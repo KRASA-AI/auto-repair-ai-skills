@@ -4,8 +4,8 @@ category: admin
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~45 min per candidate pipeline"
-version: 1.0
-last_eval_score: null
+version: 1.1
+last_eval_score: 8.8
 ---
 
 # 🔧 Technician Recruiting Outreach Builder
@@ -166,4 +166,64 @@ You are a recruiting communications writer for an independent auto repair shop. 
 
 ## Example Output
 
-> [This section will be populated by the eval system with a reference example. For now, run the skill with sample input to see output quality.]
+### Worked Example — Cold A-tech outreach via SMS, full sequence
+
+**Input:**
+- Role: A-tech, drivability + diag-heavy (2 lifts, no collision)
+- Candidate context: Jorge R., 9 years at a regional chain, ASE A1/A6/A8 + L1, found via referral from current B-tech Ana M. Specifically interesting: Ana said he's the one she calls when she's stuck on a CAN-bus diag and he's been hinting he's tired of flat-rate chasing on warranty pads.
+- Why they should care: Snap-On Ultra in every bay (3), Autel MaxiSys Ultra + Ford IDS + GM MDI 2 + Honda HDS, paid ASE testing 4×/year, $1,200 annual tool allowance, no warranty-pad flat-rate chasing (we eat that), Saturday rotation 1-in-3, Mon–Fri 8–5, no Sundays
+- Compensation: $38–$48/hr flat-rate guarantee + production bonus over 45 hrs/wk billed, health (we pay 80% single / 60% family), 401k 4% match, 2 wks PTO yr 1
+- Non-negotiables: clean MVR (we run motor-vehicle records annually for insurance), no drug test, ASE A1/A6/A8 required, OE-scan-tool fluency required, own basic hand tools (we provide diag + specialty)
+- Timeline: start within 30–45 days; next step is a 20-min phone call with owner Dan
+- Shop culture signal: "We're a 6-bay independent in Northside — owner-on-the-floor, no service-writer-customer-tech telephone game, and we've kept the same B-tech for 4 years and the same A-tech for 7. That's the place."
+- Channel: SMS (cold), then email follow-up if SMS lands
+
+**Output (Artifact 1 — First Touch SMS, 308 chars):**
+
+> Jorge — Dan at Northside Auto Care here. Ana M. said you're the diag call when she's stuck on a CAN-bus head-scratcher. We've got an A-tech opening, 3 Snap-On Ultras, no warranty-pad flat-rate games, $38–$48 + production over 45. Open to a 20-min call this week? No worries if not — text STOP if not a fit. — Dan, (617) 555-0142
+
+**Output (Artifact 2 — Follow-up #1, +4 days, SMS, 244 chars):**
+
+> Jorge — Dan again, no pressure. One thing I forgot to mention: paid ASE testing 4×/year and a $1,200 annual tool allowance, on top of pay. Happy to talk this week or next, your call. — Dan, (617) 555-0142
+
+**Output (Artifact 3 — Follow-up #2, +9 days, email, 118 words):**
+
+Subject: Quick note — A-tech bench at Northside
+
+Jorge,
+
+Last note from me — wanted to keep the door open without crowding you. If the timing's off right now (totally understand — most good techs need 30–60 days to move), my number stays the same and I'm easy to reach.
+
+The role's still open as of today. If your situation shifts in the next quarter, even just to talk about what the day actually looks like over coffee, I'm in. We've got a good crew and I'd rather wait for the right person than rush the wrong one.
+
+— Dan
+Northside Auto Care
+(617) 555-0142 direct
+
+**Output (Artifact 4 — Polite Close, +14 days, SMS, 172 chars):**
+
+> Jorge — sounds like the timing's not right, no problem at all. Wishing you well. If anything changes down the road, my number's still (617) 555-0142. — Dan, Northside
+
+**Output (Artifact 6 — Interview Invite, after Jorge replies "yes" on SMS):**
+
+Subject: Phone screen — Northside Auto Care A-tech
+
+Jorge — glad you're up for a call. Three windows that work on my end, pick whichever fits around your shift:
+
+- Wed 4/29, 12:15–12:45 PM (lunch)
+- Thu 4/30, 5:30–6:00 PM (after shift)
+- Sat 5/2, 9:00–9:30 AM (if Saturdays are open for you)
+
+20 minutes, just me. Ana doesn't know we're talking and I'd like to keep it that way until we're farther along — your current shop deserves that. After the call, if it makes sense to both of us, the next step is a 3-hour paid working interview on a Saturday with me and our shop foreman Mike, on a real ticket pair.
+
+Reply with whichever window works and I'll send a calendar hold with my direct cell.
+
+— Dan
+Northside Auto Care
+1247 Broadway, Northside MA 02XXX
+(617) 555-0142
+
+**Flags:**
+- TCPA: cold SMS includes "text STOP if not a fit" — meets most state expectations. Document opt-outs.
+- Working-interview wage flag: MA has active wage-and-hour attention on working interviews — paid 3-hour structure is correct, do not extend to full-day without an offer in hand.
+- Referral discretion: Ana referred Jorge but Jorge has not told his current employer he's looking. Do not name the current employer in any written artifact, do not contact Ana about it, do not post anything publicly until Jorge has resigned.

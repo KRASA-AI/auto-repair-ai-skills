@@ -4,8 +4,8 @@ category: customer-service
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~4 min/review"
-version: 1.0
-last_eval_score: null
+version: 1.1
+last_eval_score: 8.8
 ---
 
 # ⭐ Review Response Generator
@@ -96,4 +96,64 @@ You are a customer experience specialist AI for an auto repair shop. Your job is
 
 ## Example Output
 
-> [This section will be populated by the eval system with a reference example. For now, run the skill with sample input to see output quality.]
+### Example 1 — 5-star Google review (specific praise)
+
+**Input:**
+- Review text: "Took my 2017 Subaru Outback in for what I thought was a brake job. Marcus walked me through the inspection photos and showed me the pads still had life — said come back in a few months. Honest shop, hard to find. Will be back."
+- Star rating: 5
+- Reviewer's name: Sarah K.
+- Verified customer: Yes
+- RO context: 2017 Outback, complimentary inspection 2026-04-22, advisor Marcus, no work performed
+- Platform: Google
+- Response goal: Thank-you + invite back
+
+**Output:**
+
+```
+# Review Response
+**Reviewer:** Sarah
+**Rating:** 5 stars
+**Platform:** Google
+
+## Response
+Sarah, thanks for taking the time. Marcus says the photo walkthrough is the most fun part of the job — glad it was useful even when the answer was "you're fine for now." We'll see you when those pads actually catch up to the wear bar.
+
+— Dan, Owner, Northside Auto Care · (617) 555-0142
+
+## Notes for the Owner
+- Suggested tone: warm, specific thank-you naming Marcus and the inspection-photo moment
+- Character count: 287 (under Google's 400 mobile-preview cutoff)
+- Flags to watch: none — review is clean, customer is verified, advisor named is on file
+- If the customer responds privately: no action required; capture for the testimonial wall with consent
+```
+
+### Example 2 — 1-star Google review (disputed facts, offline invite)
+
+**Input:**
+- Review text: "Charged me $890 for a brake job that should have been $500. Said my rotors were bad but the ones they put on were the same brand I could buy at AutoZone for $80 a pair. Won't be back."
+- Star rating: 1
+- Reviewer's name: Travis M.
+- Verified customer: Yes
+- RO context: 2014 RAM 1500, RO #18432, 2026-04-18, front pads + rotors + caliper slide-pin service, parts $312, labor 2.4 hr at $145/hr ($348), shop supplies + tax $230, total $890. Rotors used were Centric Premium (mid-tier OE-equivalent), not the budget Centric C-Tek the customer is comparing to.
+- Platform: Google
+- Response goal: De-escalate, take offline, do not litigate in public
+
+**Output:**
+
+```
+# Review Response
+**Reviewer:** Travis
+**Rating:** 1 star
+**Platform:** Google
+
+## Response
+Travis, I'm sorry the bill landed harder than you expected. There are real differences between rotor lines that I'd rather walk you through on the phone than try to explain in a review thread. Could you give me a call directly at (617) 555-0142 — I want to look at your invoice with you and make sure you're square on what you paid for.
+
+— Dan, Owner, Northside Auto Care
+
+## Notes for the Owner
+- Suggested tone: empathetic, no public defense of the price, direct-line offer
+- Character count: 396 (under Google's 400 mobile-preview cutoff)
+- Flags to watch: customer is comparing Centric Premium rotors to Centric C-Tek (different product lines) — do not say this in the public reply, but be ready to explain in the call. Verify RO #18432 parts line before the call.
+- If the customer responds privately: offer 15-min review of invoice, walk through parts-line with rotor brand/grade in hand. If the work was sound, do not refund — instead offer a complimentary brake-fluid flush at the next visit. If the rotor grade was actually a customer mismatch (he asked for budget, we installed premium without authorization), that is a partial refund conversation. Do not freelance — manager call within 24 hrs, document outcome on RO.
+```

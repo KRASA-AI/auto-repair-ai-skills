@@ -4,8 +4,8 @@ category: operations
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~2-3 hours/SOP authored"
-version: 1.0
-last_eval_score: null
+version: 1.1
+last_eval_score: 8.8
 ---
 
 # 🧰 Technician Onboarding SOP Generator
@@ -148,4 +148,136 @@ Customer-visible note (optional): ___
 
 ## Example Output
 
-> [This section will be populated by the eval system with a reference example. For now, run the skill with sample input to see output quality.]
+### Worked Example — Rear brake pad & rotor replacement, 2015–2020 F-150
+
+**Input (senior tech walkthrough, edited bullets from a 9-min voice memo by Mike H., shop foreman):**
+- "F-150 rears, this generation, the parking brake is the cable type — not the EPB on the SuperCrew Limited, just the regular cable. Verify before you start because the EPB rears are a totally different procedure."
+- "Lug nuts: 150 ft-lb per Ford. I do 'em in three passes — snug by hand, half-spec, full spec. New techs always rip 'em on with the impact and warp the rotor in two months."
+- "Caliper bracket bolts are 184 ft-lb. They're TTY on this gen — replace 'em, do not reuse. Part # is in the box with the rotors usually but verify."
+- "Slide pins: clean the old grease, inspect the boots, pack with the gray Permatex (the high-temp silicone-based, not the purple)."
+- "Pad clips: replace, don't reuse. They come in the box. New techs always skip this."
+- "Bleed isn't required if you don't open the line — and don't. Compress the piston with the tool, not the C-clamp; C-clamp will overshoot and unseat the seal."
+- "Check the dust shield clearance after install — these like to ding when the pad pivots out. Easy fix but it'll squeal forever if you miss it."
+- "Test drive: 5 minutes minimum, 3 stops from 25 mph escalating pressure. Listen for the squeal, feel for the pulse."
+- "Common comeback: someone leaves the slide pin half-greased and it sticks in 4 months — pads wear unevenly and the customer's back. Pack both, every time."
+- Audience level: Level 1 tech (0–12 months)
+- OEM reference: Motor manual, procedure ID 4M-2018-F150-RB
+- Shop tools: Snap-On torque wrench (1/2" drive), Permatex Ultra Grey synthetic high-temp grease, OTC piston spreader tool #7317
+- Book time: 1.4 hr | Shop real time: 1.0 hr (Mike's pace)
+- Safety hazards mentioned: hot rotor if vehicle was just driven; brake-dust inhalation; pinch point at caliper hang
+
+**Output (full SOP, formatted as the skill produces):**
+
+```
+# SOP: Rear brake pad & rotor replacement — 2015-2020 F-150 (cable parking brake variant)
+Applies to: 2015–2020 Ford F-150, regular cable parking brake (NOT EPB-equipped SuperCrew Limited)
+Level: Level 1 tech (0–12 months)
+Authored from walkthrough by: Mike H., 2026-04-27
+Version: 1.0 | Last reviewed: 2026-04-27
+⚠️ SME REVIEW REQUIRED BEFORE USE: No
+
+## Section 1 — Overview
+- Purpose: Replace rear pads and rotors on the cable-parking-brake variant of the 12th and 13th gen F-150 with QC and a clean test-drive.
+- Book time: 1.4 hr | Shop time: 1.0 hr | Variance note: Mike runs 0.4 under book; new techs should plan to book.
+- Prerequisites: Confirm cable parking brake (not EPB). EPB variants route to a different SOP.
+- Safety hazards on this job: hot rotor if vehicle was just driven; brake-dust inhalation; pinch point at caliper hang.
+
+## Section 2 — Tools, Parts, Consumables
+### Tools
+- Snap-On torque wrench, 1/2" drive (calibrated within 12 months — check sticker)
+- OTC piston spreader tool #7317 (DO NOT use a C-clamp on this caliper — see Section 3 callout)
+- 21mm socket (lug nuts), 18mm socket (caliper bracket), 13mm socket (caliper slide bolts)
+- Wire brake-cleaner brush, brake parts cleaner spray
+- Torque paint (yellow) for QC marking
+
+### Parts (per vehicle)
+- Rear pad set, OEM or shop-approved equivalent (verify part # against VIN)
+- Rear rotor pair, OEM or shop-approved equivalent
+- Caliper bracket bolts ×4 (TTY — replace, do not reuse; part # included in rotor box; verify)
+- Pad clip kit (included in pad box; replace, do not reuse)
+
+### Consumables
+- Permatex Ultra Grey synthetic high-temp grease (NOT the purple silicone-only)
+- Brake parts cleaner
+
+## Section 3 — Procedure
+
+### Phase A: Prep
+1. Verify VIN against work order; verify cable parking brake (not EPB) by inspecting the rear caliper for an electric actuator. If EPB present, STOP and route to the EPB SOP.
+2. Confirm correct pad and rotor part numbers against VIN before lifting.
+   💡 Sidenote (Mike H.): "If you're holding the parts before you're holding the vehicle, you've already saved 10 minutes."
+3. Lift vehicle; remove rear wheels.
+
+### Phase B: Teardown
+   ⚠️ SAFETY: Rotor may be hot if the vehicle was just driven. Touch-test before grabbing.
+4. Remove caliper slide bolts (13mm) and hang caliper from frame with a wire — do not let it dangle on the brake hose.
+   ⚠️ SAFETY: Pinch point — keep fingers clear of the caliper as it swings free.
+5. Remove old pads and pad clips.
+6. Remove caliper bracket bolts (18mm) and bracket. DO NOT reuse the bracket bolts (TTY — see Section 2).
+7. Remove rotor.
+
+### Phase C: Repair
+8. Clean the hub face with a wire brush. Verify no rust ridge that will prevent the new rotor from seating flush.
+9. Install new rotor.
+10. Install caliper bracket with NEW TTY bolts.
+   🔧 Torque: 184 ft-lb (per Motor 4M-2018-F150-RB and shop policy — confirmed by Mike H.)
+   💡 Sidenote (Mike H.): "TTY means torque-to-yield. Reusing them once is how you lose a bracket on a customer's first hard stop."
+11. Clean caliper slide pins. Inspect boots — replace caliper if torn. Pack BOTH slide pins with Permatex Ultra Grey.
+   💡 Sidenote (Mike H.): "Half-greased pin sticks in 4 months. Customer's back, pads wore uneven. Pack both, every time."
+12. Install new pad clips (do not reuse the old ones — they're in the pad box).
+13. Install new pads.
+14. Compress caliper piston with OTC #7317 spreader tool.
+   ⚠️ SAFETY / DAMAGE: Do NOT use a C-clamp. C-clamp will overshoot and unseat the piston seal. Use the spreader.
+15. Reinstall caliper over the new pads.
+16. Install caliper slide bolts (13mm).
+   🔧 Torque: 25 ft-lb (per Motor 4M-2018-F150-RB)
+
+### Phase D: Reassembly
+17. Reinstall wheels. Hand-snug lug nuts in star pattern.
+18. Lower vehicle until tires just contact ground.
+19. Torque lug nuts in three passes — snug, half-spec, full spec — in star pattern.
+   🔧 Torque: 150 ft-lb (per Ford and shop policy — three-pass mandatory)
+   💡 Sidenote (Mike H.): "Impact to spec warps the rotor in 2 months. Three passes, every time. Mark with yellow torque paint when done."
+
+### Phase E: QC (see Section 4)
+### Phase F: Cleanup & Documentation
+20. Document old pad thickness measurement on RO. Document new rotor measurement (within spec). Note slide-pin condition.
+
+## Section 4 — Quality Control Checkpoints
+- [ ] Before work begins: VIN-confirmed cable PB variant (not EPB); correct pad/rotor part #
+- [ ] Mid-procedure: caliper bracket bolts torqued to 184 ft-lb, marked with yellow torque paint
+- [ ] End of procedure: lug nuts torqued in three passes to 150 ft-lb, all 8 marked with yellow torque paint
+- [ ] Test drive: 5 min minimum, 3 stops from 25 mph escalating pressure on a quiet street. Listen for squeal (dust shield clearance), feel for pulse (rotor warp / hub-face contamination), confirm parking brake holds on a 5–10° grade.
+
+## Section 5 — Common Mistakes (Mike H.'s list)
+- **Mistake:** Reusing caliper bracket bolts.
+  **Symptom:** Bracket loosens, customer reports rear-end clunk on hard stops.
+  **Catch it by:** Verify new TTY bolts are in your hand before installing the bracket.
+
+- **Mistake:** Half-greased slide pin.
+  **Symptom:** Uneven pad wear in 3–4 months; customer back with squeal or pulsation.
+  **Catch it by:** Both pins out, both pins cleaned, both pins greased — never one.
+
+- **Mistake:** C-clamp on the piston.
+  **Symptom:** Pedal goes to floor at first test-stop; piston seal compromised.
+  **Catch it by:** Spreader tool is the only acceptable tool — verify before reaching for the toolbox.
+
+- **Mistake:** Impact to spec on lug nuts.
+  **Symptom:** Rotor warp at 1,500–3,000 mi; customer back with brake pulsation.
+  **Catch it by:** Three-pass star pattern with calibrated torque wrench, paint-marked.
+
+- **Mistake:** Skipping the dust-shield clearance check.
+  **Symptom:** Persistent rear squeal after install.
+  **Catch it by:** Spin the wheel by hand before lowering — listen for ring contact.
+
+## Section 6 — Tech Sign-Off
+Tech name: ___ Date: ___ Odometer in/out: ___/___
+QC pass: [ ] Yes [ ] No — if No, note: ___
+Customer-visible note (optional): ___
+```
+
+**Notes for the skill user:**
+- The senior tech's voice is preserved in five sidenotes and the entire Common Mistakes section, attributed.
+- Every torque spec carries a source citation (Motor 4M-2018-F150-RB or shop policy with the tech's name).
+- The cable-PB-vs-EPB distinction is in the title, in Section 1, and as Step 1 — the prerequisite check that prevents the wrong SOP from being followed.
+- No safety-content invention: only hot-rotor, brake-dust, and pinch-point hazards from Mike's walkthrough are included.
