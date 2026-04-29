@@ -4,7 +4,7 @@ category: customer-service
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~8 min/bilingual message"
-version: 1.0
+version: 1.1
 last_eval_score: null
 ---
 
@@ -122,6 +122,99 @@ You are a bilingual customer communications specialist for an auto repair shop. 
 - No Spain-specific constructions in the Spanish version unless regional context requires
 - Saved to `outputs/` if the user confirms
 
-## Example Output
+## Example Outputs
 
-> [This section will be populated by the eval system with a reference example. For now, run the skill with sample input to see output quality.]
+**Example 1 — Estimate approval, SMS, repeat customer (tú register), Mexican-American household:**
+
+Input:
+- Customer: María Reyes, 2018 Honda CR-V EX, mobile primary, repeat customer (3rd visit)
+- Message type: Estimate approval — front brake pads + rotors found at 2mm during oil-change DVI
+- Core content: "Found front pads at 2mm and minor rotor scoring. $487 total ($212 parts, $245 labor, $30 shop supplies + tax). Can finish today by 5pm if approved by noon."
+- Register: tú (warm — María has been to the shop three times, brings her sister's car too)
+- Regional: Mexican-American (Houston)
+- Channel: SMS, ≤320 chars per language
+- Voice config: friendly
+- Advisor: Diego; Shop: Reliant Auto Care; Phone: (713) 555-0140
+
+Output:
+```
+# Bilingual Message — María Reyes, 2018 Honda CR-V
+**Type:** Estimate approval (DVI finding — front brakes)
+**Channel:** SMS
+**Register:** tú
+
+## Section 1 — English version
+Hi María — quick update on the CR-V. Front pads are at 2mm and rotors have light scoring. Total $487 (parts + labor + supplies + tax). Can have it done by 5pm if you reply YES by noon. — Diego, Reliant Auto Care, (713) 555-0140
+
+[Char count: 248 / 320]
+
+## Section 2 — Versión en español
+Hola María — te aviso del CR-V. Las pastillas de adelante ya están en 2mm y los discos tienen rayitas. Total $487 (refacciones + mano de obra + materiales + impuesto). Lo entregamos hoy a las 5pm si respondes SÍ antes del mediodía. — Diego, Reliant Auto Care, (713) 555-0140
+
+[Char count: 282 / 320]
+
+## Section 3 — Translation Notes
+- "Pads" → "pastillas" (US-market default; "balatas" works in Mexican Spanish but "pastillas" is universally understood; chose pastillas because the customer's prior intake form used it)
+- "Light scoring" → "rayitas" (warmer/more conversational than "rayaduras leves" — fits the tú register)
+- CTA reply word: "SÍ" (mirrors "YES" — keep this exact word; do not soften to "está bien")
+- "Shop supplies + tax" → "materiales + impuesto" (US-market customer-facing terminology; do not say "suministros" — sounds clinical)
+- Register: tú confirmed appropriate (3rd-visit repeat, prior text thread used tú)
+
+## Send Checklist
+- [x] Customer's preferred language confirmed on file (Spanish primary per intake)
+- [x] Dollar amounts identical: $487 in both
+- [x] CTA uses the exact reply word: YES / SÍ
+- [x] SMS under 320 chars (both versions: 248 / 282)
+```
+
+---
+
+**Example 2 — Bad-news call, voicemail script, first-time customer (usted register), Cuban-American household:**
+
+Input:
+- Customer: Sr. Antonio Pérez, 2014 Toyota Sienna LE, owns since 2014 (first-time at this shop, walk-in for AC issue)
+- Message type: Bad-news voicemail — AC compressor seized internally; teardown of front of engine confirmed no salvage; new compressor + condenser flush + accumulator + refrigerant = $1,840 (was estimating ~$650 for a recharge + leak find before teardown)
+- Core content: AC diagnosis revealed compressor failure (not just leak). Original estimate $650 → revised $1,840. Need callback before any further work. Vehicle drivable but AC not functional.
+- Register: usted (formal — first-time, older customer, called him Sr. on intake)
+- Regional: Cuban-American (Miami) — flagged because Cuban Spanish defaults differ slightly from Mexican-American (e.g., "máquina" or "carro," "guagua" reserved for buses; ustedes-form for plural)
+- Channel: voicemail, ≤30 seconds spoken per language
+- Voice config: professional
+- Advisor: Lourdes; Shop: Calle Ocho Auto Service; Phone: (305) 555-0188
+
+Output:
+```
+# Bilingual Message — Sr. Antonio Pérez, 2014 Toyota Sienna
+**Type:** Bad-news call (revised estimate after teardown)
+**Channel:** Voicemail script (read aloud, ≤30 seconds each)
+**Register:** usted
+
+## Section 1 — English version
+Mr. Pérez, this is Lourdes from Calle Ocho Auto Service calling about your 2014 Sienna. We opened up the AC system as we discussed, and unfortunately the compressor itself has failed — it's not just a leak. To do the repair right we'd need a new compressor, condenser flush, accumulator, and refrigerant — about $1,840 total instead of the $650 we originally talked about. The van is safe to drive without AC. Please call me back at (305) 555-0188 before five o'clock today so we can decide together. Thank you, sir.
+
+[Read time: ~28 seconds]
+
+## Section 2 — Versión en español
+Sr. Pérez, le habla Lourdes de Calle Ocho Auto Service por el Sienna 2014. Abrimos el sistema de aire acondicionado como habíamos hablado, y lamentablemente el compresor falló por dentro — no es solamente una fuga. Para hacer la reparación bien necesitamos un compresor nuevo, una limpieza del condensador, el acumulador y la recarga — alrededor de $1,840 en total, en vez de los $650 que habíamos hablado al principio. La van se puede manejar sin problema, pero sin aire. Por favor regréseme la llamada al (305) 555-0188 antes de las cinco de hoy para que decidamos juntos. Muchas gracias, señor.
+
+[Read time: ~30 seconds]
+
+## Section 3 — Translation Notes
+- "Mr. Pérez" → "Sr. Pérez" — kept as title-only (Cuban-Spanish convention with older customers; never first-name)
+- "Failed internally" → "falló por dentro" (warmer than "falla interna," reads as a person speaking, not a report)
+- "Unfortunately" → "lamentablemente" — appropriate apology weight (not over-apologizing for an honest teardown finding)
+- "Van" → "la van" (Cuban-American Miami English-borrowed default; "camioneta" works but "la van" is what this customer would actually use)
+- "Five o'clock today" → "las cinco de hoy" (kept idiomatic; not "las 17:00" which sounds bureaucratic)
+- "So we can decide together" → "para que decidamos juntos" (subjunctive — formal-but-warm; respects usted register and gives the customer agency without pressuring)
+- Avoided "ustedes" anywhere (single customer; ustedes-plural would be incorrect)
+- Avoided "vosotros" form entirely (Spain-only)
+- Did NOT use "coche" (Spain) or "auto" (South American) — used vehicle-specific "Sienna" and "la van"
+- Register: usted confirmed (first-time, addressed as Sr. on intake)
+
+## Send Checklist
+- [x] Voicemail script timed (English ~28s, Spanish ~30s — both under 30s cap when read at conversational pace)
+- [x] Dollar amounts identical: $1,840 and $650 in both
+- [x] Phone number identical: (305) 555-0188
+- [x] CTA: "call me back" / "regréseme la llamada" — clear action with deadline
+- [x] No PII beyond what the advisor already had (no VIN, no RO number read aloud)
+- [x] Did NOT promise the AC compressor failure mode in writing — voicemail is deniable; advisor will document teardown findings on the RO separately
+```
