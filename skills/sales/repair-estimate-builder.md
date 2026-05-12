@@ -4,8 +4,9 @@ category: sales
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~20 min/estimate + fewer billing disputes"
-version: 1.1
-last_eval_score: null
+version: 1.2
+last_eval_score: 9.0
+last_eval_date: 2026-05-11
 ---
 
 # 📝 Repair Estimate Builder
@@ -171,4 +172,139 @@ I authorize [Shop Name] to perform the work described above for a total not to e
 
 ## Example Output
 
-> [This section will be populated by the eval system with a reference example. For now, run the skill with sample input to see output quality.]
+**Inputs:**
+- Customer: Sandra Okafor | Phone: (619) 555-0183 | Email: s.okafor@email.com
+- Vehicle: 2021 Ford F-150 XLT 5.0L 4WD | VIN: 1FTFW1E85MFA12347 | 68,420 miles | RO-4418
+- Verified findings: Front brake pads worn to 2mm (spec: replace at 3mm), front rotors scored beyond minimum thickness (measured 28.1mm; min 28.4mm), caliper slide pins seized on driver side — caliper body suspect pending disassembly, rear brake pads at 5mm (green), transmission fluid dark at 68k miles (overdue per Ford's 60k-mile service interval), cabin air filter restricted
+- Labor ops: front brake pads + rotors (Mitchell1 #520601, 2.0 hr), caliper slide pin service (bundled in pad/rotor op if pins free; caliper R&R additional 0.8 hr if body fails), transmission drain & fill (Mitchell1 #308100, 0.8 hr), cabin air filter (0.3 hr tech estimate)
+- Parts: OEM Ford rotors (BL3Z-1125-D, $89.00 ea) or aftermarket Bosch QuietCast 26011534 ($54.00 ea); OEM Ford pads (BL3Z-2001-A, $68.00/set) or aftermarket Wagner ThermoQuiet QC1650 ($42.00/set); caliper slide pin kit (Raybestos H5408, $12.00); Mercon LV fluid (6 qts × $9.00 = $54.00); cabin air filter (Purolator C35720, $18.00)
+- Teardown contingent: If caliper body fails inspection on disassembly → add 1 remanufactured caliper (Cardone 18-5117, $64.00) + 0.5 hr labor
+- Shop: Maple Street Auto Service | 1200 Maple St, San Diego, CA 92101 | (619) 555-1234 | Repair Facility #AR-229871 (CA BAR)
+- Labor rate: $165/hr (standard) | Tax: 8.75% (CA) | Shop supplies: 8% of labor (max $40) | EPA/hazmat: $8.00 flat
+- Warranty: 24 months / 24,000 miles on parts & labor
+- Tier split: Required (brakes), Recommended (trans fluid + cabin filter)
+- Authorization threshold: 10% or $100, whichever is less
+- Estimate validity: 7 days
+
+```
+# Repair Estimate — RO-4418
+**Shop:** Maple Street Auto Service | Repair Facility #AR-229871 | 1200 Maple St, San Diego, CA 92101 | (619) 555-1234
+**Date:** May 11, 2026 | **Expires:** May 18, 2026
+**Customer:** Sandra Okafor | (619) 555-0183 | s.okafor@email.com
+**Vehicle:** 2021 Ford F-150 XLT 5.0L 4WD | VIN: 1FTFW1E85MFA12347 | 68,420 mi
+
+---
+
+## Work Summary
+
+Your F-150's front brakes are worn past safe limits — pads at 2mm against a 3mm replacement threshold, and rotors scored below Ford's minimum thickness. This is a required safety repair. The driver-side caliper slide pins are also seized; we'll inspect the caliper body once disassembled and call before doing any additional work if the body itself needs replacement (see teardown note below). Your transmission fluid is dark at 68,420 miles — Ford recommends replacement at 60,000 miles — and your cabin air filter is heavily restricted. We're presenting those as recommended-but-optional so you can decide what fits your schedule and budget.
+
+---
+
+## Parts
+
+### Aftermarket (shop standard — same warranty coverage as OEM for this application)
+| Description | Part # | Brand | Qty | Unit Price | Ext. | Warranty |
+|-------------|--------|-------|-----|-----------|------|----------|
+| Front brake pads | QC1650 | Wagner ThermoQuiet | 1 set | $42.00 | $42.00 | 24 mo/24k mi |
+| Front rotors | 26011534 | Bosch QuietCast | 2 | $54.00 | $108.00 | 24 mo/24k mi |
+| Caliper slide pin kit | H5408 | Raybestos | 1 | $12.00 | $12.00 | 24 mo/24k mi |
+| Mercon LV ATF | — | Motorcraft | 6 qt | $9.00 | $54.00 | 24 mo/24k mi |
+| Cabin air filter | C35720 | Purolator | 1 | $18.00 | $18.00 | 12 mo/12k mi |
+
+### OEM Alternative (available on request — longer lead time, higher cost)
+| Description | Part # | Brand | Qty | Unit Price | Ext. |
+|-------------|--------|-------|-----|-----------|------|
+| Front brake pads (OEM) | BL3Z-2001-A | Ford OE | 1 set | $68.00 | $68.00 |
+| Front rotors (OEM) | BL3Z-1125-D | Ford OE | 2 | $89.00 | $178.00 |
+
+*OEM upgrade adds $92.00 to parts subtotal. Request at time of authorization.*
+
+**Parts Subtotal (aftermarket):** $234.00
+**Core Charges:** None
+
+---
+
+## Labor
+
+| Operation | Labor-Op # | Source | Hours | Rate | Ext. |
+|-----------|-----------|--------|-------|------|------|
+| Front brake pads & rotors, slide pin service | 520601 | Mitchell1 | 2.0 | $165 | $330.00 |
+| Transmission fluid drain & fill (Mercon LV) | 308100 | Mitchell1 | 0.8 | $165 | $132.00 |
+| Cabin air filter replacement | — | Tech est. | 0.3 | $165 | $49.50 |
+
+**Labor Subtotal:** $511.50
+
+---
+
+## Sublet
+
+None this visit.
+
+---
+
+## Shop Supplies / EPA / Tax
+
+- Shop supplies (8% of labor, max $40): $40.00
+- EPA/hazmat (flat): $8.00
+- CA sales tax (8.75% on parts): $20.48
+
+---
+
+## Totals
+
+### Tiered Estimate
+
+| Tier | Items | Parts | Labor | Supplies/EPA | Tax | **Subtotal** |
+|------|-------|-------|-------|-------------|-----|-------------|
+| 🔴 Required | Front pads, rotors, slide pin service | $162.00 | $330.00 | $40.00 + $8.00 | $14.18 | **$554.18** |
+| 🟡 Recommended | Trans fluid + cabin filter | $72.00 | $181.50 | — | $6.30 | **$259.80** |
+| | **Combined total (all tiers)** | **$234.00** | **$511.50** | **$48.00** | **$20.48** | **$813.98** |
+
+---
+
+## Teardown-Contingent Items
+
+**Driver-side brake caliper body** — The slide pins on this caliper are seized. We will inspect the caliper piston and seals once the assembly is disassembled. If the caliper body is found to be unserviceable:
+
+- Additional part: Cardone 18-5117 reman caliper — $64.00
+- Additional labor: 0.5 hr @ $165 = $82.50
+- Additional tax: $5.60
+- **Contingent additional cost: $152.10**
+
+We will call you before performing any additional work. The re-authorization threshold is $100 — any increase beyond that requires your approval before we proceed.
+
+---
+
+## Needs Before Presenting
+
+None — all parts pricing confirmed. Mercon LV fluid price verified against current supplier quote (05/11/2026).
+
+---
+
+## Disclaimers & Terms
+
+- **Teardown:** Additional parts or labor discovered during disassembly (see caliper note above) will require your re-authorization before any additional work is performed. We will call the number on file.
+- **Parts warranty:** 24 months / 24,000 miles on all listed aftermarket brake components and transmission fluid service. 12 months / 12,000 miles on cabin air filter. Warranty is void if parts are tampered with or if subsequent repair is performed by another facility without written exception.
+- **Labor warranty:** 24 months / 24,000 miles on all labor operations listed above.
+- **Diagnostic fee:** No diagnostic fee applies — inspection was performed as a courtesy multi-point inspection during this visit.
+- **Estimate validity:** Pricing valid through May 18, 2026. Parts pricing is subject to supplier changes after that date — particularly Mercon LV ATF, which has experienced volatility in 2026.
+- **California BAR 3372 Disclosure:** Pursuant to California Business and Professions Code Section 9884.9, you are entitled to a written estimate before work is performed. You have the right to an itemized invoice and the right to request the return of replaced parts (request at time of authorization). This estimate does not authorize work until signed by the customer.
+
+---
+
+## Authorization
+
+I authorize Maple Street Auto Service to perform the work described above for a total not to exceed:
+
+☐ **Required items only: $554.18**
+☐ **Required + Recommended: $813.98**
+☐ **Required + OEM parts upgrade: $646.18** *(pads + rotors only; add $92.00 to required total)*
+
+Any increase greater than **$100.00** (10% of authorized total, whichever is less) requires my additional written or verbal approval before the work is performed.
+
+My preferred contact for re-authorization: ☐ Phone ☐ SMS ☐ Email
+
+**Customer signature:** _________________________ **Date:** _______
+**Advisor signature:** _________________________ **Date:** _______
+```
