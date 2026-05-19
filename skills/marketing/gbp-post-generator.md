@@ -4,7 +4,7 @@ category: marketing
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~15 min/post"
-version: 1.0
+version: 1.1
 last_eval_score: null
 ---
 
@@ -140,3 +140,75 @@ Produce a single Markdown artifact, formatted exactly as below.
 ## Time-Saved Math
 
 Manually written GBP post (drafting, finding a photo, writing alt-text, deciding on a CTA, scheduling): ~20 minutes per post. Using this skill: ~5 minutes (light edit + photo + publish). Net ~15 minutes per post. At 2 posts per month × 12 months = ~6 hours / year recovered, with measurably more consistent voice and local-SEO discipline.
+
+## Example Output
+
+**Inputs:**
+- Shop context (from `config.yml`): Northside Auto Care, Buffalo, NY 14216, cold-winter climate region, services: brakes / suspension / electrical / state-inspection / heating-and-cooling / tires / oil-service, hours M–F 7:30–5:30, phone (716) 555-0148, booking URL https://northsideautocare.com/book, brand voice = friendly / direct, signature line "Northside — across from Hertel Hardware since '04"
+- Post intent: seasonal-service reminder
+- Topic: end-of-winter cooling-system flush — Buffalo customers come out of winter with old coolant that's been freeze-cycled hard; a flush before May's first 80°F day prevents the summer overheating call. Customer-education framing, not a discount.
+- CTA (single): "Book a coolant flush — online"
+- Offer details: none (no discount; this is a reminder + education post)
+- Photo plan: needs photo brief
+- Targeting / locale notes: mention the Hertel-Ave neighborhood once for local-SEO; Memorial Day weekend traffic on I-90 as the timing anchor
+
+**Output:**
+
+```
+## GBP Post — Northside Auto Care — 2026-05-18 — seasonal-service reminder
+
+**Post type:** What's New
+**Character count:** 612 — within 1,500 limit; in the 300–700 sweet spot
+
+---
+
+### Post body (publish-ready)
+
+Buffalo winters are hard on coolant. Five months of freeze-thaw cycles change the chemistry — the additives that protect your radiator, water pump, and heater core wear out, and the freeze point starts to drift toward water.
+
+Before the first 80° day hits (and before Memorial Day traffic on the I-90), a cooling-system flush gets your engine ready for summer. Drained, refilled with the right OEM-spec coolant for your vehicle, and pressure-tested for any winter-cracked hose clamps.
+
+About an hour in the shop. Most cars need this every 5 years or 60,000 miles.
+
+Book online — link below — or call the shop. We're on Hertel, across from Hertel Hardware.
+
+— Northside Auto Care
+
+---
+
+### CTA button (Google's structured field)
+
+**Action:** Book
+**URL:** https://northsideautocare.com/book?utm_source=gbp&utm_medium=post&utm_campaign=spring-coolant-flush-2026
+
+---
+
+### Photo brief
+
+Wide shot of one of the service bays with a coolant drain pan visible and a tech in shop uniform working at the engine bay — preferably a domestic sedan or crossover so it reads as relatable to most viewers. Crop out customer plates and any RO paperwork. Natural light from the bay door is fine. Avoid stock-image waiting-room shots.
+
+**Alt-text suggestion:** "Northside Auto Care technician performing a coolant flush in the service bay, with a clean drain pan visible and the engine bay open."
+
+---
+
+### Hashtags (optional, max 3)
+
+#BuffaloAutoRepair #HertelAve #CoolantFlush
+
+---
+
+### Schedule suggestion
+
+**Best day to publish:** Tuesday morning 9–10am — local-search activity for service queries peaks Tue–Thu mornings, and Tuesday gives the post the full week's visibility window before the weekend dropoff
+**Suggested cadence:** This is a seasonal post — fits the spring (April–May) slot. Pair with a customer-education post on heating-system / A/C readiness in the next biweekly slot
+
+---
+
+### Caveats & Verification
+
+- The "5 years or 60,000 miles" interval is a typical guideline — verify it matches what the shop actually communicates to customers before publishing, since some vehicles call for shorter intervals
+- Photo brief assumes the shop has a clean bay shot available; if not, schedule a 2-minute photo capture during a real coolant flush this week
+- Memorial Day traffic on I-90 is the timing anchor — if the post slips past mid-May, swap to "before the first 80° day" framing only and drop the Memorial Day reference
+```
+
+The example exercises every section of the output format — body within the 300–700 sweet spot, single CTA with UTM tags, photo brief specific enough to shoot in 30 seconds, alt-text for accessibility, three local hashtags, schedule + cadence guidance, and three caveats the owner verifies before publishing. The content is education-led (no fabricated discount), the locale is referenced naturally (Hertel Ave, I-90, Buffalo winters), the voice matches the shop's stated friendly/direct register, and the post avoids every common pitfall (no second CTA, no stock photo direction, no manufactured urgency, no keyword stuffing).

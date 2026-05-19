@@ -4,7 +4,7 @@ category: operations
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~15 min/inspection + higher authorization rate"
-version: 1.1
+version: 1.2
 last_eval_score: null
 ---
 
@@ -167,4 +167,125 @@ You are an automotive inspection report writer. Your job is to make a customer u
 
 ## Example Output
 
-> [This section will be populated by the eval system with a reference example. For now, run the skill with sample input to see output quality.]
+**Inputs:**
+- Vehicle: 2021 Toyota Corolla LE, VIN last 6: 419837, 62,400 mi, in-service 2021-03, 1.8L FE
+- Inspection scope: Standard 27-point courtesy multi-point (oil-change visit + customer requested "anything I should know" check)
+- Customer: Sandra (4 yrs ownership, 35-mile daily commute, expecting another 40,000 mi on the car, budget-aware, vehicle is leaving today with her)
+- Shop's severity thresholds: shop defaults — brake pads red ≤ 3mm / yellow 3–5mm; tires red ≤ 2/32" / yellow 3–4/32"; differential service interval 60,000 mi
+- Raw tech findings:
+  - Front brake pads: LF 3.5mm, RF 3.5mm (photo #DVI-419837-01) — measured with pad-thickness gauge
+  - Rear brake pads: 6mm both — pass
+  - Rotors: front 25.0mm (min 24.5mm spec stamped) — pass, near min on next service
+  - Tires: LF 5/32, RF 5/32, LR 6/32, RR 6/32 — pass; DOT 2520 (~5.5 yrs) — note age
+  - Battery: 75% CCA of spec (525 of 700 CCA), surface temp 78°F, 12.4V resting — borderline-pass (yellow watch)
+  - Rear differential fluid: original / never serviced; recommended interval 60k mi — overdue by ~2,400 mi (yellow)
+  - Cabin air filter: visible dust but no major blockage — pass at this visit, advise next service
+  - Engine air filter: pass
+  - Wipers: front pass, rear no wiper (sedan)
+  - Coolant: green, level full, no contamination — pass
+  - Power steering / brake fluid: clean — pass
+  - Belts: pass
+  - Lights: all functional
+  - HVAC blower: full range, vent temp 41°F at recirc — pass
+  - ADAS systems (TSS-P): out of scope for courtesy visit — N/I
+  - Alignment: not measured this visit — N/I (no pull complaint)
+  - Suspension hands-on: not lifted for hands-on — N/I (courtesy scope)
+- Previously declined: none
+- Urgency context: vehicle leaves with customer today; no current safety-stop items
+
+**Output:**
+
+```
+# Vehicle Inspection Report — 2021 Toyota Corolla LE, VIN ...419837
+**Customer:** Sandra | **Mileage:** 62,400 | **Date:** 2026-05-18 | **RO:** 38422
+**Shop:** [Shop Name], (555) 123-4567 | **Advisor:** Marcus | **Tech:** Devon
+
+## Summary
+- 🔴 **Required:** 0 items — no immediate safety items today
+- 🟡 **Recommended:** 3 items — front brakes at end-of-life window, rear differential fluid overdue, battery testing at the lower edge of pass
+- 🟢 **Pass:** 19 items inspected, within spec
+- ⚪ **Not inspected:** 3 items — see list at end (ADAS, alignment, suspension hands-on)
+
+**Overall condition:** Vehicle is safe to drive home tonight. Three preventive items should be addressed within the next 60 days — front brakes should be planned in the next 1,500–3,000 miles, the rear differential service is past its interval, and the battery is at the lower edge of pass and should be retested at the next oil change.
+
+---
+
+## 🟡 Recommended Items
+
+### Front brake pads at end-of-life window
+- **Impact:** Safe to drive today. Pads have ~3,000 miles of useful life remaining before crossing the safety threshold.
+- **Measurement:** LF 3.5mm / RF 3.5mm (replacement threshold 3mm). See photo #DVI-419837-01.
+- **Photo:** Front brake pad gauge reading — 3.5mm at the thinnest point of the LF inner pad
+- **Why it matters:** Below 3mm, the pad material wears unevenly and rotor scoring accelerates. Catching this at 3–4mm means a pad replacement only ($XXX range). Letting it slip past 2mm typically forces a pads-and-rotors job at roughly double the cost. Front rotors are at 25.0mm, just above their 24.5mm minimum — they will likely survive one more pad set if replaced now.
+- **Recommendation:** Plan front pads within the next 1,500–3,000 miles. Recommended — not Required — at this visit.
+- **Labor est:** 1.2 hr | **Parts:** pads (placeholder → see estimate)
+
+### Rear differential fluid — overdue
+- **Impact:** No current driveline noise or symptom; service is preventive.
+- **Measurement:** Original fluid, 62,400 mi (60,000-mi service interval, ~2,400 mi past due)
+- **Photo:** N/A — service is fluid-only, no visible photo benefit
+- **Why it matters:** Differential fluid loses additive package and lubricity over time. Past the interval, gear wear accelerates and the eventual repair (ring & pinion, bearing replacement) is several times the cost of a routine fluid service. This is a "do it now and forget about it for 60k" item.
+- **Recommendation:** Recommended at this visit or next visit.
+- **Labor est:** 0.5 hr | **Parts:** rear diff fluid (placeholder → see estimate)
+
+### Battery testing at lower edge of pass
+- **Impact:** Currently starting reliably; battery is approaching end-of-service-life window.
+- **Measurement:** 525 CCA of 700 CCA spec (75%); 12.4V resting; surface temp 78°F at test
+- **Photo:** N/A — readout on shop tester
+- **Why it matters:** Pass-threshold on a CCA test is typically 70% of rated CCA at moderate temperatures. At 75% in spring temperatures, the battery is comfortably above threshold today but will lose another 5–10% by next winter. Replacing proactively before next cold season avoids a no-start in a parking lot.
+- **Recommendation:** Monitor — retest at next oil change (~5,000 mi). Replace before next winter if it drops below 70%.
+- **Labor est:** 0.3 hr (replacement, if done) | **Parts:** battery (placeholder → see estimate)
+
+---
+
+## Prioritized Work Plan
+| # | Item | Severity | Labor | Parts | Notes |
+|---|------|----------|-------|-------|-------|
+| 1 | Front brake pads (rotors near min) | 🟡 | 1.2 hr | [TBD — pads only, rotors likely OK one more set] | Plan within 3,000 mi; pair with #2 if approved |
+| 2 | Rear differential fluid service | 🟡 | 0.5 hr | [TBD] | Past 60k interval by ~2,400 mi; do same visit as #1 to save labor stacking |
+| 3 | Battery monitor + winter retest | 🟡 | 0.3 hr | [TBD if replaced] | Currently 75% CCA; retest at next oil change |
+
+---
+
+## Safety & Driving Advice
+
+Vehicle is safe to drive home tonight and safe for the next 1,500–3,000 miles of normal commuting. No items require an immediate stop. Watch for brake pedal feel change or any noise (squeal, grinding) — those would indicate the front pads need attention sooner than the 3,000-mile window.
+
+---
+
+## Previously Declined Work
+None on file.
+
+---
+
+## Next Steps
+- [ ] Review report with Marcus (advisor) — call/text at (555) 123-4567
+- [ ] Approve recommended items → next-visit scheduling for pads + diff service (combined labor saves ~0.4 hr vs. separate visits)
+- [ ] Optional: battery retest at next oil change — no separate appointment needed
+- [ ] Warranty: 24 months / 24,000 miles on parts & labor (shop standard)
+
+---
+
+## Not Inspected This Visit
+| System | Reason |
+|--------|--------|
+| ADAS systems (Toyota Safety Sense P) | Out of scope for courtesy 27-point — calibration check on dedicated visit |
+| Alignment | Not measured — no pull complaint and tires showing even wear |
+| Suspension hands-on (ball joints, control-arm bushings) | Vehicle not lifted for hands-on — courtesy-scope visual only |
+
+---
+
+## Technical Appendix (for records)
+- Pads: LF 3.5mm / RF 3.5mm / LR 6mm / RR 6mm — gauge measurement, photo #DVI-419837-01
+- Rotors: F 25.0mm (24.5mm min stamped) / R within service spec
+- Tires: LF 5/32, RF 5/32, LR 6/32, RR 6/32 — wear even, no anomalies; DOT 2520 (~5.5 yrs old — age call only, no current concern at this depth)
+- Battery: 525 CCA / 700 CCA spec (75%); 12.4V open-circuit; ambient/surface 78°F
+- Rear diff: original fluid at 62,400 mi (60,000 mi service interval); no current noise or temperature concern
+- Coolant: green, level at full mark, no contamination signs
+- Brake / power-steering fluid: clean
+- Cabin air filter: dust visible, no airflow restriction at this visit; advise replacement next service
+- HVAC: recirc vent temp 41°F at idle — within spec
+- Lights, wipers, belts, engine air filter, hoses: pass
+```
+
+> Hand-offs: For this report, the recommended items flow to `sales/repair-estimate-builder.md` for pricing across the three yellow tiers (combined pads + diff fluid + battery retest plan), and to `customer-service/service-advisor-script.md` if Marcus is presenting the recommendations on a callback. Sandra's vehicle is also a candidate for `customer-service/maintenance-reminder-sequence.md` enrollment if not already enrolled — the pads, diff, and battery cadence map naturally to the next three touchpoints in the sequence.
