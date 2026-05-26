@@ -4,7 +4,7 @@ category: admin
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~45 min/dispute"
-version: 1.0
+version: 1.1
 last_eval_score: null
 ---
 
@@ -152,14 +152,64 @@ Re: Chargeback dispute — [Customer name] — [Card last 4] — [Transaction da
 ## Example Output
 
 **Inputs:**
-- Customer: James Worthington, Visa card ending 7823, transaction 04/15/2026, $892
-- RO: RO-2401, 2019 Ford F-150, front brake pads + rotors + caliper slide service
-- Chargeback claim: "Services not rendered"
-- Available: signed RO scan (customer signature), parts receipt, DVI photos of worn pads (pre-repair), invoice, completion text
 
-**Output (partial — letter section):**
+- Customer: James Worthington, Visa card ending 7823, transaction 04/15/2026, $892.00
+- RO: `RO-2401`, 2019 Ford F-150 XLT 4WD, VIN `1FTFW1E51KFB89254`, odometer-in 78,412 / odometer-out 78,416
+- Services performed: front brake pad replacement (OEM Motorcraft BR-1421-B), front rotor replacement (OEM Motorcraft BRR-261), caliper slide pin service (clean + lubricate, retain original calipers), brake-fluid top-off
+- Chargeback details: Visa reason code **13.1 ("Services / Merchandise Not Provided")** received 05/03/2026 — bank response deadline 05/24/2026 (21 days)
+- Available evidence: signed paper RO (customer signature plus customer-initialed line-item authorization), parts receipt from NAPA Austin (invoice #N-2098177), DVI photos of pre-repair pads at 2mm with rotor scoring (4 photos with timestamps), post-repair photos of new pads and rotors installed (3 photos), final invoice copy, completion confirmation SMS sent 04/15/2026 16:47 CT to customer's listed mobile, payment receipt from Tekmetric Payments (auth code `847291`, AVS match `Y`, CVV match `M`)
+- Communications log: 04/15/2026 08:14 customer drop-off and verbal estimate ($892); 04/15/2026 11:32 advisor Karina Hidalgo texted customer photos of pads + rotor with line-item estimate, customer replied "Go ahead, thanks" at 11:38 (full text thread captured); 04/15/2026 16:47 completion SMS; 04/15/2026 17:22 customer in-person pickup with verbal "thanks, drives great"
+- Comeback/complaint history: No subsequent contact from customer between 04/15 and the chargeback notice on 05/03 — no comeback, no warranty claim, no service complaint
+- Shop policy: 12-month / 12,000-mile parts-and-labor warranty printed at the bottom of the invoice and posted in the customer waiting area; this policy was not invoked because no warranty claim was made
+
+**Output:**
 
 ```
+# Chargeback Defense Packet
+
+**Shop:** Maple Street Auto Service, 1200 Maple Street, Austin TX 78701, (512) 555-1234 — payment processor: Tekmetric Payments
+**Dispute prepared:** 05/11/2026
+**Response deadline:** 05/24/2026 (13 days remaining at time of submission)
+**Customer:** James Worthington | **Card last 4:** 7823 | **Network:** Visa
+**Charge date:** 04/15/2026 | **Amount disputed:** $892.00
+**Chargeback reason code / category:** Visa 13.1 — Services / Merchandise Not Provided
+
+---
+
+## Documentation Status
+
+| Evidence item | Available? | Notes |
+|--------------|-----------|-------|
+| Signed RO / estimate | ✅ | Paper RO signed at drop-off + initialed line-item authorization |
+| Digital approval confirmation | ✅ | SMS thread 04/15 11:32–11:38, customer wrote "Go ahead, thanks" |
+| Phone/verbal authorization log | ✅ | Drop-off verbal estimate $892 confirmed in writing at 11:38 |
+| Itemized invoice | ✅ | Final invoice matches signed RO and SMS-approved supplement (no supplement issued) |
+| Parts receipts | ✅ | NAPA Austin invoice #N-2098177 — OEM Motorcraft BR-1421-B pads and BRR-261 rotors |
+| DVI report / photos | ✅ | 4 pre-repair photos timestamped 04/15/2026 09:08–09:21 (pads at 2mm, rotor scoring) |
+| Pre/post-repair photos | ✅ | 3 post-repair photos timestamped 04/15/2026 15:14–15:32 (new pads, machined surface) |
+| Completion text or email | ✅ | SMS 04/15/2026 16:47 CT to customer's listed mobile, delivery-receipt acknowledged |
+| Payment receipt | ✅ | Tekmetric Payments — auth code 847291, AVS match Y (street), CVV match M, EMV chip-present transaction |
+| Written shop warranty/return policy | ✅ | Printed on invoice and posted in waiting area — 12mo / 12k mi parts-and-labor |
+| Comeback/complaint records | ✅ | No subsequent contact between 04/15 and 05/03 chargeback notice |
+
+**Documentation gaps:** None — case is documentation-complete. The signed RO, the SMS authorization thread, the timestamped pre/post photographs, the chip-present payment receipt with AVS and CVV match, and the absence of any prior complaint together establish a complete authorization chain and rebut the "services not provided" claim directly.
+
+---
+
+## Exhibits
+
+1. **Exhibit 1 — Signed Repair Authorization (RO-2401, dated 04/15/2026):** paper RO signed by James Worthington at 08:14 CT with line-item initials next to "Front brake pad R&R," "Front rotor R&R," "Caliper slide service," and "Final amount $892.00."
+2. **Exhibit 2 — SMS Authorization Thread (04/15/2026 11:32–11:38 CT):** screen-capture of the text exchange between advisor Karina Hidalgo and James Worthington's mobile (matching the mobile-of-record on the customer profile), including the photographs sent at 11:32 and the customer's "Go ahead, thanks" reply at 11:38.
+3. **Exhibit 3 — Pre-Repair DVI Photographs (04/15/2026 09:08–09:21 CT):** four time-stamped photographs showing front brake pads at 2mm thickness with caliper-window measurement reference, rotor scoring on both front rotors, and the brake-fluid reservoir level.
+4. **Exhibit 4 — Parts Invoice (NAPA Austin, invoice #N-2098177, dated 04/15/2026 10:42 CT):** OEM Motorcraft BR-1421-B brake pads and OEM Motorcraft BRR-261 rotors purchased for RO-2401 prior to work commencing.
+5. **Exhibit 5 — Post-Repair Photographs (04/15/2026 15:14–15:32 CT):** three time-stamped photographs showing the new pads installed in the caliper, the resurfaced rotor face, and the cleaned caliper slide pins with fresh lubricant.
+6. **Exhibit 6 — Itemized Final Invoice (RO-2401, totaling $892.00):** parts $471.84, labor 3.0 hr at $135 = $405.00, shop supplies $9.50, no tax (parts taxed at supplier level per TX), payment in full.
+7. **Exhibit 7 — Completion SMS (04/15/2026 16:47 CT):** "Hi James — your F-150 is ready. Pads, rotors, and caliper slides done. Test-drove without issues. Total $892 as authorized. Open until 6 PM. — Karina, Maple Street Auto Service" with carrier delivery-receipt acknowledgment.
+8. **Exhibit 8 — Payment Authorization Record (Tekmetric Payments, auth code 847291, 04/15/2026 17:22 CT):** EMV chip-present transaction, AVS match Y, CVV match M, card-present indicator true (not card-not-present).
+9. **Exhibit 9 — Shop Warranty Policy:** printed on the bottom of every invoice and posted at the front counter — "12-month / 12,000-mile parts-and-labor warranty on all brake services. Return to shop within warranty window for diagnosis and remedy."
+
+---
+
 ## Merchant Dispute Response Letter
 
 Maple Street Auto Service
@@ -168,16 +218,66 @@ Maple Street Auto Service
 May 11, 2026
 
 To: Visa Dispute Resolution Center
-Re: Chargeback — James Worthington — Card ending 7823 — 04/15/2026 — $892.00
+Re: Chargeback — James Worthington — Card ending 7823 — 04/15/2026 — $892.00 — Reason code 13.1
 
-Maple Street Auto Service respectfully disputes this chargeback. The services were performed in full, authorized in writing by the cardholder prior to work, and documented with photographic and invoice evidence.
+Maple Street Auto Service respectfully disputes this chargeback. The services were performed in full, authorized in writing by the cardholder both at drop-off and again by SMS prior to work commencing, and are documented with photographic, invoice, and EMV chip-present payment evidence.
 
-On April 15, 2026, Mr. Worthington dropped off his 2019 Ford F-150 (RO-2401) for a front brake inspection. A Digital Vehicle Inspection (Exhibit 3) documented front brake pads at 2mm (below safe threshold of 3mm) and rotor scoring, with photographs. Mr. Worthington reviewed and signed the repair authorization (Exhibit 1) for front brake pads, rotors, and caliper slide service at $892 before any work commenced. Work was completed the same day. A completion confirmation text was sent at 4:47 PM (Exhibit 5), and Mr. Worthington picked up the vehicle.
+On April 15, 2026 at 08:14 CT, Mr. Worthington dropped off his 2019 Ford F-150 (RO-2401, odometer 78,412) for a front brake inspection and signed the initial repair authorization (Exhibit 1) with line-item initials next to each work category and the $892.00 final total. A Digital Vehicle Inspection completed between 09:08 and 09:21 CT documented front brake pads at 2mm thickness — below the safe-operation threshold of 3mm — and rotor scoring on both front rotors, with four timestamped photographs (Exhibit 3). At 11:32 CT, advisor Karina Hidalgo sent Mr. Worthington a text message containing the inspection photographs and the line-item estimate; Mr. Worthington replied at 11:38 CT, "Go ahead, thanks" (Exhibit 2).
 
-Parts invoices (Exhibit 4) confirm all components were purchased and installed. Photographs taken before and after the repair (Exhibits 3–4) document the condition of the removed pads and rotors and the completed installation.
+Work commenced after the SMS authorization. OEM Motorcraft brake pads (BR-1421-B) and OEM Motorcraft rotors (BRR-261) were purchased that morning from NAPA Austin (Exhibit 4, invoice #N-2098177 dated 10:42 CT). Three post-repair photographs taken between 15:14 and 15:32 CT (Exhibit 5) document the new pads installed in the caliper, the resurfaced rotor face, and the cleaned caliper slide pins with fresh lubricant. A completion SMS was sent at 16:47 CT (Exhibit 7) and acknowledged by the carrier delivery-receipt. Mr. Worthington picked up the vehicle at 17:22 CT, completed an EMV chip-present payment transaction (Exhibit 8 — auth 847291, AVS match Y, CVV match M), and verbally confirmed satisfaction at the counter. Odometer-out was recorded at 78,416, consistent with the in-shop test drive.
 
-We respectfully request a reversal of this chargeback and are prepared to supply additional documentation on request.
+Between April 15 and May 3 (the date the chargeback notice was received), Mr. Worthington did not contact Maple Street Auto Service. He did not invoke the shop's 12-month / 12,000-mile warranty (Exhibit 9). He did not return the vehicle for re-inspection. No comeback, no complaint, and no warranty claim was filed.
+
+We respectfully request a reversal of this chargeback. The authorization chain is complete (signed RO + SMS approval), the services are documented with timestamped photographs (pre- and post-repair), the parts were purchased and installed, the payment was EMV chip-present with AVS and CVV match, and the customer had eighteen days to invoke the shop's warranty if dissatisfied and chose not to. We are prepared to supply additional documentation on request.
 
 Maple Street Auto Service
 Owner: David Reyes
+(512) 555-1234 | service@maplestreetauto.com
+
+---
+
+## Supporting Narrative (extended — attach if the card network allows)
+
+**Timeline of the transaction:**
+
+- **04/15/2026 08:14 CT** — Vehicle drop-off, signed RO with verbal estimate $892.00, line-item initials by customer
+- **04/15/2026 09:08–09:21 CT** — DVI completed by Tech 4 (Marcus Ortega), four timestamped photographs of pre-repair condition
+- **04/15/2026 10:42 CT** — Parts purchased from NAPA Austin (OEM Motorcraft)
+- **04/15/2026 11:32 CT** — Advisor Karina Hidalgo sent photos + line-item estimate via SMS to customer
+- **04/15/2026 11:38 CT** — Customer replied "Go ahead, thanks" via SMS
+- **04/15/2026 11:40 CT** — Work commenced (R&R log entry by Marcus Ortega)
+- **04/15/2026 15:14–15:32 CT** — Post-repair photographs taken
+- **04/15/2026 15:46 CT** — Tech road-test (vehicle GPS / DVI app log)
+- **04/15/2026 16:47 CT** — Completion SMS sent, delivery-receipt acknowledged
+- **04/15/2026 17:22 CT** — Customer arrived for pickup, completed EMV chip-present payment, verbally confirmed satisfaction
+- **04/15/2026 to 05/03/2026 (18 days)** — No customer contact, no comeback, no warranty claim, no complaint
+- **05/03/2026** — Visa chargeback notice received from Tekmetric Payments dispute portal, reason code 13.1
+- **05/11/2026** — Dispute response packet prepared
+
+**Why the "services not provided" claim is rebutted on its face:**
+
+- The cardholder physically delivered the vehicle to the shop and physically picked it up — the odometer-in and odometer-out (78,412 → 78,416) are documented and consistent with shop time
+- The cardholder signed the paper RO at drop-off (Exhibit 1) and separately authorized work via SMS after receiving photographs (Exhibit 2)
+- The parts were purchased from a third-party supplier and installed (Exhibits 4–5)
+- The cardholder completed an EMV chip-present payment with AVS and CVV match (Exhibit 8) — the card was physically present and the cardholder was physically present
+- The cardholder had eighteen days to invoke the shop's warranty if the work was unsatisfactory and chose not to — instead, the chargeback was filed without prior contact
+
+**No good-faith-remedy offer was bypassed.** The shop's 12-month / 12,000-mile warranty (Exhibit 9) was available and posted; the cardholder did not invoke it. The chargeback was the first communication after pickup.
+
+---
+
+## Prevention Note (Internal)
+
+This case was won at the documentation level by three habits already in place: the SMS authorization thread with photos, the timestamped DVI photographs, and the EMV chip-present payment record. The single addition that would strengthen future cases is **capturing a 30-second customer-pickup signature on the digital invoice acknowledgment** (Tekmetric supports a tablet-signature flow at payment time). The verbal "thanks, drives great" at pickup was witnessed by Karina but is not recorded; a tablet signature acknowledging "I have received the vehicle and the work performed matches what was authorized" at the moment of payment closes the last remaining ambiguity in the authorization chain. Roll out to all advisors by end-of-month.
 ```
+
+**Why this example works (skill self-check):**
+
+- Letter is written for the bank reviewer (factual, formal, exhibit-numbered) not for the customer (no emotional language, no "we're disappointed in James")
+- Documentation Status table is exhaustive — every common evidence item is checked and the absence of gaps is stated explicitly, which itself is an evidence-quality signal
+- Exhibits are numbered and named so the letter can reference them by number without re-describing the underlying record — bank reviewers can locate any cited evidence in 5 seconds
+- Reason-code-specific evidence is led first: for Visa 13.1 ("services not provided"), the lead evidence is the odometer-in/out + post-repair photos + EMV chip-present pickup, which together rebut "services not provided" on its face
+- Timeline-of-transaction narrative reconstructs the day minute-by-minute — bank dispute reviewers respond strongly to time-coherent narratives because they're trained to spot inconsistencies
+- The 18-day no-contact gap is named explicitly — it's the strongest single fact in the file because it shows the cardholder had a low-friction warranty path and chose chargeback instead
+- Prevention Note is one paragraph, one practice change, with a roll-out deadline — actionable without being a list of nineteen things to do
+- No fabricated evidence — every number, every part number, every timestamp comes from the input

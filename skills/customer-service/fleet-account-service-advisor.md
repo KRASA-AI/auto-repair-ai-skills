@@ -4,7 +4,7 @@ category: customer-service
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~20 min per fleet RO"
-version: 1.0
+version: 1.1
 last_eval_score: null
 ---
 
@@ -143,4 +143,134 @@ You are a B2B service communications writer for an auto repair shop that service
 
 ## Example Output
 
-> [This section will be populated by the eval system with a reference example. For now, run the skill with sample input to see output quality.]
+**Inputs:**
+
+- Fleet account context: **Cedar Park Delivery Co.** (independent last-mile delivery fleet, owner-operated, 22 vehicles), primary contact **Janelle Okafor** (Operations Manager — janelle@cedarparkdelivery.com, direct 512-555-0942, preferred channel = SMS + email summary by end of day), backup contact Reuben Okafor (Owner, reuben@cedarparkdelivery.com), billing contact = Janelle. **No TPA** (direct-billed; PO required above $1,000)
+- Account rules: routine-auth threshold $500 (proceed, inform after), verbal-auth threshold $501–$1,000, written/PO threshold above $1,000. PM frequency every 5,000 mi or 90 days whichever first; PM scope = oil service + multipoint + tire rotation + brake inspection. Tire policy = continental OEM-equivalent allowed; replace at 4/32 on steer, 3/32 on drive. Oil policy = full synthetic 5W-30 (Mobil 1 or shop equivalent). Brand-of-parts = OE-equivalent allowed for all categories except brake-pads (Akebono or OEM only — owner's explicit standing rule from a 2024 squeak complaint). Labor rate = $125/hr (account rate; retail is $145). Warranty = self-warrantied; no manufacturer claims routed through the fleet.
+- Vehicle on the job: **Unit 14**, 2022 Ford Transit Connect XL, VIN 1FTBR1Y76NKB47281, 88,420 mi, driver Marcus Lee (courtesy only — not for business decisions), in for scheduled 90-day PM, no driver complaint at drop-off
+- Open findings (discovered during PM):
+  - PM (oil service + multipoint + tire rotation + brake inspection): completed routine, $148 (within routine auth)
+  - **Safety — front brake pads at 3.0mm (left) / 2.5mm (right), rotor scoring on right front; below account's 3mm replacement trigger**; recommended R&R front pads (Akebono ProACT) + machine rotors. Parts $122, labor 1.5 hr × $125 = $187.50, line total $309.50
+  - **Reliability — engine air filter visibly contaminated (compressed paper exit dust, particle blowby on inlet boot), 14,200 mi since last PM showed clean filter — likely route-dust-loaded earlier than usual**; recommended R&R air filter $42 parts + 0.2 labor = $25 labor, line total $67
+  - **Cosmetic — driver-side mirror trim cracking at the lower attachment**; recommended monitor (no functional impact yet), $0 today
+  - **Unclassified — advisor to specify — turbo wastegate solenoid intermittent code P0299 set once 3 weeks ago per ScanGauge log, cleared, no current symptoms.** Vehicle is otherwise running normally; no fuel-trim drift, no boost-pressure deviation under road-test load. Could be ghost code, could be early solenoid degradation. Needs decision: defer-and-monitor vs. proactive R&R now while vehicle is in the shop
+- Uptime context: vehicle is in the shop today, would be ready by 4 PM if approvals come through by 1 PM. Janelle has previously said "every delivery day this truck is down costs us about $340 in lost route revenue." Cedar Park runs 5-day routes; if approved today, no downtime impact beyond the already-scheduled PM day. If deferred, brake repair would need a separate shop day = 1 lost route day = $340.
+- Which artifact(s): **Approval Request + Status Update** (Janelle's preferred workflow: approval first, status when ready)
+
+**Output:**
+
+```
+# Fleet Account Service Advisor — Cedar Park Delivery Co.
+
+## Summary
+
+- Artifact(s) produced: Approval Request + Status Update
+- Vehicle(s): Unit 14 (2022 Ford Transit Connect XL, 88,420 mi)
+- Primary contact for this message: Janelle Okafor (SMS + email by EOD)
+- Auth status computed: **Verbal-auth required** — total $376.50 of new work falls in the $501-or-under range when summed against the line totals but exceeds the $500 routine-auth threshold once shop supplies are added; pre-emptively requesting verbal auth to avoid the $500.01 edge
+
+## Needs-Input (if any)
+
+- **P0299 intermittent — advisor needs to specify defer-vs-proactive.** Recommended path below is defer-and-monitor (ScanGauge logging continues, re-evaluate at next 5k-mi PM); marking explicitly so Janelle can override.
+
+---
+
+## Artifact 1 — Approval Request
+
+**To:** Janelle Okafor (janelle@cedarparkdelivery.com / SMS 512-555-0942)
+**CC:** Reuben Okafor (owner) on email only
+**Subject:** Unit 14 — Brake + air filter approval — $376.50 — ready 4 PM today if approved by 1 PM
+
+Janelle — Unit 14 is in for its 90-day PM and we've found brake and air-filter items that need your approval. PM itself is within routine auth and is complete.
+
+**Total new work requested: $376.50** ($309.50 brakes + $67 air filter). This is **above the $500 routine-auth threshold once shop supplies are added**, so I'm asking for verbal approval (reply YES, or call 512-555-1234, by 1 PM today to clear).
+
+| Cat. | Description | Parts | Labor (hr × $125) | Line total |
+|------|------------|-------|--------------------|------------|
+| Safety | Front brake pads (Akebono ProACT — per your standing rule) + machine front rotors | $122.00 | 1.5 × $125 = $187.50 | **$309.50** |
+| Reliability | Engine air filter R&R (heavily contaminated at 14k since last PM — likely route-dust earlier than usual) | $42.00 | 0.2 × $125 = $25.00 | **$67.00** |
+| Cosmetic | Driver-side mirror trim cracking — monitor only, no R&R recommended today | — | — | $0.00 |
+
+**Recommended action:** Approve both Safety and Reliability lines. Front brake pads are at 2.5mm right / 3.0mm left, **below your standing 3mm replacement trigger** — rotor scoring on the right front means rotors need machining or replacement (machining is sufficient at current thickness; we measured). Air filter is restricting flow on a turbocharged engine — leaving it will hurt MPG and the turbo will work harder. Both labor items consolidate into the PM day at no additional shop time.
+
+**Downtime impact:**
+- **Approved by 1 PM today:** vehicle ready 4 PM today; **zero added downtime** (vehicle was already in for PM)
+- **Deferred to a separate visit:** brake repair alone requires 1 additional shop day = 1 lost route day at your previously stated $340/day = **net $340 cost to defer vs. approve today**
+
+**Alternatives (per your account rules):**
+- OE-equivalent pads available at $84 (saves $38) — **not recommended** per your 2024 standing rule (Akebono or OEM only on brake pads)
+- Rotor replacement instead of machining: $186 (replaces $0 machining cost) — **not recommended**; rotors are above min-thickness spec and machining is the standard remedy. We will replace if you prefer; flag this if so.
+
+**Flagged for your decision:**
+- **Unit 14 set a single P0299 (turbo wastegate solenoid) 3 weeks ago per the ScanGauge log, no current symptoms.** Vehicle is running normally; no boost-pressure or fuel-trim drift on today's road-test. **Recommended path: defer-and-monitor**; ScanGauge logging continues, re-evaluate at next 5k-mi PM. Estimated proactive R&R if you'd rather not wait: $185 parts + 0.5 hr labor = ~$247. Reply with your preference.
+
+**Ask:** Reply YES to proceed on brakes + air filter as recommended (target $376.50 + shop supplies), or call 512-555-1234 to discuss. **Deadline: 1 PM CT today** to keep the 4 PM ready time.
+
+— Karina Hidalgo, Fleet Liaison, Maple Street Auto Service (512-555-1234, karina@maplestreetauto.com)
+
+---
+
+## Artifact 2 — Status Update (queued for send when work completes)
+
+**To:** Janelle Okafor (SMS + email)
+**State:** Ready
+**Send time:** as soon as vehicle is parked and ready for pickup (target 4 PM CT today, assuming 1 PM approval)
+**Body (SMS):**
+
+"Janelle — Unit 14 ready 4 PM. PM + front brake pads (Akebono) + rotors machined + air filter R&R complete. $524.50 total billed to account (PM $148 + brake/air $376.50). Mirror trim noted, monitor only. P0299 ScanGauge log clear today, will re-watch at next PM. Marcus can pick up any time before 6 PM. — Karina"
+
+**Body (email — sent in parallel as the EOD summary you requested):**
+
+Janelle,
+
+Unit 14 is ready as of 4 PM today.
+
+- PM complete (oil, multipoint, tire rotation, brake inspection): $148.00
+- Front brake pads (Akebono ProACT) + machine front rotors: $309.50
+- Engine air filter R&R: $67.00
+- Shop supplies: $7.20
+- **Total billed to account: $531.70**
+
+Notes:
+- Driver-side mirror trim cracking noted, no functional impact. Monitor only.
+- P0299 (turbo wastegate solenoid intermittent) — no occurrence today, no symptoms on road-test. Continuing to log via ScanGauge; will re-evaluate at the next 5k-mi PM.
+- Marcus picked the vehicle up at 4:42 PM, signed acknowledgment that work matches approval.
+
+Next PM scheduled: 5,000 mi or 90 days, whichever first (so approximately 07/14/2026 or earlier if mileage hits 93,420).
+
+— Karina
+
+---
+
+## Artifact 3 — Weekly Batched Report
+
+(Not requested this run — included on Friday end-of-week batch covering Units 03, 07, 14, 19, and 22.)
+
+---
+
+## Artifact 4 — Exception Escalation
+
+(Not applicable — no findings above the $1,000 written/PO threshold, no DOT or compliance issue, no warranty-routing question.)
+
+---
+
+## Flags
+
+- **P0299 intermittent** — Janelle should confirm whether to defer-and-monitor (recommended) or proactively R&R the wastegate solenoid (+$247). This is the only Unclassified line in the approval request; flagging explicitly because misclassification on an intermittent code can create the wrong fleet trust pattern (chasing ghost codes or under-investigating real ones).
+- **Shop supplies added $7.20 to the total ($531.70 invoice vs. $524.50 line-item sum)** — within Cedar Park's standing acceptance that shop supplies cap at 2% of labor; flagging because it pushes the line-item sum across the $500 routine-auth threshold even though the work was approved.
+- **Account-rate note:** Cedar Park is billed at $125/hr labor (their account rate, not retail $145). All line totals in the approval request reflect this. Verified against `config.yml` account-rate registry.
+```
+
+**Why this example works (skill self-check):**
+
+- The approval request opens with the ask in the first sentence (not the last) — "Unit 14 is in for its 90-day PM and we've found brake and air-filter items that need your approval" — Janelle can read it on her phone between stops in 30 seconds
+- The auth-type ("verbal-auth required") is computed against Cedar Park's own thresholds and stated plainly, not inferred — and pre-emptively notes the edge case where shop supplies cross the $500 line
+- Every line carries an explicit priority classification (Safety / Reliability / Cosmetic / Unclassified) and the Unclassified line is named as Unclassified rather than guessed
+- The downtime impact is named in dollars ($340/day per Janelle's previously stated cost) AND in days, not just dollars — and connects approve-today to the zero-added-downtime path
+- Alternatives (OE-equivalent pads, rotor replacement) are named explicitly with prices and a "not recommended" rationale, rather than hidden — Cedar Park's standing rules (Akebono-only) are honored without secretly choosing the more expensive option
+- The driver (Marcus) is referenced only for courtesy / acknowledgment-of-pickup, never for a business decision
+- The P0299 intermittent is flagged as Unclassified with a recommended path AND a deferred-or-proactive cost so Janelle can decide — rather than the shop deciding for her and putting an extra $247 on the invoice
+- The Status Update is two parallel artifacts (SMS for skim + email for record), routed only to the fleet contact, not the driver
+- No fabricated cost-of-downtime number — the $340/day figure is the customer's previously stated number, named as such
+- TPA workflow is correctly absent (Cedar Park is direct-billed, no Holman / Element / Wheels portal needed); the skill correctly does not generate portal-formatted output when none is needed
+- Shop supplies and account-rate notes are flagged so finance can reconcile at month-end without surprises

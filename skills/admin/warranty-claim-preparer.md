@@ -4,7 +4,7 @@ category: admin
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~20 min/claim"
-version: 1.1
+version: 1.2
 last_eval_score: null
 ---
 
@@ -149,4 +149,133 @@ You are a warranty administration specialist AI for an auto repair shop. Manufac
 
 ## Example Output
 
-> [This section will be populated by the eval system with a reference example. For now, run the skill with sample input to see output quality.]
+**Inputs:**
+
+- Vehicle: 2019 Toyota Camry SE, 2.5L I4 (2AR-FE), 8-speed automatic, VIN `4T1B11HK0KU721944`, in-service date 03/15/2019, current mileage 48,921, RO `RO-2417`, repair date 04/13/2026
+- Coverage type: **Federal emissions warranty (8yr/80,000mi extension)** — Toyota's 5yr/60,000mi powertrain is expired (vehicle is 7yr 1mo in service); customer's MIL-on / misfire failure is an EPA-mandated emissions-related defect covered under the Federal Performance Warranty (40 CFR §85.2105) and Toyota's published 8yr/80k emissions long-list
+- Failed component: Ignition coil cylinder 2, OEM P/N `90919-02260`, qty 1, Toyota labor op `19.10.01` (1.0 hr)
+- Failure narrative:
+  - **Complaint:** Customer states "check engine light on, engine shakes at cold start, smooths out after a minute"
+  - **Cause:** P0302 stored, freeze-frame at 540 RPM / 28°F coolant. Coil-2 primary resistance 0.78 Ω (spec 0.4–0.6 Ω); swap test to cyl-4 transferred misfire to cyl-4 — confirmed coil failure, not injector or compression
+  - **Correction:** Replaced coil cyl-2 (OEM P/N 90919-02260), cleared codes, 15-min road test plus 10-min idle/cold-soak verification — no misfire, STFT ±3%, MIL off, Mode 06 misfire counters incrementing zero on a second drive cycle
+- Diagnostic evidence: scan-tool report with P0302 + freeze frame, coil-resistance photo (DMM display showing 0.78 Ω), Mode 06 misfire counters pre- and post-repair, road-test verification log
+- Prior service history: 2024-09 throttle-body clean (RO-1908); 2025-03 spark-plug replacement at 41,200 mi (RO-2104) — plugs gapped to spec, OEM Denso FK20HR11, no prior coil work
+- Pre-authorization: Not required for federal emissions warranty — Toyota processes via standard dealer warranty claim, but indie shop submits via manufacturer goodwill / direct-to-Toyota emissions warranty channel (see flags)
+- Pricing: Parts $84.62 (OEM coil at MSRP per Toyota warranty parts policy), labor 1.0 hr at shop rate $145 = $145.00, diagnostic 0.5 hr at $145 = $72.50, no sublet, shop supplies $4.50, no tax (warranty work)
+
+**Output:**
+
+```
+# Warranty Claim Submission
+
+**Shop:** Maple Street Auto Service, Repair Facility # TX-INDIE-4471, 1200 Maple Street, Austin TX 78701, (512) 555-1234
+**Claim Date:** 04/13/2026
+**Coverage Type:** OEM — Federal Emissions Warranty (8yr/80,000mi extension)
+**Administrator/OEM:** Toyota Motor North America — Emissions Warranty Department (1-800-331-4331)
+**Pre-Authorization #:** N/A — federal emissions warranty does not require pre-auth at the manufacturer level; shop is submitting via Toyota's emissions-warranty direct channel because indie shop is not a franchised dealer
+
+## Vehicle Information
+
+| Field | Value |
+|-------|-------|
+| VIN | 4T1B11HK0KU721944 |
+| Year/Make/Model | 2019 Toyota Camry SE |
+| Engine/Trans | 2.5L I4 (2AR-FE) / 8-spd auto |
+| Current Mileage | 48,921 |
+| In-Service Date | 03/15/2019 |
+| RO Number | RO-2417 |
+| Repair Date | 04/13/2026 |
+
+## Coverage Verification
+
+- **Warranty type:** Federal emissions warranty (Performance Warranty per 40 CFR §85.2105) — coverage period 8yr/80,000mi from in-service date, whichever first
+- **Time in service:** 7 years 1 month — **WITHIN** 8-year limit (expires 03/15/2027)
+- **Mileage:** 48,921 — **WITHIN** 80,000-mile limit
+- **Component coverage:** Ignition coil is listed on Toyota's published 2019 Camry federal emissions long-list (Toyota Warranty Information Booklet, p. 14, emissions-related parts section)
+- **Eligibility determination:** **COVERED** under the 8yr/80k federal emissions warranty. Toyota's standard 5yr/60k powertrain warranty is expired but does not affect federal emissions coverage, which is independent and statutorily required
+- **Flags for adjuster:**
+  - Vehicle is past Toyota's 5yr/60k powertrain warranty (expired 03/15/2024); claim is under federal emissions extension only, not powertrain
+  - Submission is from an independent repair facility (not a franchised Toyota dealer) — federal emissions warranty repairs at independent shops are reimbursable per EPA 40 CFR §85.2105; Toyota's policy is to accept direct submission with supporting documentation
+  - Maintenance compliance verified: spark plugs replaced 03/2025 at 41,200 mi (RO-2104) per Toyota's 30k/60k schedule using OEM Denso FK20HR11 — no maintenance-gap defense available to the adjuster
+  - No aftermarket modifications, no tune, no aftermarket air filter — vehicle is bone-stock per VIN scan and visual inspection
+
+## Failure Narrative (3 C's)
+
+**Complaint:**
+Customer states "check engine light on, engine shakes at cold start, smooths out after about a minute." Verified MIL illuminated on key-on engine-running. Idle roughness 540–620 RPM during first 90 seconds after cold start at 28°F ambient, smoothing to commanded 700 ± 30 RPM after coolant reached 140°F.
+
+**Cause:**
+P0302 (cylinder 2 misfire detected) stored as confirmed DTC, no pending codes. Freeze-frame captured at engine-coolant 28°F / RPM 540 / load 22% / STFT cyl-2 bank +6.3%. Ignition coil cylinder 2 primary-circuit resistance measured at 0.78 Ω with calibrated Fluke 87V (spec 0.40–0.60 Ω per Toyota repair manual section EM-21). Verified failure by physically swapping coil cyl-2 with coil cyl-4 and clearing codes — on second drive cycle, P0304 set (misfire followed the coil), confirming coil-2 internal primary-winding degradation, not injector or compression issue. Compression cyl-2 verified at 165 PSI (spec 145–180 PSI, neighbor cylinders within 10 PSI). Injector-pulse-width and resistance within spec.
+
+**Correction:**
+Replaced ignition coil cylinder 2 with OEM Toyota P/N 90919-02260 per labor op 19.10.01. Reinstalled original coil cyl-4 in cyl-4 location (no rotation strategy applied — coil was swap-tested only). Cleared all stored and pending codes. Completed 15-minute road test plus 10-minute idle / cold-soak verification: no misfire on Mode 06 misfire counters (zero new counts on both drive cycles), STFT cyl-2 bank ±3%, MIL off and remained off through key-cycle test. Verified readiness monitors completed catalyst + O2 + misfire monitors before customer release.
+
+## Parts
+
+| Description | OEM P/N | Qty | Unit Cost | Total |
+|-------------|---------|-----|-----------|-------|
+| Ignition Coil, Cyl 2 | 90919-02260 | 1 | $84.62 | $84.62 |
+
+**Parts Subtotal:** $84.62
+
+## Labor
+
+| Operation | Labor Op # | Hours | Rate | Total |
+|-----------|------------|-------|------|-------|
+| R&R ignition coil cyl-2 | 19.10.01 | 1.0 | $145.00 | $145.00 |
+| Diagnostic time (DTC retrieval, freeze-frame capture, resistance test, swap-test confirmation, road-test verification) | DIAG-01 | 0.5 | $145.00 | $72.50 |
+
+**Labor Subtotal:** $217.50
+
+## Sublet / Shop Supplies / Tax
+
+- Sublet: $0.00
+- Shop supplies: $4.50
+- Tax: $0.00 (warranty work — non-taxable per TX Comptroller Rule 3.290)
+
+## Claim Total: $306.62
+
+## Supporting Documentation (Attached)
+
+- [x] Exhibit A — Scan-tool report (Snap-on Triton, capture 04/13/2026 09:14): P0302 stored, freeze-frame data, no pending codes, readiness monitors status pre- and post-repair
+- [x] Exhibit B — DMM resistance photo: Fluke 87V displaying 0.78 Ω across coil-2 primary terminals (out of 0.40–0.60 Ω spec)
+- [x] Exhibit C — Mode 06 misfire counter screenshots pre-repair (cyl-2: 47 counts past drive cycle) and post-repair (cyl-2: 0 counts on two consecutive drive cycles)
+- [x] Exhibit D — Photo of removed coil cyl-2 with visible cracking at the secondary boot
+- [x] Exhibit E — Customer-signed RO (RO-2417) with diagnostic authorization
+- [x] Exhibit F — Prior service history printout (RO-1908 throttle-body clean 2024-09; RO-2104 spark plug R&R at 41,200 mi 03/2025)
+- [x] Exhibit G — Customer's Toyota Warranty Information Booklet emissions long-list (p. 14, ignition coil listed under emissions-related parts)
+- [x] Exhibit H — OEM parts invoice from Capitol Toyota Parts (Austin TX) showing P/N 90919-02260 purchase
+
+## Supporting Notes for Adjuster
+
+This claim is submitted under the 8yr/80k federal emissions performance warranty, not Toyota's standard powertrain warranty (which expired 03/15/2024). The ignition coil is listed in Toyota's own published 2019 Camry federal emissions long-list as an emissions-related part, and its failure caused the customer's MIL to illuminate due to a confirmed P0302 misfire DTC — meeting both the component-coverage and the MIL-on triggers required under 40 CFR §85.2105.
+
+Common adjuster questions pre-emptively addressed:
+
+1. **Why not the dealer?** Customer's nearest franchised Toyota dealer (South Austin Toyota) declined to schedule the repair for 18 days. Customer's vehicle was MIL-on and intermittently rough-running; the failure created a driveability concern the customer was not comfortable deferring. Federal emissions warranty is reimbursable at independent shops per EPA 40 CFR §85.2105 and Toyota's own emissions-warranty policy when dealer scheduling delays exceed reasonable bounds.
+
+2. **Maintenance compliance?** Spark plugs were replaced at 41,200 mi (03/2025) per Toyota's published 30k / 60k schedule using OEM Denso FK20HR11 plugs gapped to spec. No tune-up gap exists. Prior service records attached (Exhibit F).
+
+3. **Modifications / aftermarket parts?** None. VIN-scan and visual inspection confirm vehicle is stock; no tune, no aftermarket air filter, no aftermarket intake, no aftermarket ignition components. Coils replaced are OEM Toyota.
+
+4. **Wear-and-tear vs. defect?** Coil failure at 48,921 miles on a vehicle that received timely scheduled maintenance is below the reasonable useful-life expectation Toyota itself publishes for ignition coils (Toyota recommends inspection at 120,000 mi). Resistance measurement documents an internal-primary-winding failure, which is a defect mode, not a wear mode. Visible secondary-boot cracking (Exhibit D) is consistent with internal coil failure.
+
+5. **Diagnostic time?** 0.5 hours billed for DTC retrieval, freeze-frame review, resistance measurement, swap-test confirmation, and post-repair Mode-06 verification. Diagnostic time on warranty claims is reimbursable per Toyota's published warranty labor policy when documented with specific test procedures (which Exhibit A and Exhibit C provide).
+
+## Submission Channel
+
+- **Channel:** Toyota Emissions Warranty Department — direct submission via emissions-warranty@toyota.com with attached PDF packet (preferred for indie-shop submissions per Toyota's 2024 policy update)
+- **Alternative:** Fax to Toyota Warranty Administration at 1-310-468-7800 if email is not acknowledged within 7 business days
+- **Customer:** Will follow up with Toyota directly if claim is denied; copy of full packet provided to customer at vehicle delivery
+- **Claim submitted by:** Sandra Hidalgo (Service Manager), Maple Street Auto Service, 04/13/2026 16:22 CT
+- **Expected response window:** 30–45 days per Toyota emissions warranty policy
+```
+
+**Why this example works (skill self-check):**
+
+- Coverage eligibility is verified explicitly with both time and mileage checks, AND the federal-emissions vs. Toyota-standard-powertrain distinction is named upfront — the most common source of warranty-claim rejection on older vehicles is the adjuster reading "7 years in service" and reflex-denying without reading the specific federal emissions path
+- 3 C's narrative uses technical language with measured values (0.78 Ω vs. 0.40–0.60 Ω spec, STFT ±3%, RPM 540, coolant temp 28°F) rather than soft descriptors — adjusters need numbers
+- Coverage routing flagged the indie-shop submission path explicitly, pre-empting the most common procedural rejection ("submit through a Toyota dealer")
+- Parts and labor itemization use OEM part number and OEM labor op number — not generic descriptions — and diagnostic time is billed separately with its own justification
+- Supporting Notes section addresses five anticipated adjuster questions in advance — moves the claim from "submitted and waiting for the adjuster's first round of pushback" to "first round of pushback pre-empted, adjuster has to escalate to find a denial reason"
+- The packet routes to the next step regardless of outcome: if approved, the customer is reimbursed; if denied, the packet is already documentation-complete for escalation to EPA Region 6 (Texas) under 40 CFR §85.2105 customer-complaint procedures, and Sandra can hand it to the customer with confidence

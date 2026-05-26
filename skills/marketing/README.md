@@ -9,6 +9,7 @@ Local-marketing content generation for the auto repair shop — Google Business 
 | `gbp-post-generator.md` | beginner | ~15 min/post | Google Business Profile post (text + photo brief + CTA) |
 | `short-form-video-script-generator.md` | beginner | ~25 min/script | 30–90 sec Reel / TikTok / Short script (hook + beats + caption + CTA) |
 | `email-newsletter-builder.md` | beginner | ~45 min/issue | Monthly customer email (seasonal services + shop news + customer education) |
+| `ai-search-visibility-brief.md` | intermediate | ~3 hr/audit | Quarterly audit + 30-day content brief for Google AI Overviews / AI Place Summaries / Gemini citation |
 
 ## Shared inputs
 
