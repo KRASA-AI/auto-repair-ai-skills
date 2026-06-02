@@ -4,7 +4,7 @@ category: _shared
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~10 min/use"
-version: 1.2
+version: 1.3
 ---
 
 # Meeting Summarizer
@@ -155,4 +155,62 @@ You are an experienced auto-repair shop manager's AI assistant. Your job is to t
 ## Next Meeting
 Wed 2026-04-22 — Morning huddle, 7:30 AM (per shop standard cadence)
 Production review — Tue 2026-04-22, 4:00 PM (per shop standard cadence)
+```
+
+**Inputs (comeback / quality review — the harder case):**
+- Meeting type: comeback-review
+- Date: Fri 2026-05-15, 3:30 PM
+- Attendees: Tony (advisor), Carlos (A-tech), Maya (B-tech), Joe (owner)
+- Notes (raw): "Reviewed 4 comebacks in the last 30 days. RO-2548 BMW 328i — original brake job, customer back twice for brake squeal — Carlos's RO — anti-squeal compound was missed on the new pads, Carlos to add to brake-job checklist. RO-2560 Subaru Outback — back for the same P0420 cat code we cleared three weeks ago — we replaced the downstream O2 but the cat is also borderline — should have caught it at the original diag — going to call customer and offer goodwill on a portion. RO-2581 Toyota Tacoma — back for noise after CV axle replacement — turned out to be a separate strut mount, not our work, no comeback root cause on us, document and move on. RO-2598 Hyundai Sonata — back for AC not cold after compressor replacement — Maya's RO — likely incomplete evacuation, system has moisture — need to redo. Total comeback rate this month was 4 out of 187 ROs, 2.1%, target is under 2%. Discussed putting all brake jobs through the second-set-of-eyes check at delivery — Joe wants to pilot for 30 days. Maya brought up that the new AC machine's recovery cycle takes longer than the old one and she's been cutting it short — needs training time, Carlos volunteered to walk her through the full cycle on Monday. WorldPac shipping has been late again — second time in 30 days — Tony to escalate. Parking lot from last comeback meeting (tablet for the lift bay) — Joe says next month's budget."
+- Config voice: casual-professional
+- Shop: Maple Street Auto
+
+**Output:**
+
+```
+# Meeting Summary — Maple Street Auto
+**Date:** 2026-05-15 (Fri, 3:30 PM)
+**Meeting Type:** Comeback / quality review
+**Attendees:** Tony, Carlos, Maya, Joe
+**Notes captured by:** Tony
+
+## Decisions Made
+- Pilot the second-set-of-eyes check at delivery for all brake jobs — 30-day pilot starting 2026-05-18
+- RO-2548 BMW 328i — add anti-squeal compound to brake-job checklist (process gap, not a single-tech issue)
+- RO-2560 Subaru Outback — Tony to call customer and offer goodwill on a portion (diag-gap acknowledged)
+- RO-2581 Toyota Tacoma — confirmed not a comeback against shop work; separate strut-mount finding documented and closed
+- RO-2598 Hyundai Sonata — redo with full evacuation cycle; AC machine cycle-time training scheduled for Maya
+- Tablet for the lift bay — approved for next month's budget (carried from prior parking lot)
+
+## Action Items
+| Action | Owner | Deadline | Context |
+|--------|-------|----------|---------|
+| Add anti-squeal compound step to the brake-job checklist; print and post in both bays | Carlos | Mon 2026-05-18 | RO-2548 (BMW 328i, brake squeal comeback) |
+| Call Subaru Outback customer with goodwill offer; document approved amount | Tony | Mon 2026-05-18, by EOD | RO-2560 (Subaru Outback, P0420 cat) |
+| Re-evacuate AC system on Sonata; full recovery + vacuum cycle; verify performance | Maya | Tue 2026-05-19 | RO-2598 (Hyundai Sonata, AC not cold) |
+| Walk Maya through full AC-machine recovery cycle; sign off on completion | Carlos | Mon 2026-05-18, before shift end | New AC machine cycle-time training |
+| Escalate WorldPac shipping issues (second occurrence in 30 days) | Tony | Mon 2026-05-18 | Repeat vendor issue — log for quarterly vendor review |
+| Document the Tacoma strut-mount finding in customer file and notify the customer | Tony | Mon 2026-05-18 | RO-2581 (Toyota Tacoma, separate finding) |
+| Order tablet for lift bay | Joe | Beginning of June budget cycle | Approved tablet for lift-bay use |
+
+## Follow-Ups Required
+- Second-set-of-eyes pilot — review at next comeback meeting (Fri 2026-06-12) — Carlos + Joe — does the pilot reduce brake-job comebacks?
+- WorldPac shipping escalation — log issue and confirm vendor-side correction by Fri 2026-05-29 — Tony
+
+## Parking Lot (Next Meeting's Agenda)
+- (none new this meeting)
+
+## Resolved from Prior Parking Lot
+- Tablet for lift bay — approved for next month's budget
+
+## Confidentiality note
+Per skill guardrails: RO numbers and tech first names only are used in this summary. No language has been recorded that would create employment or warranty exposure if the document leaked. Process gaps (the anti-squeal step on brake jobs, the AC-machine cycle-time training) are recorded as process gaps, not as tech-specific failures.
+
+## Comeback Rate Snapshot
+- 4 of 187 ROs in the last 30 days = 2.1% (target < 2.0%)
+- 3 of the 4 attributable to internal process gaps (brake-job checklist, original P0420 diag scope, AC-machine cycle training)
+- 1 (Toyota Tacoma) confirmed not attributable to shop work
+
+## Next Meeting
+Comeback / quality review — Fri 2026-06-12, 3:30 PM (per shop standard cadence — monthly)
 ```

@@ -4,7 +4,7 @@ category: marketing
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~45 min/issue"
-version: 1.0
+version: 1.1
 last_eval_score: null
 ---
 
@@ -191,6 +191,125 @@ Produce a single Markdown artifact, formatted exactly as below.
 - Hands to `declined-services-followup.md` for the lapsed-customer / declined-work segment so the newsletter doesn't double-touch
 - Hands to `maintenance-reminder-sequence.md` for the customers-due-in-30-days segment so the newsletter complements (not duplicates) the reminder sequence
 - Hands to `fleet-account-service-advisor.md` for the fleet-customer segment
+
+## Example Output
+
+**Inputs (October 2026 winter-prep issue, Buffalo NY climate region):**
+- Shop: Northside Auto Care, Buffalo NY (climate: cold-winter, hard-freeze typically mid-October)
+- Issue month: October 2026
+- Primary CTA: "Book your winter-prep service" (single ask)
+- Audience segment: All customers, with overlay for customers due-for-service in next 30 days
+- Sections (5): seasonal service in focus (cooling-system + battery winter check), customer education (why coolant matters and how it fails silently), shop news (new tech Jordan joined as A-tech, ASE L1 certified), inspection/recall awareness (NY state inspection-renewal reminder window for sticker-numbers ending in October digit), customer Q&A (windshield-replacement + ADAS calibration)
+- Featured image: "needs image brief" (skill produces the brief)
+- Brand voice (from config.yml): warm, no-jargon, friendly-direct; sender Joe Marchetti (owner); reply-to: joe@northsideautobuffalo.com; mailing address footer: 4218 Delaware Ave, Buffalo NY 14217; unsubscribe-management URL via Klaviyo
+- Customer Q&A topic: "We replaced my windshield last month, do I really need that ADAS calibration?" (anonymized customer consent on file)
+
+**Output:**
+
+```
+## Email Newsletter — Northside Auto Care — October 2026 — All customers
+
+**Send timing suggestion:** Tuesday October 7, 2026 at 9:30 AM ET. Tuesday morning lands ahead of the typical mid-October hard freeze (NWS Buffalo 30-year mean: October 12–15) so the seasonal CTA still has a window to convert. 9:30 AM ET clears morning commute inbox-purges and beats the lunch-hour dropoff.
+
+---
+
+### Subject line (publish-ready)
+
+It's coolant season — here's how to tell if yours is overdue
+
+**Subject line A/B alternative:** Buffalo's first freeze hits in 10 days. Is your car ready?
+
+### Preview text (publish-ready)
+
+Plus: a customer asked about ADAS calibration after a windshield replacement — here's what we told her.
+
+---
+
+### Masthead (top of body)
+
+**Greeting:** Hey {{first_name}},
+**One-sentence opener:** The first hard freeze in Buffalo usually lands between October 12 and 15 — which means now is the right time to check the two systems that decide whether your car starts on a cold morning.
+
+---
+
+### Section 1 — Seasonal service in focus: cooling system + battery
+
+Most cooling-system failures don't announce themselves. Coolant breaks down chemically over 4–5 years even if it still looks green or orange in the overflow tank — and once it loses its corrosion-inhibitor package, it stops protecting the water pump, radiator, and heater core. A winter-prep service tests the strength and freeze-point of the existing coolant, pressure-tests the system for slow leaks, and gives us a clean read on the battery's cold-cranking amps before the temperature drops past 20°F (when CCA loss becomes obvious in your driveway, not our bay). The whole check takes about 45 minutes and is the single cheapest way to avoid a January no-start.
+
+[Book your winter-prep service →](https://northsideautobuffalo.com/book?utm_source=email&utm_medium=newsletter&utm_campaign=oct-2026-winter-prep)
+
+### Section 2 — Customer education: why coolant fails silently
+
+Three things you can't see in the overflow tank, but matter:
+1. **Acidity climbs.** Healthy coolant runs slightly alkaline (pH ~9). After 4–5 years it drifts acidic, and acidic coolant eats aluminum from the inside.
+2. **Corrosion inhibitors deplete.** The orange color sticks around long after the inhibitor package has worn out. Color is not a freshness gauge.
+3. **Freeze-point rises.** Old coolant freezes at higher temperatures than fresh — sometimes 10–15°F higher. In a Buffalo January, that's the difference between a cracked block and a car that starts.
+
+We check all three with a 60-second test strip at every winter-prep service. If they're fine, we tell you. If they're not, we show you the strip.
+
+### Section 3 — Shop news: welcome Jordan
+
+We've added Jordan Chen as our second A-tech as of September 22. Jordan came over from a Honda dealer in Rochester and brings ASE L1 certification, which means he's qualified for advanced engine performance and emissions diagnostics — useful for the older Civics, CR-Vs, and Accords that make up about a third of the cars we see. He's already in the bay and you might meet him at pickup.
+
+### Section 4 — NY state inspection-renewal reminder (October stickers)
+
+If your inspection sticker has a "10" in the month box, your renewal is due by October 31, 2026. NY inspection includes the OBD-II emissions check, which can surface a slow-developing check-engine condition before it becomes a no-start. If you're due, we have weekday morning slots available now — pre-November is the lowest-wait window of the year.
+
+### Section 5 — Customer Q&A: ADAS calibration after a windshield replacement
+
+A customer asked us last week: "You replaced my windshield, do I really need that ADAS calibration?"
+
+Short answer: yes, if your car has a forward-facing camera mounted behind the windshield (most vehicles 2018 or newer). The camera runs lane-keeping, automatic emergency braking, and adaptive cruise — and even a 1-degree shift in its mounting angle changes where the car thinks the road is. Calibration re-teaches the camera the road geometry. We've been calibrating in-house on the new target rig since August, which means we can do glass + calibration in one visit instead of sending you to the dealer afterward. For most vehicles, calibration adds 60–90 minutes to a windshield job.
+
+---
+
+### Primary CTA (button)
+
+**Button text:** Book winter-prep service
+**URL:** https://northsideautobuffalo.com/book?utm_source=email&utm_medium=newsletter&utm_campaign=oct-2026-winter-prep
+
+---
+
+### Sign-off
+
+Thanks for letting us be your shop. If anything in this issue raised a question about your specific vehicle, just hit reply — Joe (me) or Sarah (advisor) reads every one.
+
+**Signed by:** Joe Marchetti, Owner
+
+---
+
+### Footer (CAN-SPAM compliance)
+
+- **Physical mailing address:** Northside Auto Care, 4218 Delaware Ave, Buffalo NY 14217
+- **Unsubscribe link:** https://klaviyo-list.com/unsubscribe?list=northsideauto&customer={{customer_id}}
+- **Reply-to:** joe@northsideautobuffalo.com
+- **Why are you receiving this:** You're getting this because you've been a customer at Northside Auto Care in the past 24 months.
+
+---
+
+### Plain-text fallback (for shops that send via SMS / RCS as second channel)
+
+Buffalo's first freeze usually hits mid-October. A 45-min winter-prep service checks your coolant, pressure-tests the system, and reads your battery's cold-cranking amps before the temperature drops. Book at northsideautobuffalo.com/book. Reply STOP to opt out.
+
+---
+
+### Image brief (if requested)
+
+**Brief:** Photograph (or pull from gallery) one of our techs holding a coolant test strip up to the camera at the open hood of a customer's car. Mid-shot, daylight in the bay, no customer plates visible. The strip should be in focus with the gradient visible — that's the visual hook. The hood, engine bay, and tech are background blur.
+**Alt-text:** "Northside Auto Care technician holding a coolant test strip at the open hood of a customer's vehicle during a winter-prep service check."
+
+---
+
+### Caveats & Verification
+
+- The "4–5 year" coolant interval is the OE recommendation for most non-extended-life formulations. Confirm against the customer base's predominant vehicle makes — Toyota / Honda extended-life is closer to 100k miles or 10 years.
+- The NY state inspection deadline window (sticker month = renewal month) is accurate per NYS DMV's 2026 inspection calendar — confirm the sticker-month interpretation is correct for the customer base before send.
+- Jordan Chen's start date (2026-09-22), ASE L1 cert, and prior employer (Honda dealer in Rochester) should be verified with Joe before send.
+- The "since August" in the ADAS calibration paragraph references the in-house calibration rig install date — confirm with shop manager that the August install date is correct and the rig is live for all camera-equipped models.
+- Customer Q&A: confirm the anonymized customer-of-origin has written consent on file before publishing the question — anonymization alone does not satisfy the consent guardrail.
+- Deliverability: subject line is 51 characters (under 60-char inbox truncation); preview text is 92 characters; single primary CTA; CAN-SPAM footer present. No deliverability flags raised.
+- Audience-segment double-touch check: the customers-due-in-next-30-days overlay coordinates with `maintenance-reminder-sequence.md` Message 2 (the 14-day reminder); confirm no double-touch in the Klaviyo flow before send. The lapsed-customer segment is excluded from this issue per `declined-services-followup.md` hand-off.
+```
 
 ## Time-Saved Math
 

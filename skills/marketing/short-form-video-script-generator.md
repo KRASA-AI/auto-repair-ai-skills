@@ -4,7 +4,7 @@ category: marketing
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~25 min/script"
-version: 1.0
+version: 1.1
 last_eval_score: null
 ---
 
@@ -182,6 +182,113 @@ Produce a single Markdown artifact, formatted exactly as below.
 - Hands to `service-advisor-script.md` for the call the CTA drives (so the advisor's first 30 seconds matches the video's tone)
 - Hands to `review-response-generator.md` for comments on the video that read like reviews
 - Coordinates with `digital-vehicle-inspection-report.md` plain-language framing for any video explaining DVI findings
+
+## Example Output
+
+**Inputs:**
+- Shop: Northside Auto Care, Buffalo NY (config.yml — warm, no-jargon, friendly-direct voice; booking URL https://northsideautobuffalo.com/book)
+- Topic: Why brake fluid moisture matters (silent failure mode the dashboard doesn't show)
+- Target duration: 60 seconds (hook + three beats + CTA)
+- Platform: Reels (cross-posts to TikTok, Shorts, Facebook Reels)
+- On-camera person: Carlos Reyes, A-tech, ASE-certified
+- Filming context: In the bay during a real brake-fluid service on a 2019 Honda CR-V (customer consented to vehicle being on camera; plate and VIN masked)
+- Customer-education focus: Brake fluid absorbs water from the air over time, which lowers its boiling point — which is why it needs to be replaced even when it looks fine
+- CTA: "Book a brake-fluid check at northsideautobuffalo.com/book"
+- Brand voice override: None (use default warm/no-jargon)
+
+**Output:**
+
+```
+## Short-Form Video Script — Northside Auto Care — Brake fluid moisture matters — 2026-06-01
+
+**Duration:** 60 sec
+**Platform:** Reels (cross-post Reels / TikTok / Shorts / Facebook Reels)
+**On-camera:** Carlos, A-tech
+**Filming context:** In-bay during a real brake-fluid service on a 2019 Honda CR-V
+
+---
+
+### Hook (0–3 sec)
+
+**On-camera dialogue:** "Most cars on the road today have brake fluid that's already failed — and the dashboard won't tell you."
+**Visual cue:** Tight close-up on the brake-fluid reservoir cap as Carlos cracks it open. Reservoir is on screen, fluid is visibly darkened.
+**On-screen text:** "Your brake fluid is failing right now."
+
+---
+
+### Beat 1 (3–18 sec)
+
+**On-camera dialogue:** "Brake fluid is hygroscopic — fancy word for it absorbs water from the air. After three years, most fluid has about 3% water in it. After five years, it's closer to 5%. And water boils way before brake fluid does."
+**Visual cue:** Side-by-side on the workbench: a small glass jar of fresh amber brake fluid next to a jar of dark, used fluid pulled from the CR-V's reservoir. Carlos holds them up to the camera one at a time.
+**On-screen text:** "Fresh vs. 5-year-old. Both look like 'brake fluid.'"
+
+### Beat 2 (18–35 sec)
+
+**On-camera dialogue:** "Here's why that matters. Hard braking — like a panic stop on the 290 — heats your brake fluid past 250°F. Water in the fluid boils at 212. When it boils, the bubbles compress when you push the pedal. Pedal goes to the floor. You don't stop."
+**Visual cue:** Carlos taps the brake pedal of the CR-V from the open driver's door for emphasis; b-roll cuts to a thermometer graphic showing 212°F → 250°F range as he speaks.
+**On-screen text:** "Boiling water in your brake line = soft pedal."
+
+### Beat 3 (35–52 sec)
+
+**On-camera dialogue:** "The dashboard doesn't warn you about this — there's no sensor for fluid moisture. We test it in 60 seconds with a $40 strip. Healthy fluid reads dry; failed fluid reads wet. If it's wet, we flush it. Takes about 30 minutes."
+**Visual cue:** Carlos dips a brake-fluid test strip into the CR-V reservoir and pulls it out. Test strip is in focus; gradient is visible. Cut to the strip on the workbench next to the empty fluid bottle.
+**On-screen text:** "60-second test. 30-minute fix."
+
+---
+
+### CTA (last 5 sec)
+
+**On-camera dialogue:** "If your last brake-fluid service was over three years ago, book a check. Link in bio."
+**Visual cue:** Carlos closes the hood. Final shot: Northside Auto Care logo card with the booking URL on screen.
+**On-screen text:** "Book at northsideautobuffalo.com/book"
+
+---
+
+### Caption (publish copy)
+
+Most cars on the road have brake fluid that's already failed — and the dashboard won't tell you. Here's the 60-second test we use at Northside Auto Care to check yours. If your last service was over three years ago, book a check at the link.
+
+**Hashtags (max 5):** #autorepair #brakecare #carcare #buffaloautorepair #nyauto
+
+---
+
+### B-roll shot list (the filming person's checklist)
+
+1. Tight close-up: brake-fluid reservoir cap being cracked open (hook visual)
+2. Medium: Carlos at the open hood, jars on the workbench beside him (Beat 1)
+3. Close-up: fresh fluid jar vs. used fluid jar held up to camera (Beat 1)
+4. Wide-medium: Carlos at the driver's door tapping the brake pedal (Beat 2)
+5. Close-up: thermometer graphic insert or printed temp card on the bench (Beat 2)
+6. Close-up: test strip being dipped into reservoir, then on bench next to bottle (Beat 3)
+7. Wide: Carlos closing the hood, walking out of frame (CTA)
+8. Final: Northside Auto Care logo card with booking URL (CTA close)
+
+**Total b-roll shots:** 8 — filmable in under 5 minutes during the real brake-fluid service.
+
+**Photo / safety notes:**
+- Mask the customer's plate before publishing (use a sticker or post-edit blur)
+- VIN on the dashboard plate is visible from the driver-door b-roll — frame to exclude or blur in post
+- No safety glasses required for this job, but Carlos should wear nitrile gloves on camera — brake fluid is paint-corrosive and viewer-credibility points come from visible PPE
+- No proprietary diagnostic-tool screen content in this script — no licensing issue
+
+---
+
+### Music / sound suggestion
+
+**Sound style:** Explainer-low-pulse instrumental from the Reels native audio library (Reels in-app library tracks are license-clear for in-app cross-post to TikTok / Shorts / Facebook Reels). Keep Carlos's voice forward in the mix — sound-on viewers are here for the explanation, not the beat.
+**Note:** If a trending audio is used instead, run the license-check question through the owner first — trending audio licensing on cross-post is the most common platform takedown reason.
+
+---
+
+### Caveats & Verification
+
+- The "3% water at 3 years / 5% at 5 years" range is the SAE J1703/J1704 brake-fluid moisture-uptake curve generalized across DOT 3 / DOT 4. Confirm with Carlos that the CR-V's fluid is DOT 3 (it is, per Honda spec) before filming so the on-camera number isn't off.
+- The "$40 test strip" cost is the in-shop bulk-pack cost. If Carlos quotes a retail strip price on camera, he should say "about $40" not a specific dollar figure.
+- The "30-minute flush" duration is the labor-time estimate for the CR-V specifically; vehicles with electronic brake systems (ABS scan-tool bleed required, most 2018+ Hondas) may take 45–60 minutes — call the duration "about 30 minutes" rather than absolute.
+- TikTok demotes captions with external URLs in the visible text; cross-post the caption as-written for Reels but strip the URL from the TikTok caption visible text (move it to the bio link). The Reels-native caption hashtags are fine on all four platforms.
+- Customer-consent on the CR-V's appearance on camera is on file. Plate-and-VIN masking is the only remaining consent step before publishing.
+- Carlos is the on-camera tech for this video — confirm his shift covers the planned film time (typically Tue–Sat) before scheduling.
+```
 
 ## Time-Saved Math
 
