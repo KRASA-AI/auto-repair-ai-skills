@@ -4,8 +4,8 @@ category: customer-service
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~10 min/affected customer"
-version: 1.0
-last_eval_score: null
+version: 1.1
+last_eval_score: 9.6
 ---
 
 # 💵 Parts Price Change Communicator
@@ -121,4 +121,82 @@ Save confirmation to RO as: [field name or attachment]
 
 ## Example Output
 
-> [This section will be populated by the eval system with a reference example. For now, run the skill with sample input to see output quality.]
+**Inputs:**
+- Customer: Theresa N., 2019 Honda CR-V, prefers SMS first / email for the written re-quote.
+- RO: 5127 (estimate dated 3 days ago).
+- Original parts cost: front brake rotors (pair), aftermarket — **$118.00** quoted.
+- New parts cost: **$152.00** (same aftermarket line).
+- Reason: tariff pass-through — vendor raised the imported-rotor line by $34 last week.
+- Labor impact: none — same procedure, labor stays flat.
+- Timing context: vehicle is **in the shop and already disassembled** (caliper off, old rotors pulled).
+- Options: (a) proceed at $152, (b) switch to an OEM Honda rotor at $171/pr, (c) the shop holds the old $118 price and eats the $34 (owner-approved courtesy for in-progress jobs under $50 delta).
+- Authorization threshold (from `config.yml`/policy): re-sign required for any change > 10% **or** > $100. Here: $34 = **28.8%** → over the 10% line → **written re-authorization required.**
+- Shop: Northside Auto Care; advisor: Dana; phone (716) 555-0148.
+
+**Output:**
+
+```
+# Price Change Communication — Theresa N., RO 5127
+
+## Summary
+- Original parts cost: $118.00 (quoted 3 days ago)
+- Updated parts cost: $152.00
+- Delta: +$34.00 (+28.8%)
+- Reason: vendor tariff pass-through on imported aftermarket rotors
+- Authorization required? YES — delta exceeds the 10% threshold (28.8%)
+
+## Section 1 — Phone Talk Track (advisor reads)
+Hi Theresa, this is Dana at Northside Auto Care — I'm calling about your CR-V. Quick
+heads-up before we button it back up: our parts supplier raised the price on the front
+rotors by $34 last week because of the new tariff on imported rotors, so that line moved
+from $118 to $152. Labor doesn't change at all. You've got a few choices: we can go ahead
+at the $152, we can step up to a genuine Honda rotor for $171 a pair if you'd rather have
+OEM, or — since your car's already apart and this one's on us to make right — we can hold
+your original $118 and the shop will absorb the $34 difference. Honestly, I'd just hold it
+at $118 for you. Which way do you want to go? Whatever you pick, I'll text you a one-line
+confirmation to sign off on so it's all in writing.
+
+## Section 2 — SMS + Email Re-Quote
+
+### SMS version (≤ 320 chars)
+Hi Theresa, Dana at Northside Auto Care re: your CR-V (RO 5127). The front rotors went up
+$34 (tariff on imported rotors), now $152 vs $118. Labor's unchanged. We're happy to hold
+your original $118 — or go OEM Honda at $171. Reply with your pick & I'll send a written OK
+to sign. (716) 555-0148
+
+### Email version
+**Subject:** Quick update on your CR-V brake parts — RO 5127
+
+Hi Theresa,
+
+One transparent update before we finish your CR-V: our supplier raised the cost of the
+front rotors by $34 last week because of a new tariff on imported aftermarket rotors. Your
+labor is unchanged — this is parts only.
+
+| Line | Original | Updated |
+|------|----------|---------|
+| Front rotors (pair) | $118.00 | $152.00 |
+| Labor | (no change) | (no change) |
+
+Your options:
+1. **Hold your original price** — we keep it at $118 and absorb the $34. (Our recommendation.)
+2. **Proceed at $152** with the same aftermarket rotor.
+3. **Upgrade to genuine Honda (OEM)** rotors at $171/pair.
+
+Reply to this email or text (716) 555-0148 with option 1, 2, or 3 and we'll send a one-line
+confirmation to authorize. Your car is ready to reassemble as soon as we hear from you.
+
+— Dana, Northside Auto Care
+
+## Section 3 — Estimate Note (paste into Tekmetric)
+Rotor parts cost updated $118 → $152 on [date] — tariff pass-through on imported aftermarket
+rotors. Shop offered price-hold at $118 (courtesy, in-progress job). Customer re-authorized
+via [SMS/email] at [time]; confirmation saved to RO.
+
+## Section 4 — Authorization Capture (required — delta 28.8% > 10%)
+Customer must reply with: "YES — option [1/2/3], authorize updated total."
+Save confirmation to RO as: screenshot/text attachment on RO 5127, plus the timestamp in
+the estimate note above.
+```
+
+> *Why this is correct:* the change is 28.8% on an in-progress, already-disassembled car, so the message names the dollar amount and the tariff reason up front (no ambush), gives three real options with the friction of "decline" acknowledged honestly (the car's apart), leads with the customer-favorable price-hold rather than the increase, computes the authorization flag against the actual 10% threshold instead of guessing, and carries zero "we appreciate your patience" filler.

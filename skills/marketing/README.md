@@ -10,6 +10,7 @@ Local-marketing content generation for the auto repair shop — Google Business 
 | `short-form-video-script-generator.md` | beginner | ~25 min/script | 30–90 sec Reel / TikTok / Short script (hook + beats + caption + CTA) |
 | `email-newsletter-builder.md` | beginner | ~45 min/issue | Monthly customer email (seasonal services + shop news + customer education) |
 | `ai-search-visibility-brief.md` | intermediate | ~3 hr/audit | Quarterly audit + 30-day content brief for Google AI Overviews / AI Place Summaries / Gemini citation |
+| `loyalty-program-builder.md` | intermediate | ~4 hr/program | Upstream loyalty/retention program spec — tiers, earn rules, segment offers, slow-season calendar, referral mechanic, AI touchpoint map, unit economics |
 
 ## Shared inputs
 
