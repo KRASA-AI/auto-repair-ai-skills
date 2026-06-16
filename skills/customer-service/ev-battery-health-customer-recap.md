@@ -4,7 +4,7 @@ category: customer-service
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~10 min/vehicle"
-version: 1.0
+version: 1.1
 last_eval_score: null
 ---
 
@@ -158,5 +158,67 @@ Here's what we found on your Prius battery today.
 - Urgency tier: 🟡 Monitor / Plan
 - Next touchpoint: Recheck at next oil change; replacement estimate follow-up offered
 - Estimate follow-up: Yes — offer at next visit if customer doesn't reply to email
+- Bilingual flag: No
+```
+
+---
+
+### Second example — 🟠 Plan tier, verbal walkthrough
+
+This second example exercises the 🟠 **Plan** tier (the first example is 🟡 Monitor) and the **verbal walkthrough** channel (the first is a written email). Same accuracy discipline, harder conversation: a failed module is present, the SoH is materially lower, and the advisor has to convey real urgency without tipping into a scare tactic.
+
+**Inputs:**
+- Vehicle: 2015 Toyota Camry Hybrid LE, ~165,000 miles, ~11 years old
+- Test tool: Dr.EV AI Battery Report
+- SoH: 61%
+- Cell/block results: 34 modules tested; 29 pass, 4 flagged (low voltage), 1 fail
+- DTCs: P0A7F (Hybrid Battery Pack Deterioration)
+- Customer context: daily commuter + occasional rideshare; reports the gas engine "kicks on almost right away" and noticeably worse mileage; deciding whether to keep the car another year or trade it
+- Recommendation: Plan for replacement within the next 6–12 months (the one failed module pulls the timeline toward the near end of the Plan window); monitor closely, retest in ~3 months
+- Channel: verbal walkthrough (advisor talking-track)
+
+**Output:**
+
+```
+## Battery Health Recap — 2015 Toyota Camry Hybrid LE | June 15, 2026
+
+**Test performed:** Dr.EV cell-level diagnostic
+**State of Health:** 61% — 🟠 Plan
+**Cell/block results:** 29 pass / 4 flagged / 1 fail
+**Fault codes:** P0A7F (Hybrid Battery Pack Deterioration)
+
+---
+
+### For the customer (channel: verbal walkthrough — advisor talking-track)
+
+**[Lead with the punchline]**
+- "So here's the headline: your hybrid battery is still running the car, but it's worn enough that I'd want you to start planning for a replacement in the next 6 to 12 months — not today, but this isn't one to sit on for two or three years."
+  *(pause — let that land, then continue)*
+
+**[Explain the SoH % with the phone analogy]**
+- "Think of it like a phone battery. When the car was new, the pack held 100% of its charge. Right now it's holding about 61% — so it just can't store and deliver as much as it used to."
+
+**[Cell/block findings in plain English]**
+- "We tested all 34 individual sections inside the pack. 29 are still healthy, 4 are starting to weaken, and 1 has actually failed."
+- "That one failed section is the reason I'm putting a clock on this. Once one section is gone, it puts extra load on the neighbors, and they tend to follow over the next several months."
+  *(pause for questions)*
+
+**[Connect to what they've noticed]**
+- "You mentioned the gas engine kicks on almost right away and the mileage dropped — that's exactly what a worn hybrid battery feels like. The car is leaning on the gas engine to make up for what the battery can't deliver, so you're buying more fuel to cover the gap."
+
+**[State the recommendation clearly]**
+- "My recommendation: plan to replace the hybrid battery within the next 6 to 12 months. It's safe to keep driving in the meantime, but I'd retest in about 3 months so we can watch the trend and you're never caught off guard."
+
+**[Address the cost + the keep-or-trade question they raised]**
+- "On cost — a hybrid battery for this Camry typically runs somewhere in the $2,000–$3,500 range installed depending on whether we go new, reconditioned, or remanufactured, and I'm happy to put together a real quote so it's not a guess."
+- "Since you're weighing whether to keep it another year: a fresh battery is the single biggest thing that makes a high-mileage hybrid feel normal again. If you're planning to keep it past this year, replacing the battery is usually money well spent. If you're leaning toward trading it soon, that's useful to know too — I won't push you toward a repair that doesn't fit your plan."
+- "Want me to build that replacement quote while you're here so you've got a real number to plan around?"
+
+---
+
+### Service advisor notes (internal)
+- Urgency tier: 🟠 Plan (SoH 61% AND 1 failed module — both indicators agree on Plan; failed module pulls timeline to the near end of the 6–12 mo window)
+- Next touchpoint: Retest in ~3 months to track trend; do NOT let this lapse to the next annual visit
+- Estimate follow-up: Yes — build new / reman / recond comparison quote; note keep-or-trade is undecided, so frame quote as decision-support, not a hard close
 - Bilingual flag: No
 ```

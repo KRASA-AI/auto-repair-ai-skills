@@ -4,7 +4,7 @@ category: operations
 tools: [claude, chatgpt]
 difficulty: advanced
 time_saved: "~20 min/RO + reduced rework exposure"
-version: 1.0
+version: 1.1
 last_eval_score: null
 ---
 
@@ -116,4 +116,59 @@ You are an ADAS documentation specialist for an auto repair or collision shop. Y
 
 ## Example Output
 
-> [This section will be populated by the eval system with a reference example. For now, run the skill with sample input to see output quality.]
+**Inputs:**
+- Vehicle: 2022 Honda CR-V EX, VIN last 6 …4417, build date 09/2021
+- Work performed: replace windshield (laminated glass R&R); 4-wheel alignment
+- Event context: not a collision — stone-strike crack beyond repair; customer also reported a faint steering pull, hence the alignment
+- ADAS present (from build sheet): Honda Sensing — forward camera behind windshield (CMBS / LKAS / RDM / TSR), front radar in lower grille (ACC / Low-Speed Follow), LaneWatch right-side camera
+- Shop capability: static Honda camera aiming in-house (Honda targets on hand, level calibration floor); dynamic-only OEM procedures sublet
+- Insurance: comprehensive glass claim (Safelite-style carrier supplement); customer-pay alignment
+- Customer communication: yes — plain-language explanation requested
+
+**Output:**
+
+```
+# ADAS Calibration Documentation — 2022 Honda CR-V EX, VIN …4417
+
+## 1. Work Performed Summary
+- Replace windshield (laminated glass R&I/R&R)
+- 4-wheel alignment
+
+## 2. Required ADAS Procedures
+| System | Trigger | Type | In-house / Sublet | OEM Source | Labor Op |
+|--------|---------|------|-------------------|------------|----------|
+| Forward camera (CMBS / LKAS / RDM / TSR) | Windshield R&R moves the camera's mounting/reference plane → aiming required after re-install | Static (target aim) — tech to verify whether a confirmation drive is also required for this VIN | In-house | Honda position statement: ADAS recalibration required after windshield replacement (tech to verify current Honda SIS procedure ID for this VIN/build) | tech to verify |
+| Steering angle sensor / LKAS geometry | 4-wheel alignment changes thrust/steer reference; many Honda procedures require SAS reset + camera confirmation after alignment | Tech to verify (SAS reset; LKAS confirmation static or drive) | In-house | Honda SIS alignment + SAS procedure (tech to verify); I-CAR guidance on alignment-triggered ADAS | tech to verify |
+| Front radar (ACC / Low-Speed Follow) | Grille/bumper NOT disturbed by this work → radar aim NOT triggered by these line items | N/A this RO | N/A | n/a — no triggering operation | — |
+
+## 3. Prerequisites
+- [ ] Pre-repair scan report attached (capture any pre-existing DTCs before glass R&R)
+- [ ] Alignment completed and within Honda spec BEFORE camera calibration (calibration can fail silently if thrust angle is out)
+- [ ] Battery ≥ OEM-required voltage for calibration (Honda commonly ≥ 12.6V — tech to verify; put on a maintainer)
+- [ ] Tire pressures set to door-placard spec
+- [ ] Fuel level / vehicle load / target distance & floor level per OEM static-aim setup (tech to verify)
+- [ ] Windshield fully cured / camera bracket seated per glass-OEM and Honda spec before aiming
+
+## 4. Sublet Routing (if any)
+None this RO — both calibrations are within in-house static capability. (If the VIN turns out to require a dynamic-only procedure the shop can't complete, sublet the forward-camera confirmation drive to the certified ADAS partner on file and note expected same-day return.)
+
+## 5. Customer-Facing Explanation (optional)
+Your CR-V has a small camera mounted at the top of the windshield. It runs the automatic emergency braking and lane-keeping systems by "looking" through the glass. When we replace the windshield, that camera has to be precisely re-aimed afterward — even a tiny shift changes where it thinks the road is, and an un-aimed camera can brake late or read lanes wrong. We also did an alignment, which on this Honda means the steering and lane-keep systems need to be reset to match. We calibrate to Honda's own procedure and save the before-and-after scan reports with your records. Skipping this isn't an option we'd recommend — these are safety systems, and they have to be set correctly to work.
+
+## 6. Insurance Supplement Section (glass claim)
+- Labor op: Forward-camera ADAS recalibration required after windshield replacement — per Honda position statement (procedure ID to be cited from Honda SIS on the final RO).
+- Labor op: Post-alignment SAS reset / LKAS confirmation — per Honda service procedure.
+- Pre-repair scan report (attached) and post-repair scan report showing no DTCs (attached) support the calibration line.
+- Statement for carrier: "Calibration of the forward-facing camera is required by the vehicle manufacturer following windshield replacement and is not optional; documentation per OEM position statement attached." Format to the carrier's supplement template.
+
+## 7. Technician Sign-Off Checklist
+- [ ] All required calibrations performed per OEM procedure
+- [ ] Post-repair scan attached showing no DTCs
+- [ ] Road-test confirmation completed (if a dynamic confirmation is required for this VIN)
+- [ ] Tech signature: _______________
+
+## 8. Flags & Verification Items
+- Exact Honda SIS procedure IDs for both the forward-camera aim and the post-alignment SAS/LKAS step are NOT cited here — technician to pull and record the current procedure ID for this VIN/build date before billing (Honda revises ADAS procedures by build date).
+- Whether the forward-camera calibration is static-only or static + dynamic confirmation for this specific VIN is unconfirmed — verify against Honda SIS; sublet the drive cycle if in-house capability doesn't cover it.
+- Battery-voltage and static-setup tolerances (floor level, target distance, ambient lighting) are OEM-specified — verify exact values, do not assume.
+```

@@ -4,7 +4,7 @@ category: marketing
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~4 hr/program design"
-version: 1.0
+version: 1.1
 last_eval_score: null
 ---
 
@@ -217,7 +217,7 @@ Produce a single Markdown artifact, formatted exactly as below.
 
 An owner designing a defensible retention program from scratch typically spends 4–6 hours: researching tier and points structures, sketching segment offers, estimating the economics, and writing the rollout and counter script — and most owners skip the economics step entirely and launch a program that quietly loses margin. Using this skill: ~45 minutes (gather the baseline + economic guardrails + primary goal, run the skill, review the spec). Net ~4 hours per program design, plus the avoided cost of an under-funded program. Re-run annually.
 
-## Example Output (abbreviated)
+## Example Output
 
 **Inputs:**
 - Shop context (from `config.yml`): Northside Auto Care, Buffalo, NY 14216, ~420 cars/month, cold-winter region, services: brakes / suspension / electrical / state-inspection / heating-and-cooling / tires / oil-service / ADAS calibration, brand voice = friendly/direct, owner = Marc Belmonte
@@ -227,47 +227,93 @@ An owner designing a defensible retention program from scratch typically spends 
 - Slow season: late January–February, and the first three weeks of July
 - No formal program today (ad-hoc "every 5th oil change half off" at the counter)
 
-**Output (abbreviated — tiers, one segment row, slow-season, referral, counter script, and one caveat shown):**
+**Output (complete program — all sections of the output template filled):**
 
 ```
-## Customer Loyalty & Retention Program — Northside Auto Care — Buffalo, NY — 2026-06-08
+## Customer Loyalty & Retention Program — Northside Auto Care — Buffalo, NY — 2026-06-15
 
-**Primary goal:** more visits/customer/yr (target 1.6 → 2.1)
-**Retention baseline:** ~38% repeat-visit, ~1.6 visits/yr, ~$540 avg annual spend (owner estimate — confirm with SMS data)
-**Economic envelope:** ≤ $22/customer/yr reward value (4% of revenue at 52% GP)
+**Primary goal:** more visits/customer/yr (target 1.6 → 2.1); slow-season bay-fill secondary
+**Retention baseline:** ~38% repeat-visit, ~1.6 visits/yr, ~$540 avg annual spend, ~55% of revenue from returning customers (owner estimate — confirm against SMS/CRM data, priority-1)
+**Economic envelope:** ≤ $22/customer/yr reward value (4% of revenue at 52% blended GP)
 **Front-door menu items NEVER discounted:** $39 NY state inspection
+
+---
 
 ### Tier structure
 
-| Tier | Entry threshold | Earn rate | Benefit mix |
+| Tier | Entry threshold (reachable) | Earn rate | Benefit mix (discount vs. experience) |
 |---|---|---|---|
-| Garage (entry) | enroll at first paid visit | 1 pt / $1 | $15 off next service after 1st return visit (recruits the 2nd visit) |
-| Garage+ (mid) | 2 paid visits in 12 mo | 1.25 pts / $1 | free seasonal courtesy inspection + priority scheduling |
-| Bay Club (top) | 3+ paid visits OR $900 in 12 mo | 1.5 pts / $1 | priority scheduling, loaner/shuttle priority, dedicated advisor, annual free A/C or heating check |
+| Garage (entry) | enroll at first paid visit | 1 pt / $1 | $15 off next service after 1st return visit — a behavior-recruiting discount that buys the all-important 2nd visit |
+| Garage+ (mid) | 2 paid visits in 12 mo | 1.25 pts / $1 | free seasonal courtesy inspection + priority scheduling (mostly experience, low give-back) |
+| Bay Club (top) | 3+ paid visits OR $900 in 12 mo | 1.5 pts / $1 | priority scheduling, loaner/shuttle priority, dedicated advisor, one annual free A/C or heating check — non-discount experience perks that retain high-value customers |
 
-### Segment offer map (excerpt)
+### Earn-and-burn rules
+
+- Earns value: 1 pt per $1 on all paid labor and parts (incl. the $39 inspection — it earns but is never discounted); points are the only currency.
+- Redemption: 100 pts = $5 in service credit; min redemption 200 pts ($10); applied at the counter against any service except the protected inspection.
+- Expiration: points expire 18 months after the last earning visit; an SMS nudge fires 30 days before any point block expires (steered toward a slow-season redemption — see calendar).
+- Forbidden: rewards never attach to unnecessary or premature service. Points reward the spend the vehicle genuinely needed, never a manufactured visit.
+
+### Segment offer map
 
 | Segment | Offer | Entry path | Economic note |
 |---|---|---|---|
-| Lapsed > 12 mo | "We miss your [vehicle]" — $25 toward any service, expires in 45 days + due-maintenance recap | win-back SMS/email | one-time; nets positive if it recovers a single avg RO |
-| Single-visit / new | strong 2nd-visit offer ($15 off within 90 days) | auto-enroll at first paid visit | converts one-and-done into a repeat relationship |
+| Fleet accounts | account terms, NOT consumer points: net-15 billing + standing priority bay + quarterly multi-vehicle health summary | flagged at check-in / account setup | hand to fleet-account-service-advisor.md; keep off the points ledger so fleet discounts never stack on retail points |
+| EV / hybrid owners | Bay Club fast-track: annual battery state-of-health check counts as a qualifying visit | auto-tag at first EV RO | protects a high-value, low-frequency segment whose 1–2 visits/yr would never reach a frequency threshold |
+| European-vehicle owners | "specialist" positioning perk: priority diagnostic scheduling + named advisor (experience, not discount) | auto-tag by make at RO | higher-ARO segment; retain with service quality and access, not margin give-back |
+| High-frequency maintenance | 2× points on the 4th+ qualifying visit in a rolling 12 mo | automatic at visit count | rewards genuine maintenance cadence without paying for premature visits |
+| Single-visit / new | strong time-boxed 2nd-visit offer: $15 off within 90 days | auto-enroll at first paid visit | converts one-and-done into a relationship; the single highest-leverage retention lever |
+| Lapsed > 12 months | "We miss your [vehicle]" — $25 toward any service, expires in 45 days, + a due-maintenance recap | win-back SMS/email | one-time; nets positive if it recovers a single average RO (~$540) |
 
 ### Slow-season incentive calendar
 
-| Window | Incentive | Service steered toward | Why it fills a gap |
+| Window (real slow weeks) | Incentive | Service steered toward | Why it fills a gap |
 |---|---|---|---|
-| Late Jan–Feb | 2× points on suspension + alignment | suspension/alignment (capacity-light in winter) | fills historically slow weeks with high-margin work |
-| First 3 wks July | 2× points on A/C service | A/C (seasonal, high-margin) | pulls summer A/C demand into a slow stretch |
+| Late Jan–Feb | 2× points on suspension + alignment | suspension/alignment (capacity-light after the holiday rush) | converts give-back into high-margin work during historically slow weeks |
+| First 3 weeks of July | 2× points on A/C service | A/C (seasonal, high-margin) | pulls summer A/C demand forward into a known slow stretch |
+| Both windows | expiring-point redemptions steered here via the 30-day pre-expiry nudge | any service | redemptions land when bays are open, not when they're already full |
 
 ### Referral mechanic
 
-- Referrer: $20 account credit; Referred: $20 welcome credit
-- Releases on referred customer's first COMPLETED PAID visit only
+- Referrer reward: $20 account credit
+- Referred-customer welcome offer: $20 welcome credit
+- Anti-fraud trigger: reward releases on the referred customer's first COMPLETED PAID visit only (no credit on a booking, a no-show, or a quote)
 - Cap: 6 referral rewards / customer / yr
 
-### Counter script
+### AI-personalized touchpoint map
 
-> "We've started a free loyalty program — you earn points on every visit and there's $15 off your next one after today. Want me to add your [vehicle] to it real quick?"
+| Moment | Trigger | Channel | Personalization inputs | Hand-off skill |
+|---|---|---|---|---|
+| Enrollment welcome | enrolled at first paid visit | SMS + email | vehicle, advisor name | email-newsletter-builder.md / job-status-update-generator.md |
+| Post-visit thank-you | visit closed | SMS | last service, advisor, current tier | job-status-update-generator.md |
+| Near-upgrade nudge | 1 visit / $ from next tier | SMS | tier gap, what unlocks it | maintenance-reminder-sequence.md |
+| Reward earned | redemption threshold hit | SMS | reward value available | — |
+| Reward expiring | 30 days pre-expiry | SMS | reward value, expiry date, slow-season steer | maintenance-reminder-sequence.md |
+| Lapsing win-back | no visit in 12 months | SMS + email | last service, due maintenance, $25 win-back | declined-services-followup.md |
+| Referral thank-you | referred visit completed | SMS | referrer + referred names (with consent) | — |
+
+### Illustrative economics (estimate — depends on execution)
+
+| Metric | Baseline | Projected w/ program | Note |
+|---|---|---|---|
+| Visits / customer / yr | 1.6 | 2.1 | illustrative; the 2nd-visit offer is the primary driver |
+| Avg annual spend / customer | $540 | ~$700 | net of reward cost; reflects the extra ~0.5 visit at avg ticket |
+| Reward cost as % of revenue | — | ≤ 4% (~$22/customer/yr) | hard ceiling; Bay Club perks skew non-discount to stay inside it |
+
+### Success metrics to track
+
+- Enrollment rate (% of paid visits that enroll), repeat-visit rate (the 38% baseline), 2nd-visit conversion of new customers, redemption rate, reward cost as % of revenue, and incremental slow-season visits — review at 60–90 days, then quarterly.
+
+### Rollout plan
+
+1. Instrument the baseline (priority-1): pull true repeat-visit rate, visits/customer, and avg annual spend from the SMS/CRM before launch — the 38% is an owner estimate.
+2. Soft-launch to existing best customers (Bay Club candidates) for 2–3 weeks; confirm the counter script and the redemption flow work at the desk.
+3. Full launch with enrollment at every paid visit.
+4. First review at 60–90 days: check reward cost % against the 4% envelope and 2nd-visit conversion against target; adjust earn rate only if redemption runs hot.
+
+### Counter script (two sentences, front-desk enrollment)
+
+> "We've started a free loyalty program — you earn points on every visit and there's $15 off your next service after today. Want me to add your [vehicle] to it real quick?"
 
 ### One thing not to change
 
@@ -275,9 +321,11 @@ The $39 NY state inspection stays $39 — it's the front-door price the neighbor
 
 ### Caveats & Verification
 
-- The 1.6 → 2.1 visit projection is illustrative and depends on execution; confirm the 38% baseline against actual SMS data before launch (priority-1).
-- Reward cost stays inside the 4%-of-revenue envelope only if Bay Club perks skew non-discount; re-check if redemption runs hot.
-- Never reward customers for leaving reviews — the post-visit thank-you may mention the program but must not condition anything on a review.
+- The 1.6 → 2.1 visit and ~$540 → ~$700 spend projections are illustrative and depend on execution and service quality — not guarantees; confirm the 38% baseline against actual SMS/CRM data before launch (priority-1).
+- Reward cost stays inside the 4%-of-revenue envelope only if Bay Club perks skew non-discount; re-check at the 60–90 day review if redemption runs hot.
+- Gift-card / sweepstakes / prize-promotion structures are not designed here — they carry state-specific legal requirements; flag for the owner/counsel.
+- Never reward customers for leaving reviews — the post-visit thank-you may mention the program but must not condition anything on a review (FTC endorsement guidance).
+- Consent for SMS/email touchpoints must be captured by the shop's systems before any automated message sends.
 ```
 
 ## Notes
