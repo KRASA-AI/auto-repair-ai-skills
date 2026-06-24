@@ -4,7 +4,7 @@ category: customer-service
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~10 min/vehicle"
-version: 1.1
+version: 1.2
 last_eval_score: null
 ---
 
@@ -221,4 +221,53 @@ This second example exercises the 🟠 **Plan** tier (the first example is 🟡 
 - Next touchpoint: Retest in ~3 months to track trend; do NOT let this lapse to the next annual visit
 - Estimate follow-up: Yes — build new / reman / recond comparison quote; note keep-or-trade is undecided, so frame quote as decision-support, not a hard close
 - Bilingual flag: No
+```
+
+---
+
+### Third example — 🔴 Replace tier, text/SMS channel
+
+This third example completes the tier coverage (🟡 Monitor and 🟠 Plan are above; 🟢 Healthy needs no recap). It is the hardest tier: SoH below 55%, **two failed modules**, and a battery-replacement code already set. The recap must convey real urgency honestly, give the replace recommendation in plain terms, present the shop's actual replacement options (config-driven pricing band and warranty), and offer a path forward — without pressure tactics and **without lecturing the customer about whether the car is "worth" fixing** (that keep-or-replace-the-car judgment is a human advisor conversation, surfaced only in the internal notes). Channel is SMS, so it stays short with one clear call to action.
+
+**Inputs:**
+- Vehicle: 2013 Toyota Prius, ~212,000 miles, ~13 years old
+- Test tool: AVILOO
+- SoH: 49%
+- Cell/block results: 28 modules tested; 24 pass, 2 flagged (low voltage), 2 fail
+- DTCs: P0A80 (Replace Hybrid Battery Pack)
+- Customer context: rideshare driver; battery warning light is on; car has gone into reduced-power "turtle" mode twice; gas engine running almost constantly; needs the car working for income
+- Recommendation: Replace now
+- Channel: text/SMS to customer
+- Config: shop = Eastgate Hybrid & Auto; advisor = Luis; reman HV battery installed price band $2,200–$2,900 with a 36-month/unlimited-mile warranty; new and reconditioned options also offered
+
+**Output:**
+
+```
+## Battery Health Recap — 2013 Toyota Prius | June 22, 2026
+
+**Test performed:** AVILOO cell-level diagnostic
+**State of Health:** 49% — 🔴 Replace
+**Cell/block results:** 24 pass / 2 flagged / 2 fail
+**Fault codes:** P0A80 (Replace Hybrid Battery Pack)
+
+---
+
+### For the customer (channel: text/SMS)
+
+Hi [Customer first name], it's Luis at Eastgate Hybrid & Auto with your Prius battery results.
+
+Straight answer: the hybrid battery is worn out and needs to be replaced now. The test shows it's holding about 49% of its original capacity, 2 of the 28 sections have failed, and the car has already set the "replace battery" code — that's why it's dropping into reduced-power mode and running the gas engine constantly.
+
+Since you drive for income, the risk is it could leave you stranded mid-shift, so I don't want you sitting on this.
+
+We can usually get a replacement installed in a day. A reman battery runs about $2,200–$2,900 installed and comes with our 36-month/unlimited-mile warranty; we also offer new and reconditioned options if you want to compare. Want me to text you the full quote with all three so you can pick? Reply here or call us at [shop phone]. — Luis
+
+---
+
+### Service advisor notes (internal)
+- Urgency tier: 🔴 Replace (SoH 49% AND 2 failed modules AND P0A80 set — all three indicators agree; no ambiguity)
+- Safety/operability: car already entering reduced-power mode → flag stranding risk for a rideshare driver; do not soft-pedal urgency
+- Estimate follow-up: Yes — send new / reman / recond comparison; lead recommendation = reman (best value + 36-mo warranty)
+- Keep-or-replace-the-car: a 13-yr/212k Prius nearing the cost-of-repair-vs-value line — this is an advisor conversation IF the customer raises it, NOT a line in the customer recap. Have the trade/scrap discussion live, only if the customer opens it.
+- Bilingual flag: Unsure — if customer prefers Spanish, route to Bilingual Customer Message Builder before sending
 ```

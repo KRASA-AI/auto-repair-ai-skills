@@ -4,7 +4,7 @@ category: operations
 tools: [claude, chatgpt]
 difficulty: advanced
 time_saved: "~20 min/EV RO + reduced liability exposure + cleaner qualification paper trail"
-version: 1.0
+version: 1.1
 last_eval_score: null
 ---
 
@@ -135,4 +135,68 @@ You are an EV/hybrid service-readiness documentation specialist for an independe
 
 ## Example Output
 
-> [This section will be populated by the eval system with a reference example. For now, run the skill with sample input to see output quality.]
+This example exercises the gate's hardest path — a **refused job**. The proposed technician's HV credential is **expired**, so the qualification gate routes the HV-adjacent work to **SUBLET** rather than clearing it; the SoH baseline is **not on file** and is flagged as a recommended test rather than invented; and an **open NHTSA recall** is flagged and routed out, not adjudicated. The HV confirmation block is shown as the qualified sublet partner's attestation, never as an instruction.
+
+**Inputs:**
+
+- **Vehicle:** 2021 Chevrolet Bolt EV LT, BEV, VIN ...7G4 (last 6 587G4), ~48,200 mi, original LG HV pack, in service 03/2021
+- **Concern / requested work:** "A/C blows warm, no cold air." Advisor suspects the electric A/C compressor (HV-adjacent). Customer also wants the cabin air filter replaced (low-voltage / ordinary).
+- **SoH data:** None on file — no battery health test has been run at this shop.
+- **Software / OTA:** Unknown; not yet read. Customer mentions "a recall letter about the battery came in the mail months ago, never dealt with it."
+- **Technician qualification:** Proposed tech is Marcus D. — held GM EV/hybrid (xEV) certification, but per the shop's credential tracker it **expired 02/2026** and has not been renewed. The shop's only other tech, Priya S., holds A/C (609) certification but no HV credential.
+- **Shop capability:** Shop does 12V, A/C (non-HV-compressor), brakes, tires in-house; sublets all HV-component work to **Voltacare EV Specialists** (preferred qualified partner).
+- **Open recalls:** Advisor's VIN check shows an open GM HV-battery recall (Bolt EV high-voltage battery fire risk).
+- **Customer communication:** Yes — plain-language scope explainer, delivered as a printed work-order summary.
+
+**Output:**
+
+```
+# EV/Hybrid Service Readiness — 2021 Chevrolet Bolt EV LT, BEV, VIN ...587G4
+
+## 1. Job Scope Classification
+- Requested work: (a) diagnose/repair "A/C blows warm" — suspected electric A/C compressor; (b) replace cabin air filter
+- HV-adjacent operations: electric A/C compressor diagnosis/replacement on a BEV is HV-ADJACENT (the compressor is driven off the high-voltage system) → triggers the qualification gate + HV confirmation block
+- Low-voltage / ordinary: cabin air filter replacement — NOT HV-adjacent; can proceed in-house under normal procedure
+
+## 2. Technician Qualification Gate
+- Proposed technician: Marcus D.
+- Credential: GM xEV — ⚠ EXPIRED 02/2026 (per shop credential tracker; not renewed)
+- Other roster: Priya S. — A/C (609) only, no HV credential
+- Decision: **SUBLET to Voltacare EV Specialists** for the HV-adjacent A/C-compressor diagnosis/repair.
+  Rationale: no currently-qualified in-house HV technician. The gate does NOT clear an HV-adjacent job on an expired credential. The cabin air filter (low-voltage) may be completed in-house by Priya S. or Marcus D.
+
+## 3. Pre-Work Baseline
+- Battery SoH: ⚠ recommend baseline test — NOT on file. No SoH figure invented. Recommend an SoH/DTC capture at the sublet partner so the customer has a documented pack-health baseline (and because this VIN is under an open HV-battery recall — see §5).
+- Software/firmware version: ⚠ tech to read & record — not yet read.
+- Pending OTA / OEM campaign: ⚠ open recall present (see §5); software state to be read at the partner.
+
+## 4. HV Confirmation Block (HV-adjacent work — QUALIFIED SUBLET PARTNER attestation)
+Because the HV-adjacent work is sublet, this block is signed by the qualified partner's technician, NOT by in-house staff. Confirmations only — records that steps were done per training and OEM procedure; does not describe how.
+- [ ] Partner HV-qualified technician confirms vehicle prepared for HV-adjacent work per OEM procedure & partner HV policy
+- [ ] OEM service procedure referenced: _______________ (partner to record — verify against GM service information for this VIN/build)
+- [ ] Approved HV equipment used: _______________
+- [ ] Post-work HV system status verified per OEM procedure
+- [ ] Partner HV-qualified technician signature: _______________ | Credential type/expiry: _______________
+
+## 5. Prerequisites & Dependencies
+- [x] Open recall / OEM campaign? → YES. Open GM Bolt EV high-voltage-battery recall on this VIN. This is OUT OF SCOPE for the shop and the sublet partner — it is a manufacturer remedy performed at no charge by a GM-authorized dealer. Route the customer via `safety-recall-outreach-builder.md`. Record that it exists; do NOT adjudicate, attempt, or fold it into the A/C repair. (Tech to verify current recall status against the NHTSA VIN lookup / GM dealer before assuming open or closed.)
+- [ ] Software update required (pre/post)? → partner to read software state and advise.
+- [ ] 12V system health checked? → recommended; many BEV faults trace to the 12V system. Check before condemning the HV A/C compressor.
+- [ ] Alignment / ride-height dependency? → N/A for this job.
+
+## 6. Sublet Routing
+- Partner: Voltacare EV Specialists (preferred qualified partner)
+- Operations sublet: electric A/C-compressor diagnosis and repair; SoH baseline capture; software-state read
+- Expected return: partner to confirm; advisor to set customer turnaround only after partner ETA is received (do not promise a time before the partner commits)
+- In-house, completed before/alongside sublet: cabin air filter replacement
+
+## 7. Customer-Facing Scope Explainer (printed work-order summary)
+Your Bolt's air conditioning is run by an electric compressor that's powered by the car's high-voltage system — the same system that drives the car. Work on or around that system has to be done by a technician who holds a current high-voltage qualification and uses the manufacturer-approved equipment, for safety and to keep the repair traceable. Our in-house high-voltage certification is being renewed, so we're sending the A/C diagnosis to our trusted EV specialist partner rather than have it sit. That's why this part of the job takes a little longer than a gas-car A/C repair. While the car is there, they'll also record a quick battery-health baseline for you. Separately, our records show your Bolt has an open manufacturer recall on the high-voltage battery — that's a free repair done at a Chevrolet dealer, and we'll send you the details on how to get it scheduled. We'll replace your cabin air filter here today.
+
+## 8. Flags & Verification Items
+- ⚠ Qualification: proposed in-house tech's xEV credential EXPIRED 02/2026 → HV-adjacent work sublet (gate not cleared in-house)
+- ⚠ SoH: no baseline on file → recommend test at partner (no figure fabricated)
+- ⚠ Software/firmware version: not read → partner to record
+- ⚠ Open HV-battery recall on VIN → routed to dealer via safety-recall-outreach-builder.md; verify current status at NHTSA VIN lookup; NOT performed by shop or partner
+- ⚠ Turnaround time: not yet promised — pending partner ETA
+```

@@ -4,7 +4,7 @@ category: sales
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~25 min/customer + higher declined-work conversion + retention lift"
-version: 1.0
+version: 1.1
 last_eval_score: null
 ---
 
@@ -162,6 +162,101 @@ You are an annualized vehicle-care planner for an independent auto repair shop. 
 - **Over-conservative budgeting that breaks safety.** If the budget signal can't accommodate the safety-tier work, the plan presents the safety tier in full and the math transparently — it does not hide red items in Month 9.
 - **Padding the plan with "while we're at it" items.** Every line earns its place by being a real wear item, a real PM at interval, or a real declined item. Optional add-ons go in a separate "as-budget-allows" section, never disguised as recommendation.
 - **Forgetting the re-issue cadence.** A 12-month plan that's not re-issued after each visit becomes stale within weeks. The plan-management section is part of the deliverable, not a footer.
+
+## Example Output
+
+This example exercises the hard cases the guardrails describe: a **safety-critical item that exceeds the customer's stated monthly budget** (handled by leading with safety and showing the math, not by parking it in a later month), a **declined quote approaching the 90-day stale threshold** (re-quote flagged), **monitor items gated on a re-measurement** before they become firm line items, a **state-inspection deadline** that drives sequencing, and **clustered operations** (brakes + brake fluid; tires + alignment). Config values are threaded throughout.
+
+**Inputs:**
+
+- **Customer + vehicle:** Marcus T., 2018 Honda CR-V EX AWD, 112,400 mi, ~14,000 mi/yr, mixed city/highway, family hauler, long-time customer
+- **Service history:** Last full PM 2026-03 (oil + filter, tire rotation, multipoint). No major repairs on file. Tires measured 5/32" in May. Front brake pads 3 mm / rotors at minimum spec (last DVI 2026-05-30). Battery 4.5 yrs, CCA test marginal (2026-05-30).
+- **Open declined work:** (1) Front pads + rotors — quoted **$480 on 2026-05-30**, Safety-Critical; (2) Rear-differential + transfer-case fluid (AWD) — quoted **$150 on 2026-05-30**, Reliability
+- **Scheduled PM (next 12 mo):** oil + filter per Honda Maintenance Minder (~every 7,500 mi); tire rotation each oil service; brake-fluid flush due (2 yr elapsed); CVT fluid service (Honda severe-duty cadence); cabin air filter due
+- **Known wear / monitor:** tires projected to reach 4/32" ~Jan 2027 at current wear rate; battery marginal CCA
+- **Customer constraints:** "Spread it out, around $250/month max, safety first." Wants brakes done before an **August road trip**. **State safety + emissions inspection due September 2026.**
+- **Shop pricing reference (config):** Riverbend Auto Care; advisor Dana; labor rate **$145/hr**; standing offer **10% off declined items booked within 14 days**; booking link on file
+- **Recall check:** VIN review — no open NHTSA/OEM recall found
+
+**Output:**
+
+```
+# 12-Month Care Plan
+**Customer:** Marcus
+**Vehicle:** 2018 Honda CR-V EX AWD
+**Current Mileage:** 112,400 | **Projected Annual Miles:** ~14,000
+**Plan Built:** 2026-06-22 by Dana with [Tech]
+**Plan ID:** Riverbend RO-link / CP-2026-0622-MT
+
+## Overall Condition Summary
+Your CR-V is in solid shape for its mileage and safe to drive today, with one safety item to handle first: the front brakes are at the end of their life (pads 3 mm, rotors at minimum spec). After that, this is mostly routine upkeep we can spread across the year. Two items — your tires and your battery — are on a watch list; we'll confirm them by measurement before they become firm appointments.
+
+## 12-Month Calendar
+
+| Month | Visit Type | Operations | Time in Shop | Est. Cost | Pricing | Notes |
+|-------|-----------|------------|--------------|-----------|---------|-------|
+| Month 1 (Jun) | Repair + PM | Front pads + rotors (Safety) **·** brake-fluid flush (due, clustered) | ~1.8 hr | $610 ($480 brakes − 10% if booked by Jul 6 = $432 + $130 flush) | **Firm** | Safety leads. Brake quote 2026-05-30 still inside 30-day window. Flush clustered to share bleed/road-test labor. |
+| Month 3 (Aug) | PM | Oil + filter **·** tire rotation **·** pre-trip multipoint | ~0.7 hr | $95 | Firm | Before your August road trip; confirms tires + brakes for the drive. |
+| Month 4 (Sep) | Re-Inspect + PM | State safety + emissions inspection **·** cabin air filter | ~0.6 hr | $75 | Firm | **Inspection deadline.** Month-1 brakes ensure a pass. |
+| Month 5 (Oct) | Repair | Rear-diff + transfer-case fluid (AWD) | ~1.0 hr | $165 | Estimate | Re-quote of the $150/2026-05-30 declined item (now >90 days → re-priced). |
+| Month 6 (Nov) | PM | Oil + filter **·** tire rotation **·** tire + battery re-measure | ~0.7 hr | $95 | Estimate | Before winter. **We confirm tire tread + battery CCA here** to lock Months 8–9. |
+| Month 8 (Jan) | Repair | 4 tires + alignment (clustered) | ~1.5 hr | $880 | Planning | **Monitor item** — tires 5/32" in May, projected 4/32" ~Jan. Only books if Month-6 measurement confirms. Alignment clustered with install. |
+| Month 9 (Feb) | Repair | Battery replacement | ~0.4 hr | $260 | Planning | **Monitor item** — 4.5 yr, marginal CCA in May. Only books if Month-6 re-test confirms weakening. |
+| Month 11 (Apr) | PM | CVT fluid service (Honda severe-duty) | ~0.8 hr | $220 | Planning | Driveline longevity on the CVT; AWD + family-hauler use = severe duty. |
+| Month 12 (May) | PM | Oil + filter **·** tire rotation **·** annual DVI + plan re-issue | ~0.8 hr | $110 | Planning | Resets the watch list and the next 12-month plan. |
+
+**12-month estimated total:** ~$2,510 ($2,462 with the 14-day brake discount)
+**Monthly average:** ~$209
+**If you defer the two monitor items (tires hold past Jan, battery passes re-test) + the CVT service:** ~$1,150
+
+## What's Required vs. Recommended vs. Monitor
+
+**Required (safety / inspection / failure imminent):**
+- Front pads + rotors — pads 3 mm, rotors at minimum spec (Month 1)
+- State safety + emissions inspection — due September (Month 4)
+- Tires once they reach 4/32" — legal/safety floor (Month 8, pending measurement)
+
+**Recommended (PM at interval / wear item at end of life):**
+- Brake-fluid flush (2 yr elapsed) · oil + filter + rotations (per Maintenance Minder) · AWD rear-diff/transfer-case fluid · CVT fluid service · cabin air filter
+
+**Monitor (watch list — moves into a month only when measurement supports it):**
+- Tires — 5/32" in May, projected 4/32" ~Jan; **re-measured at Month 6 before Month 8 is committed**
+- Battery — 4.5 yr, marginal CCA; **re-tested at Month 6 before Month 9 is committed**
+
+## Pricing Confidence
+- **Months 1–2:** Firm — today's quote, good for 30 days
+- **Months 3–6:** Estimate — based on current parts pricing, subject to supply movement
+- **Months 7–12:** Planning estimate — will be re-quoted closer to the visit
+
+**Tariff-volatile note:** Tire pricing (Month 8) is subject to material parts-cost change; the figure shown is a current planning estimate.
+
+## Plan Maintenance
+- We'll send you an updated plan after each visit
+- We'll text you a friendly heads-up about two weeks before each scheduled month
+- If your driving changes (more miles, new commute, towing), call us and we'll re-balance the plan
+
+> A note on budget: you mentioned ~$250/month. Month 1 runs higher because the brakes are a safety item we don't move to balance a budget — but across the year your average is about $209/month, and deferring the watch-list items brings it lower.
+
+## Next Step
+Let's get the brakes on the calendar before your August trip. Book by **July 6** to lock the 10% off the brake job: call Riverbend Auto Care at [shop phone] or book at [booking link].
+
+## Technical Appendix (advisor / tech reference)
+- Front brakes: pads 3 mm (min 2 mm), rotors measured at min spec 2026-05-30 — replace pads + rotors, op time ~1.2 hr @ $145/hr; brake-fluid flush op ~0.6 hr clustered
+- Rear-diff + transfer-case fluid: AWD service, ~1.0 hr; re-quote (prior $150/2026-05-30 now >90 days)
+- Tires: 5/32" 2026-05-30; re-measure Month 6; alignment with install
+- Battery: 4.5 yr, CCA marginal 2026-05-30; re-test Month 6
+- CVT fluid: Honda severe-duty (AWD, family-hauler, mixed/short-trip) — drain & fill
+
+---
+
+## SHOP-SIDE SUMMARY (advisor reference, not for customer)
+- **Items that feed into `declined-services-followup.md`:** front brakes (declined 2026-05-30) → Month 1, 14-day book incentive; rear-diff/transfer-case fluid (declined 2026-05-30) → Month 5
+- **Items that feed into `maintenance-reminder-sequence.md`:** oil + rotation (Months 3, 6, 12); brake-fluid flush (Month 1); AWD driveline fluid (Month 5); CVT fluid (Month 11); cabin air filter (Month 4)
+- **Items flagged for re-quote at next visit:** rear-diff/transfer-case fluid (quote >90 days by Month 5); tires + battery (planning estimates)
+- **Items needing tech re-measurement before plan can be locked:** tire tread + battery CCA → both at the Month 6 visit (gates Months 8 and 9)
+- **State-inspection / seasonal / insurance deadlines:** state inspection due Sept → Month 4; brakes before August road trip → Month 1; winter prep → Month 6
+- **Escalation flags:** none — total repair exposure well under vehicle value; no open recall on VIN
+```
 
 ## Hand-offs
 
