@@ -4,7 +4,7 @@ category: _shared
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~10 min/email"
-version: 1.2
+version: 1.3
 ---
 
 # ✉️ Email Drafter
@@ -217,4 +217,60 @@ Maple Street Auto
 - **Send channel:** Email + courtesy follow-up phone call within 48 hours (counter desks read email irregularly)
 - **Follow-up reminder:** Mon 2026-04-28 if no response
 - **Audit flag:** This is the second un-credited core return from this counter in 90 days (prior: RO-2298, $40 brake-caliper core, eventually credited 31 days late). Track for the next quarterly vendor review.
+```
+
+**Inputs (fleet quarterly update):**
+- Recipient: Dana Whitfield, Fleet Manager, Riverside Plumbing & Mechanical, dana.w@riversidepm.com
+- Goal: Send the Q2 FY26 quarterly account review — show the KPIs, flag two exceptions, and tee up the FY27 rate conversation without making it the headline
+- Notes: Fleet = 22 vehicles (mix of ½-ton and ¾-ton vans + 3 box trucks). Q2 (Apr–Jun): 41 ROs, 38 PM services + 3 unscheduled repairs. Avg turnaround 1.3 days (target ≤ 1.5). On-time-completion 95% (39/41). Two exceptions: Unit 14 (2019 Transit) waited 4 days on a back-ordered EGR cooler — supplier delay, documented; Unit 7 (2021 ProMaster) came back once for a recurring ABS code, resolved under warranty no-charge. PM-compliance 100% (every due unit serviced in-window). Identified $1,940 in deferred-but-recommended work across 6 units (tires on 4, brakes on 2) — itemized list attached. Current labor rate $135/hr, locked through 2026-09-30; FY27 renewal discussion to start in August.
+- Attachments: q2-fy26-fleet-summary.pdf, deferred-work-by-unit.pdf
+- Tone: Results-oriented, KPI-aware (default for fleet manager)
+- Urgency: Routine
+- Config: Maple Street Auto, owner Tony Romano, (555) 123-4567, tony@maplestreetauto.com, 1234 Maple St, Springfield IL 62701
+
+**Output:**
+
+```
+## Email Draft
+
+**To:** Dana Whitfield, Riverside Plumbing & Mechanical — dana.w@riversidepm.com
+**Subject:** Q2 FY26 fleet review — 22 units, 95% on-time, 2 exceptions
+**Urgency:** Routine
+
+---
+
+Dana,
+
+Here's the Q2 (Apr–Jun) review for the Riverside fleet — 22 units, summary attached.
+
+Quarter at a glance:
+- Repair orders: 41 (38 scheduled PM, 3 unscheduled)
+- Average turnaround: 1.3 days (target ≤ 1.5) ✓
+- On-time completion: 95% (39 of 41)
+- PM compliance: 100% — every due unit serviced in its window
+
+Two exceptions to flag:
+- Unit 14 (2019 Transit): 4-day turnaround on a back-ordered EGR cooler — supplier delay, documented in the summary; we kept the unit moving as soon as the part landed.
+- Unit 7 (2021 ProMaster): one return for a recurring ABS code, resolved under warranty at no charge.
+
+We also flagged $1,940 in recommended-but-deferred work across 6 units (tires on 4, brakes on 2) — itemized by unit in the second attachment so you can budget or release as you see fit. None is safety-critical today; the brake items on Units 3 and 19 are the ones I'd prioritize next quarter.
+
+Your labor rate is locked at $135/hr through Sept 30. I'll reach out in August to start the FY27 renewal conversation — nothing needed from you before then.
+
+Attached: q2-fy26-fleet-summary.pdf, deferred-work-by-unit.pdf.
+
+Happy to walk through any of it on a call if useful.
+
+Tony Romano
+Owner, Maple Street Auto
+(555) 123-4567 | tony@maplestreetauto.com
+1234 Maple St, Springfield IL 62701
+
+---
+
+## Notes for the Sender
+- **Attachments referenced:** q2-fy26-fleet-summary.pdf, deferred-work-by-unit.pdf
+- **Send channel:** Email — fleet managers archive these for budget cycles; the PDF summary is the artifact they forward internally.
+- **Follow-up reminder:** Early August (FY27 rate-conversation kickoff) — not a response chase.
+- **Audit flag:** Rate lock expires 2026-09-30. The $1,940 deferred-work list is a soft-upsell pipeline — re-surface the two brake items (Units 3 and 19) at the next PM cycle.
 ```

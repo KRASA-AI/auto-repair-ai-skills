@@ -14,6 +14,7 @@ This repo is a complete AI toolkit for auto repair. Every skill is a standalone 
 | Skill | What it does | Time saved |
 |-------|-------------|------------|
 | ADAS Calibration Documenter | Turn a repair order, estimate, or inspection note into a structured ADAS-calibration documentation packet — identifying which Advanced Driver Assistance Systems are likely to require calibration based on the work performed, citing the OEM position statements and service procedures that trigger the requirement, and producing a clean paper trail the shop can attach to the RO for insurance billing, liability protection, and customer communication. | ~20 min/RO + reduced rework exposure |
+| ADAS Pre-Work Disclosure & Authorization Builder | Turn a windshield/glass or ADAS-triggering repair order into the **written customer disclosure and authorization a shop is increasingly required by state law to provide *before* it starts the work** — telling the customer whether the vehicle has an Advanced Driver Assistance System, whether the manufacturer requires (re)calibration after this repair, what that calibration will cost and who will perform it (in-house vs. | ~10 min/RO + reduced regulatory/consumer-complaint exposure |
 | AI Comeback Root-Cause Analyzer | Investigate a single comeback — a vehicle returning with the same complaint, a related complaint, or an unintended consequence of recent work — and produce a structured root-cause analysis that distinguishes between technician execution, parts quality, diagnostic miss, sublet vendor failure, and customer-side factors. | ~25 min/comeback investigation + 15–20% comeback-rate reduction over time |
 | AI Voice-to-Work-Order Note Builder | Turn a technician's spoken narration — captured on a phone, headset, or shop-tablet voice recorder — into a structured, advisor-readable Repair Order (RO) note that lives where the rest of the job lives: on the RO itself. | ~6 min/RO + far better tech-to-tech handoffs |
 | ASE Certification Study Plan | Build a personalized, week-by-week ASE certification study plan for a shop technician or apprentice — covering which topics to study, in what order, how many hours per week, which free and paid practice resources to use, and what to focus on in the final week before the exam. | ~2 hr/plan |
@@ -54,7 +55,7 @@ This repo is a complete AI toolkit for auto repair. Every skill is a standalone 
 | GBP Post Generator | Generate a single Google Business Profile post — text, photo brief, and a single clear call-to-action — tuned to the shop's locale, the current season, the services being marketed, and the brand voice. | ~15 min/post |
 | Short-Form Video Script Generator | Generate a publish-ready 30–90 second short-form video script for Reels, TikTok, YouTube Shorts, or Facebook Reels — with a hook in the first 3 seconds, three to five visual beats with the on-camera dialogue and the b-roll cue, an optional caption, a single CTA, and a publish-ready caption text and hashtag set. | ~25 min/script |
 
-**Total time saved per use: ~635+ minutes across all skills.**
+**Total time saved per use: ~645+ minutes across all skills.**
 
 ## Quick Start
 

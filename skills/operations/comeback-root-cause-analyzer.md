@@ -4,7 +4,7 @@ category: operations
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~25 min/comeback investigation + 15–20% comeback-rate reduction over time"
-version: 1.0
+version: 1.1
 last_eval_score: null
 ---
 
@@ -229,6 +229,71 @@ Customer is mildly upset but not hostile. Documentation is strong: original RO h
 
 ### Prevention note (single-sentence, actionable)
 Add a passenger-side and driver-side plug-well oil check to the 5.3L Gen-V misfire SOP, BEFORE settling on a coil/plug-only repair recommendation, on any vehicle with 80,000+ miles.
+```
+
+## Example Output (pattern-aggregation)
+
+**Inputs:**
+- Period: 2026-04-01 → 2026-04-30 (30 days)
+- Total ROs closed in period: 412
+- Comeback history (14 comebacks logged):
+  1. 2019 Silverado 5.3L — misfire re-do — Tech A — parts vendor: WorldPac — sublet: none — 23 days
+  2. 2017 Accord — brake noise after pad/rotor — Tech C — vendor: Centric (house brand) — none — 9 days
+  3. 2015 Camry — brake pulsation after pad/rotor — Tech C — vendor: Centric — none — 14 days
+  4. 2020 CR-V — brake squeal after pad/rotor — Tech C — vendor: Centric — none — 6 days
+  5. 2018 F-150 — alignment pull after tie-rod + align — Tech B — vendor: Moog — sublet: Precision Align — 4 days
+  6. 2016 Altima — AC not cold after condenser — Tech D — vendor: Denso — none — 11 days
+  7. 2014 Tahoe — brake noise after pad/rotor — Tech C — vendor: Centric — none — 8 days
+  8. 2019 Civic — check-engine after coil — Tech A — vendor: NGK — none — 19 days
+  9. 2021 RAV4 — alignment pull after struts — Tech B — vendor: KYB — sublet: Precision Align — 5 days
+  10. 2013 Wrangler — death wobble after track bar — Tech B — vendor: Moog — sublet: Precision Align — 7 days
+  11. 2018 Sonata — brake pedal soft after pad/rotor — Tech C — vendor: Centric — none — 12 days
+  12. 2015 Escape — coolant leak after water pump — Tech D — vendor: Gates — none — 16 days
+  13. 2017 Sienna — AC weak after evaporator — Tech D — vendor: Denso — none — 21 days
+  14. 2020 Silverado — vibration after tires — Tech E — vendor: tire — sublet: none — 3 days
+- Known shop variables: Tech C completed a 2-week PTO mid-March and returned 2026-03-30; shop switched its house brake-pad line to Centric on 2026-03-15; new sublet alignment partner (Precision Align) onboarded 2026-03-01.
+
+**Output:**
+
+```
+## Comeback Pattern Analysis — April 2026 (2026-04-01 → 2026-04-30) | 2026-05-02
+
+### Headline metrics
+- Comeback rate: 14 comebacks ÷ 412 ROs = 3.4%
+- Industry benchmark: 5–8% typical; <3% excellent; >10% problem — shop is BELOW typical (good), but two clusters below are masked by the healthy aggregate rate.
+- Trend vs. prior period (March: 3.1%): up 0.3 pts — within noise at this volume, but the composition shifted toward brake + alignment.
+
+### Cause-category breakdown
+| Cause category | Count | % of comebacks |
+|----------------|-------|-----------------|
+| Technician execution | 5 | 36% |
+| Parts quality | 4 | 29% |
+| Diagnostic miss | 1 | 7% |
+| Sublet vendor failure | 3 | 21% |
+| Customer-side factor | 0 | 0% |
+| Environmental / wear-related | 0 | 0% |
+| Communication gap | 1 | 7% |
+
+### Clustering findings (patterns with N ≥ 3 only)
+
+**Cluster 1 — Tech C brake comebacks (N = 5).** Comebacks 2, 3, 4, 7, 11 are all brake-job comebacks (noise / pulsation / squeal / soft pedal) on Tech C's ROs, all within 6–14 days. This is the single strongest signal in the period. Two confounders co-occur and must be separated before assigning cause:
+  - **Tech execution:** Tech C returned from 2 weeks PTO on 2026-03-30; all five comebacks are post-return. A skills/rust-off or rushed-reentry pattern is plausible — soft pedal (comeback 11) specifically suggests an incomplete bleed or a caliper-slide lubrication/seating miss, which is an execution tell, not a parts tell.
+  - **Parts quality:** all five used the new Centric house-brand pads/rotors adopted 2026-03-15. Noise/squeal (comebacks 2, 4, 7) can be a pad-compound/hardware issue independent of the tech.
+  - **Separation test:** pull Tech C's pre-PTO brake comeback rate (should be near zero if execution is the new variable) AND check whether any *other* tech's Centric brake jobs comeback-ed (none in this sample did — but the N on other techs' Centric brake jobs this period is small). Action below reflects both threads until the data separates them.
+
+**Cluster 2 — Precision Align sublet (N = 3).** Comebacks 5, 9, 10 are all post-alignment/steering comebacks (pull, pull, death wobble) routed through the new sublet alignment partner Precision Align (onboarded 2026-03-01), all within 4–7 days. Three different techs (B on all three originals, but the alignment itself was sublet), three different vehicles — the common factor is the vendor, not the in-house tech. The death-wobble return (comeback 10) on a Wrangler after track-bar work is the most serious and warrants a direct vendor conversation, not a courtesy re-do absorbed in-house.
+
+### Systemic actions recommended
+| # | Action | Owner | Due |
+|---|--------|-------|-----|
+| 1 | Pull Tech C's Jan–Feb brake comeback rate and re-inspect the 5 April brake comebacks for bleed completeness + caliper-slide seating (execution) vs. pad hardware/compound (parts). Do NOT coach or switch vendors until the threads separate. | Shop foreman | 2026-05-09 |
+| 2 | Open a vendor-quality case with Precision Align on the 3 alignment/steering returns (esp. the Wrangler death wobble). Request their post-alignment spec printouts for all three; route the re-dos back to them under the sublet warranty, not absorbed in-house. | Service manager | 2026-05-06 |
+| 3 | Add a brake-job final-check step (post-bleed pedal-firmness check + caliper-slide lube verification) to the brake SOP regardless of which thread Cluster 1 resolves to — it's cheap insurance and addresses the soft-pedal return directly. | Shop foreman | 2026-05-12 |
+| 4 | Track Centric brake-job comeback rate shop-wide (all techs) for 30 more days before deciding whether the pad line itself is a factor. | Parts manager | 2026-06-01 |
+
+### Watch-list for next period
+- Tech D AC/cooling comebacks: N = 2 this period (comebacks 6, 13 AC; 12 cooling) — below the N ≥ 3 threshold, not yet a pattern, but three thermal-system returns on one tech is worth watching next month.
+- Tech A: 2 comebacks (1 diagnostic-miss already analyzed, 1 coil) — not clustered, no action.
 ```
 
 ## What to Avoid

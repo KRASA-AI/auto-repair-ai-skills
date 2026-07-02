@@ -4,7 +4,7 @@ category: admin
 tools: [claude, chatgpt]
 difficulty: advanced
 time_saved: "~35 min per supplement + fewer rejection round-trips"
-version: 1.0
+version: 1.1
 last_eval_score: null
 ---
 
@@ -248,6 +248,90 @@ LF fender adjacent to replaced LF headlamp assembly requires a blend refinish. V
 [Damage Appraiser Name], [Shop Name]
 [Shop Address] · [Direct phone] · [Email]
 ```
+
+### Second example — non-DRP carrier + an incomplete line that must NOT ship
+
+This example exercises two things the first (clean State Farm DRP) does not: a **non-DRP / conservative free-form** carrier format, and the **cite-or-flag gating** — a line that is real but not yet documented, which the skill marks DO NOT SUBMIT rather than dressing up.
+
+**Input (non-DRP supplement, one line not ready):**
+- Vehicle: 2022 Subaru Outback Premium, VIN ...K55210, Crystal Black (D4S), 31,540 mi
+- Claim: GW-2026-55817, Goodwell Mutual (non-DRP), Adjuster: Ray T. (ray.t@goodwellmutual.example)
+- Original estimate: $3,205.10 (2026-05-08, on-site)
+- Teardown findings (2026-05-13):
+  1. Rear bumper reinforcement bar deformed inboard at right mount (rear-corner impact) — replace; part on hand
+  2. RR quarter-panel lower section creased above the wheel arch — repair, 2.1 hrs measured
+  3. Subaru EyeSight calibration: rear-facing work did not disturb the windshield stereo camera, BUT the impact moved the rear bumper where the blind-spot/rear-radar sensors mount — tech believes recalibration is required; **OEM position statement not yet pulled**
+  4. RR quarter blend to adjacent door
+- Labor book: Mitchell UltraMate 2026.05
+- Photos: 9 files (IMG_3301–IMG_3309), captions provided for findings 1, 2, 4; **no photo yet of the rear-radar sensor mount for finding 3**
+- Pre-scan: B1473 (blind-spot/rear-radar sensor — right) present; post-scan not yet run
+
+**Output structure produced:**
+
+```
+# Collision Supplement — GW-2026-55817 / 2022 Subaru Outback (VIN ...K55210) / Carrier: Goodwell Mutual (non-DRP)
+
+## Cover Note
+Ray — supplement for claim GW-2026-55817, 2022 Outback VIN ...K55210. Teardown on 2026-05-13 revealed a deformed rear reinforcement bar, a quarter-panel crease, and a likely rear-radar recalibration trigger. The bar, quarter repair, and blend are documented and ready (this supplement adds $1,612.40 for those). One ADAS-calibration line is still being documented and is NOT included in this total — we'll send it as a short follow-up once the OEM procedure and post-scan are attached, so the rest of the repair isn't held up. Nine photos indexed. Please advise.
+
+## Supplement Summary
+- Original estimate: $3,205.10 (2026-05-08)
+- This supplement adds: $1,612.40 (ready lines only)
+- New total (this supplement): $4,817.50
+- Held for follow-up (not in total): rear-radar recalibration — pending OEM citation + post-scan
+- Supplement reason: teardown hidden damage + refinish blend
+- Photo count: 9
+- OEM citations: 1 (Subaru refinish blend); 1 PENDING (ADAS)
+
+## Line Items (new and revised)
+| Line | Op | Panel | Part / Source | Labor (time + op + guide) | Parts $ | Labor $ | Refinish | Reason |
+|------|-----|-------|----------------|----------------------------|---------|---------|----------|--------|
+| 4 | R&R | Rear bumper reinforcement bar | SU-52022-AN / Subaru OEM | 1.0 hr, op 31-110, Mitchell 2026.05 | $241.00 | $58.00 | — | Teardown — deformed inboard at RH mount |
+| 5 | Repair | RR quarter, lower section | — | 2.1 hrs, op 33-204, Mitchell 2026.05 | — | $121.80 | — | Teardown — crease above wheel arch, measured |
+| 6 | Refinish | RR quarter blend → adjacent door | — | 1.4 hrs, op 41-012 | — | $81.20 | $96 mat | Subaru blend criteria, metallic (cited below) |
+| — | Calibrate | Rear blind-spot/rear-radar (RH) | — | **NOT SUBMITTED** | — | — | — | **DO NOT SUBMIT UNTIL COMPLETED — missing: (a) OEM position-statement citation, (b) photo of sensor mount, (c) post-scan report** |
+
+## Narrative
+
+### Sheet metal / body
+Rear-corner impact deformed the rear bumper reinforcement bar inboard at the right-hand mount (photo IMG_3303) and creased the RR quarter lower section above the wheel arch (photo IMG_3305, 2.1 hrs measured). Bar replacement and quarter repair recommended as shown.
+
+### Refinish / blend
+RR quarter repair requires a blend into the adjacent rear door to avoid a visible color break; vehicle is Crystal Black (D4S), a metallic finish. Recommended per Subaru refinish blend criteria (cited in appendix).
+
+### ADAS-calibration triggers — HELD, NOT SUBMITTED
+Pre-scan returned B1473 (blind-spot/rear-radar sensor, right). The rear-corner impact is at the sensor-mount region, so recalibration is likely required after the bar/bumper work. This line is **not** included in this supplement: the governing Subaru position statement has not been pulled, no photo of the sensor mount has been captured, and the post-scan has not been run. Per shop policy this line ships only after all three are attached — submitting it now without citation would be a fabrication risk and an audit exposure. Front office: route the three gaps before the follow-up supplement.
+
+## Photo Index
+| File | What's shown | Supports line(s) | Date / time | By |
+|------|--------------|-------------------|-------------|-----|
+| IMG_3303.jpg | Rear reinforcement bar, inboard deformation at RH mount | 4 | 2026-05-13 10:02 | RT |
+| IMG_3305.jpg | RR quarter lower crease above wheel arch | 5 | 2026-05-13 10:07 | RT |
+| IMG_3308.jpg | RR quarter / adjacent door panel gap for blend reference | 6 | 2026-05-13 10:11 | RT |
+
+## OEM Citation Appendix
+| OEM | Document title | Doc # | Published | Applies to line(s) |
+|-----|----------------|-------|-----------|---------------------|
+| Subaru of America | Refinish Blend Criteria — Metallic / Mica Finishes | [shop to confirm doc # from current Subaru STIS] | [verify] | 6 |
+| Subaru of America | Rear-radar / blind-spot recalibration after rear-body repair | **TO VERIFY — do not submit line until cited** | — | (held line) |
+
+## Pre-Submission Checklist
+- [ ] Every structural / ADAS line has an OEM citation → **1 PENDING (held line)**
+- [x] Every submitted line has at least one supporting photo
+- [x] Every submitted labor time cites the guide and op code
+- [ ] Pre-scan / post-scan reports attached → **post-scan PENDING (held line)**
+- [x] Carrier format: non-DRP — conservative free-form PDF + Mitchell export attached
+- [x] Customer-rental status noted: customer in own vehicle alternative, no rental billed
+- [x] Anti-steering footer included
+- [x] No inflammatory language
+- [x] No invented citations, damage, or labor times — the un-cited ADAS line is HELD, not guessed
+
+## Shop Signature Block
+[Damage Appraiser Name], [Shop Name]
+[Shop Address] · [Direct phone] · [Email]
+```
+
+This second example shows the intended behavior when the evidence isn't all there yet: the ready lines ship and keep the repair moving, the un-cited ADAS line is held with its exact gaps named, and nothing is fabricated to round out the packet.
 
 ## Notes on Usage
 
