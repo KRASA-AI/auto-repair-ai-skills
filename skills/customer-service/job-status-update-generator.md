@@ -4,7 +4,7 @@ category: customer-service
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~3 min/update"
-version: 1.1
+version: 1.2
 last_eval_score: null
 ---
 
@@ -176,3 +176,38 @@ Hi David — Tony at Maple Street. Quick update on your F-150: AC compressor bac
 - Next message expected: Ready for pickup (Friday morning)
 - Bilingual flag: No
 ```
+
+**Inputs (ready-for-pickup example — demonstrates payment-link + config injection):**
+- Stage: Ready for pickup
+- Customer: María
+- Vehicle: 2018 Honda CR-V, RO-2401
+- Job details: front brake pads + rotor machine, completed
+- Total: $447 (approved earlier via YES)
+- Channel: SMS
+- Config voice: friendly-neighborhood
+- Config values used: shop_name = Maple Street Auto · shop_phone = (555) 123-4567 · hours = Mon–Fri 7:30–6:00 · payment_link domain = pay.maplestreetauto.com · advisor_first = Tony
+
+**Output:**
+
+```
+## Status Update — Ready for Pickup
+
+**To:** María | 2018 Honda CR-V | RO 2401
+**Channel:** SMS
+**Char count:** 159 / 160
+
+---
+
+Hi María — Tony at Maple Street. Your CR-V is done (front brakes). Total $447. Pay ahead & grab keys: pay.maplestreetauto.com/2401 — open til 6 today. (555) 123-4567
+
+---
+
+## Notes
+- Sender: Tony
+- Sent from: (555) 123-4567
+- Config injected: shop_name, advisor_first, payment-link domain (pay.maplestreetauto.com) + RO-keyed path, hours cutoff (6 PM from Mon–Fri 7:30–6:00)
+- Next message expected: Picked up — thank-you (+24 hr; review-eligible → soft review ask, route response to Review Response Generator)
+- Bilingual flag: No
+```
+
+*Why this example matters: ready-for-pickup is the highest-frequency stage and the only one that injects the shop's payment-link domain, RO-keyed payment path, and the hours cutoff from config — everything the customer needs to pay and collect without a phone call. It also seeds the +24 hr thank-you / review-ask handoff.*

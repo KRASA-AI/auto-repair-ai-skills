@@ -4,7 +4,7 @@ category: operations
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~30 min/practice session + measurable advisor-skill lift"
-version: 1.0
+version: 1.1
 last_eval_score: null
 ---
 
@@ -136,6 +136,89 @@ You are a service-advisor coach for an independent auto repair shop. Your job is
 - The AI played a simulated customer. A real customer will surprise both of us.
 - Any shop-fact the advisor referenced that isn't in this shop's config: [list, or "none flagged"]
 - This is a coaching artifact — not a performance record without the advisor's knowledge.
+```
+
+## Worked Example
+
+**Inputs:**
+- Advisor: Ben, 24 days in the role (first month), manager focus area: "freezes on price reveals over $1,500 — tends to rush past the number instead of pausing and letting it land"
+- Scenario: Price reveal on a $2,380 timing-belt + water-pump + accessory-drive cluster. Customer came in for a $69 oil change; the tech found the timing belt at end-of-interval (108k on a 105k-interval belt) with the water pump weeping.
+- Persona: Marisol, 42, three kids, drives a 2016 Honda Odyssey EX-L (108,400 mi), busy and skeptical, chain-shop history where she felt oversold. Pushback pattern: challenges the jump from a $69 visit to a four-figure number, asks "why is it so much more than the quick-lube quoted," defers anything not strictly required.
+- Rubric: default 5-dimension
+- Mode: Live roleplay
+- Config: Maple Street Auto, labor $135/hr, 24-month/24k warranty on this job
+
+**Output:**
+
+```
+# Service Advisor Roleplay Rehearsal
+**Advisor:** Ben | **Tenure:** 24 days
+**Scenario:** Price reveal — $2,380 timing belt + water pump cluster on an oil-change visit
+**Persona:** Marisol — busy, skeptical, chain-shop-burned, defers non-required work
+**Mode:** Live
+**Rehearsal Date:** 2026-07-06
+
+## Transcript
+
+**Customer (Turn 1, persona: Marisol):** Hi — I just dropped the Odyssey off for the $69 oil change. The guy who called said something about a belt and now you're telling me it's over two thousand dollars? I came in for an oil change.
+
+**Advisor (Turn 2):** I hear you, Marisol — that's a big jump from what you walked in for, and I'd be caught off guard too. Can I take two minutes to show you what the tech found and why it came up today, and then you decide what you want to do?
+
+**Customer (Turn 3):** Fine. But the quick-lube place quoted me like $600 for a timing belt last year. Why is yours four times that?
+
+**Advisor (Turn 4):** Great question, and the number matters — let me be straight about what's in it. Two things are different. First, on your Odyssey the water pump sits behind the timing belt, so it's driven by that same belt. When we're already in there, replacing the pump is about 20 minutes of extra labor instead of a whole second teardown later. Second, we do the tensioner and the drive belts at the same time because they're all exposed. The $600 quote was likely the belt alone — which means a second $900 labor bill when the pump fails six months later. Your all-in is $2,380: that's belt, water pump, tensioner, accessory belts, and coolant, with our 24-month/24,000-mile warranty on the whole job.
+
+**Customer (Turn 5):** Okay but do I actually need all of that right now? The van drives fine.
+
+**Advisor (Turn 6):** Two of those five items are "need now," the rest are "smart while we're in there," and I'll split it so you can see the line. [pause] The belt is at 108,000 on a 105,000-mile interval — it's past due, and on this engine if it breaks it bends valves, which is a $3,000–$4,000 repair, not a $2,380 one. The water pump is weeping now — we photographed it. Those two are the ones I'd tell my own family not to leave. The tensioner and drive belts are the "already exposed, save a future labor charge" items. If budget's the question today, we can do the required belt-and-pump and hold the rest — but I'd rather you hear the whole picture first.
+
+**Customer (Turn 7):** …So what's the required-only number?
+
+**Advisor (Turn 8):** Belt, water pump, tensioner (it drives the belt tension, so it goes with the required set), and coolant: $1,890. Doing the accessory drive belts at the same time adds $190 in parts and no extra teardown labor — that's the only optional line. Want me to text you both versions so you can look at the photos of the pump before you decide?
+
+**Customer (Turn 9):** Yeah, send me both. And the photos. If the pump's really leaking I'll probably just do the whole thing — I don't want to be back here in six months.
+
+**Advisor (Turn 10):** That's the right instinct, and thank you for hearing me out on it. I'll text you the two options and the pump photo in the next five minutes, and I'll hold your bay so we can start today if you approve. No pressure on the accessory belts — that one's genuinely your call.
+
+## Score (Rubric: default 5-dim)
+
+| Dimension | Score | Anchor Quote |
+|-----------|-------|--------------|
+| Greeting & rapport | 9/10 | Turn 2: "that's a big jump from what you walked in for, and I'd be caught off guard too" — named the customer's feeling before pitching, earned the two minutes. |
+| Needs discovery | 6/10 | Ben never explicitly asked what Marisol cares about (budget vs. keeping the van long-term vs. time). He *inferred* budget correctly at Turn 6, but inferring is not asking — a single "before I lay out options, is the priority getting it safe today or spreading the cost?" would have targeted the whole conversation. |
+| Plain-language explanation | 10/10 | Turn 4: "the water pump sits behind the timing belt… replacing the pump is about 20 minutes of extra labor instead of a whole second teardown later" — perfect cause-and-effect, no jargon-without-translation, directly answered the "why 4x" objection. |
+| Objection handling | 9/10 | Turn 6: "Two of those five items are 'need now,' the rest are 'smart while we're in there'" — split required from recommended instead of defending the whole number, which is exactly the non-defensive move. |
+| Close & next step | 9/10 | Turn 8 & 10: named both numbers ($1,890 required / $2,380 full), offered the photo-text as the single next step, held the bay. Lost a point because he offered "both versions" rather than making a confident single recommendation with the alternative in reserve. |
+| **Total** | **43/50** | — |
+
+## Moment of Inflection
+**Turn 6:** "Two of those five items are 'need now,' the rest are 'smart while we're in there'… on this engine if it breaks it bends valves."
+**What happened:** This is where Marisol shifted from "you're overselling me" to "what's the required number." Ben voluntarily split the estimate before she forced him to, which read as honesty rather than a sales wall — and the interference-engine consequence gave the required items a reason she could repeat to herself. Her Turn 7 tone change ("So what's the required-only number?") is the booking becoming likely.
+
+## Coaching Note (manager 1:1 reference)
+
+**What worked:**
+- Named the sticker-shock feeling out loud before explaining anything (Turn 2). For a 24-day advisor, that composure on a four-figure reveal is ahead of tenure.
+- Answered "why 4x" with the water-pump-behind-the-belt mechanics instead of getting defensive about the shop's rate (Turn 4). That single explanation did most of the work.
+
+**What to rehearse next time:**
+- Ask one needs-discovery question *before* laying out options. One sentence at Turn 2 or 4 — "before I show you the options, is the priority getting it safe today or spreading the cost over a couple visits?" — would let him aim the whole pitch instead of inferring budget three turns in.
+
+**The drill (2-min solo practice):**
+- Ten reps of a single opener that pairs the feeling-name with a discovery question: "That's a big jump from what you came in for — before I walk you through it, what matters most here: getting it safe today, or keeping the cost manageable?" Say it until the discovery question feels automatic, not tacked on.
+
+## Manager Focus Note
+Manager focus was the price-reveal freeze. Ben did **not** freeze — he paused deliberately at Turn 6 ("[pause]") and let the number land instead of rushing past it, which is the specific behavior the manager was watching for. This focus area looks resolved; recommend re-testing once at a higher number (>$3,000) to confirm it holds under more pressure.
+
+## Next Session Suggestion
+**Scenario:** Do-not-drive safety reveal — cracked rear trailing arm found during a tire rotation, $1,650, on a customer who needs the van for a road trip in two days.
+**Persona:** Marisol again (same persona for continuity), pushback pattern shifted to time/urgency instead of price.
+**Difficulty:** +1 — adds a real deadline conflict on top of the reveal, and forces the discovery question Ben skipped this session.
+
+## Caveats & Verification
+- The AI played a simulated customer. A real customer will surprise both of us.
+- Shop-facts Ben referenced that should be verified against config: the $2,380 / $1,890 / $190 figures were supplied in the scenario, not invented; the interference-engine claim on this specific Odyssey engine should be confirmed against the OEM belt spec before it's said to a real customer — flagged, not assumed.
+- This is a coaching artifact — not a performance record without Ben's knowledge.
 ```
 
 ## Hard Guardrails (non-negotiable)
