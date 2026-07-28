@@ -4,7 +4,7 @@ category: operations
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~30 min/practice session + measurable advisor-skill lift"
-version: 1.1
+version: 1.2
 last_eval_score: null
 ---
 
@@ -37,6 +37,41 @@ Provide the following. Without a clearly named scenario and persona the rehearsa
    - **Close & next step** (0–10) — Did the advisor land on a single clear next step, name a price (or a price range with a specific reason it's a range), and confirm the customer's understanding of what was agreed?
 5. **Manager focus areas (optional)** — One or two specific things the manager wants extra-graded this session ("particularly looking for whether the advisor uses the customer's name three times during the call," "particularly watching the moment when the price is revealed — was there a pause, or did the advisor rush past it"). Focus areas inform the coaching note, not the rubric score.
 6. **Mode** — Live roleplay (the AI plays the customer turn-by-turn, the advisor types or speaks responses), Transcript review (the advisor pastes a transcript of a real call — with consent and any required redactions — and the AI scores it), or Cold start (the AI generates a hypothetical advisor's response to the same scenario as a calibration baseline).
+
+## Persona Library & Quick-Start Presets
+
+The Required Input above is what a *fully specified* rehearsal needs — and authoring a named scenario, a named persona with a real pushback pattern, and a rubric from scratch every morning is exactly the setup cost that keeps a busy manager from running reps at all. This section removes that cost. **A manager can start a rehearsal by naming one preset** — the skill fills in the scenario, persona, pushback pattern, and rubric from the library below, and the manager overrides only what's shop-specific (the advisor's name, the real dollar figure, the vehicle in the bay). This is the intended fast path; full custom input remains available whenever the scenario is unusual.
+
+### Persona library (six repeatable customers)
+
+Reuse the same personas across reps so an advisor's progress against a *known* pushback pattern is measurable week to week. Each persona names its pushback engine — the thing that makes it practice and not a cooperative walk-through.
+
+| Persona | One-line | Pushback engine |
+|---------|----------|-----------------|
+| **Marisol, 42** | Three kids, 2016 Odyssey, busy, chain-shop-burned | Price-shock + "why is it so much more than the quick-lube," defers anything not strictly required |
+| **Dave, 67** | Retired, 2010 F-150, fixed income, trusts the shop | "Can I wait until next month" — defers on budget, needs the safety/consequence framing to act |
+| **Aisha, 31** | Hybrid driver, researched online, environmentally minded | Challenges the diagnosis with a forum post or a TSB reference — "have you confirmed this against the OEM bulletin" |
+| **Carlos, 55** | Fleet manager, 22-vehicle landscaping company, time-pressured | Transactional — "what's the SLA," "what's the per-unit price," wants downtime minimized over everything |
+| **Brenda, 48** | Came in on a warranty/comeback, feels burned once already | Trust is spent — "you already had it once and it's back," escalates fast if she smells a runaround |
+| **Tyler, 26** | First real car, 2015 Civic, low knowledge, high anxiety | Doesn't know what's normal — over-asks, freezes on the number, needs plain-language reassurance without being talked down to |
+
+### Quick-start scenario presets
+
+Name a preset and the skill loads the scenario + a default persona + the pushback pattern + the default 5-dimension rubric. Override the dollar figure, vehicle, and advisor from the shop's real ticket.
+
+| Preset | Scenario | Default persona | Trains |
+|--------|----------|-----------------|--------|
+| **P1 · Price reveal** | Four-figure cluster found on a low-dollar visit (e.g., timing belt + water pump on an oil-change drop-off) | Marisol | The reveal pause, required-vs-recommended split, non-defensive "why so much" answer |
+| **P2 · Do-not-drive safety** | Safety-critical finding on a customer who needs the car *now* (cracked control arm, separated ball joint) | Dave *or* Marisol (time-pressure variant) | Urgency without fear-selling, offering the safe path when budget/timing fights it |
+| **P3 · Declined-work callback** | 30/60/90-day follow-up on work the customer passed on (e.g., $850 front brakes at 60 days) | Dave | Re-opening without nagging; tying the old decline to a new symptom or season |
+| **P4 · Warranty / comeback escalation** | A repair failed inside the warranty window; customer is angry it's back | Brenda | Owning it without over-apologizing, controlling the escalation, landing a concrete next step |
+| **P5 · Diagnosis challenge** | Customer disputes the finding with online research | Aisha | Holding the diagnosis with evidence, not ego; when to invite the second opinion |
+| **P6 · Fleet quarterly review** | Fleet manager questioning two recent invoices | Carlos | Defending value per-unit, SLA language, protecting the account without discounting reflexively |
+| **P7 · First-timer overwhelm** | Low-knowledge customer, moderate repair, high anxiety | Tyler | Plain-language explanation without condescension, pacing the information, confirming understanding |
+
+**Preset invocation example:** *"Run P1 for Ben (24 days), $2,380 timing-belt cluster, 2016 Odyssey."* — the skill loads the price-reveal scenario, the Marisol persona and her pushback engine, and the default rubric; the manager supplied only the three shop-specific values. No scenario authoring, no persona writing, one line to start. If the manager names only the preset (*"Run P4"*), the skill asks for just the advisor name and the one shop-specific fact the scenario needs (here: what the failed repair was) and starts — that is the one clarifying question the efficiency budget allows, not a setup interview.
+
+Presets and personas are starting points, not a ceiling: a manager can still hand-author any scenario, swap a persona's pushback engine, or override the rubric per shop. The library exists so the *common* rehearsal starts in one line and the *unusual* one still has the full input surface.
 
 ## Instructions
 

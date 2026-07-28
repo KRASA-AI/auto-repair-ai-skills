@@ -4,7 +4,7 @@ category: admin
 tools: [claude, chatgpt]
 difficulty: advanced
 time_saved: "~35 min per supplement + fewer rejection round-trips"
-version: 1.1
+version: 1.2
 last_eval_score: null
 ---
 
@@ -332,6 +332,110 @@ Pre-scan returned B1473 (blind-spot/rear-radar sensor, right). The rear-corner i
 ```
 
 This second example shows the intended behavior when the evidence isn't all there yet: the ready lines ship and keep the repair moving, the un-cited ADAS line is held with its exact gaps named, and nothing is fabricated to round out the packet.
+
+### Third example — California tear-down + third-party-payor disclosure (config-driven)
+
+This example exercises what the first two do not: a **state-specific estimate-disclosure regime** (California BAR) that changes what the supplement must *contain*, and a **config-driven signature block** so the output adapts to the shop's own BAR registration rather than a placeholder. In California the supplement is not just a request to the carrier — it is a regulated consumer document, and three requirements attach that do not exist in the DRP/non-DRP examples above:
+
+1. **Reassembly disclosure.** When a tear-down reveals hidden damage and the additional repair might be declined, the customer is entitled to know — in advance — what it costs to reassemble the vehicle and return it in its torn-down state. The supplement states reassembly time and cost as its own line so the customer's authorization is informed, not cornered.
+2. **Third-party-payor amount.** An itemized estimate must show the amount the third-party payor (the insurer) is expected to pay, and the supplement travels with the third-party (carrier) estimate attached. Where the payor amount is not yet known, the disclosure says so plainly in the mandated fallback form rather than leaving the column blank.
+3. **Plain-language operation descriptions and separate authorization for tow/storage.** Repair descriptions read in plain language a consumer can understand; any tow or storage charges are authorized on their own line, never folded into a repair total.
+
+**Cite-or-flag discipline still governs.** The skill does **not** assert California section numbers, an effective date, or a penalty — the BAR estimate-disclosure rules (tear-down reassembly, third-party-payor amount, plain-language) were refreshed in 2026 and the effective date is reported inconsistently across sources. The skill loads `knowledge-base/regulations/` for the current California text and routes anything it cannot confirm to the owner/counsel as a flag, exactly as it does for an un-pulled OEM position statement.
+
+**Input (California DRP supplement, tear-down with a declinable line):**
+- Vehicle: 2021 Toyota RAV4 XLE, VIN ...J71144, Silver Sky (1D6), 38,220 mi
+- Claim: CA-2026-33915, Mercury Insurance (DRP), Adjuster: Dana R. (dana.r@mercuryins.example)
+- Original estimate: $5,140.00 (2026-07-10, on-site)
+- Shop `config.yml`: **Golden State Collision, San Jose CA; BAR Auto Body Registration ARD-00291744; estimator Priya N.; labor $172/hr**
+- Teardown findings (2026-07-16):
+  1. RF strut tower shows a stress crease inboard of the mount after bumper/fender removal (frontal-offset impact) — repair per Toyota OEM procedure; measurement pending on frame bench
+  2. RF apron reinforcement buckled — replace, part on hand
+  3. Radiator support upper tie-bar bent — replace
+  4. **Front-radar recalibration likely** (support/tie-bar carries the radar bracket) — tech flags it; Toyota position statement not yet pulled → HELD line
+- Tear-down reassembly (if additional repair declined): 2.4 hrs to reassemble and return the vehicle
+- Labor book: CCC ONE 2026.07 release
+- Photos: 11 files (IMG_7701–IMG_7711), captions for findings 1–3
+- Third-party-payor status: carrier estimate on file for original $5,140.00; supplement payor amount **not yet confirmed by adjuster** at time of writing
+
+**Output structure produced:**
+
+```
+# Collision Supplement — CA-2026-33915 / 2021 Toyota RAV4 (VIN ...J71144) / Carrier: Mercury Insurance (DRP) / State: California
+
+## Cover Note
+Dana — supplement for claim CA-2026-33915, 2021 RAV4 VIN ...J71144. Tear-down on 2026-07-16 revealed a strut-tower crease, buckled apron reinforcement, and a bent radiator-support tie-bar. Documented, ready lines add $2,146.80. Per California estimate-disclosure practice this packet includes a reassembly line and states the expected third-party-payor amount (or that it is pending). One radar-recalibration line is held pending the Toyota procedure and post-scan and is not in this total. Eleven photos indexed. Please confirm the payor amount for the added lines. 
+
+## Supplement Summary
+- Original estimate: $5,140.00 (2026-07-10)
+- This supplement adds (ready lines): $2,146.80
+- New total (this supplement): $7,286.80
+- Third-party-payor (insurer) expected to pay: **PENDING adjuster confirmation** — disclosed as pending per California requirement; customer copy carries the mandated "amount not yet known" language rather than a blank
+- Customer out-of-pocket (deductible / betterment / non-covered): $0 identified on ready lines (deductible applied on original estimate)
+- Reassembly disclosure (if added repair is declined): 2.4 hrs / $412.80 to reassemble and return the vehicle in torn-down state — stated so the authorization is informed
+- Held for follow-up (not in total): front-radar recalibration — pending OEM citation + post-scan
+- Supplement reason: tear-down hidden damage (structural + sheet metal)
+- Photo count: 11 · OEM citations: 1 pending (structural procedure to confirm on frame bench); 1 pending (ADAS, held line)
+
+## Line Items (new and revised) — plain-language descriptions
+| Line | Operation (plain language) | Part / Panel | Part # / Source | Labor (time + op + guide) | Parts $ | Labor $ | Payor $ | Reason |
+|------|----------------------------|--------------|------------------|----------------------------|---------|---------|---------|--------|
+| 6 | Straighten right-front strut tower to factory position | RF strut tower | — | 3.1 hrs, op 24-118, CCC 2026.07 | — | $533.20 | pending | Tear-down — inboard crease; frame-bench measurement to confirm before final |
+| 7 | Replace buckled right-front inner apron reinforcement | RF apron reinf. | TO-53703-AN / Toyota OEM | 2.2 hrs, op 25-090 | $318.00 | $378.40 | pending | Tear-down — buckled |
+| 8 | Replace bent upper radiator-support tie-bar | Radiator support tie-bar | TO-53216-BM / Toyota OEM | 1.4 hrs, op 22-047 | $206.00 | $240.80 | pending | Tear-down — bent, carries radar bracket |
+| R | Reassemble and return vehicle IF added repair declined | — | — | 2.4 hrs, op 99-REASSY, CCC 2026.07 | — | $412.80 | n/a | California reassembly disclosure — informs the decline option, not an added charge unless declined |
+| — | Recalibrate front radar | — | — | **NOT SUBMITTED** | — | — | — | **DO NOT SUBMIT UNTIL COMPLETED — missing: (a) Toyota position statement, (b) post-scan, (c) frame-bench confirmation of tie-bar displacement** |
+
+## Narrative (plain language)
+
+### Structural
+After removing the front bumper and right fender, the right-front strut tower shows a crease pushed inboard of the strut mount, consistent with the frontal-offset impact (photo IMG_7704). Straightening to the factory position is recommended per the Toyota repair procedure; the exact displacement is being confirmed on the frame bench before the labor time is finalized, so this line is shown with its procedure citation marked to confirm rather than asserted.
+
+### Sheet metal / body
+The right-front inner apron reinforcement is buckled (photo IMG_7706) and the upper radiator-support tie-bar is bent (photo IMG_7708); both are replaced with the Toyota parts shown.
+
+### California disclosures (consumer copy)
+This supplement is written to be given to the customer as well as the carrier. It states, on its own line, that reassembling and returning the vehicle in its torn-down condition would take 2.4 hours ($412.80) should the customer decline the additional repair — so the authorization is an informed choice. It states the amount the third-party payor is expected to pay for the added lines; that amount is not yet confirmed by the adjuster, so it is disclosed as pending in the mandated form rather than left blank. Operation descriptions are written in plain language. No tow or storage charges apply to this vehicle; had they, they would appear as their own separately authorized line.
+
+### ADAS-calibration triggers — HELD, NOT SUBMITTED
+The upper tie-bar (line 8) carries the front-radar bracket, so recalibration is likely after the structural work. This line is not included: the Toyota position statement has not been pulled, the post-scan has not been run, and the tie-bar displacement is still being confirmed on the bench. Front office: route the three gaps before the follow-up supplement.
+
+## Photo Index
+| File | What's shown | Supports line(s) | Date / time | By |
+|------|--------------|-------------------|-------------|-----|
+| IMG_7704.jpg | RF strut tower, inboard crease at mount | 6 | 2026-07-16 11:03 | PN |
+| IMG_7706.jpg | RF inner apron reinforcement, buckle | 7 | 2026-07-16 11:07 | PN |
+| IMG_7708.jpg | Upper radiator-support tie-bar, bend + radar bracket location | 8 | 2026-07-16 11:12 | PN |
+
+## OEM Citation Appendix
+| OEM | Document title | Doc # | Published | Applies to line(s) |
+|-----|----------------|-------|-----------|---------------------|
+| Toyota Motor Sales | Front structural repair — 2019+ RAV4 (strut tower / apron) | **TO CONFIRM from current Toyota TIS after bench measurement** | — | 6, 7 |
+| Toyota Motor Sales | Front-radar recalibration after front-body repair | **TO VERIFY — do not submit line until cited** | — | (held line) |
+
+## California Estimate-Disclosure Check (consumer copy)
+- [x] Reassembly time + cost stated as its own line (2.4 hrs / $412.80)
+- [ ] Third-party-payor amount stated for each added line → **PENDING adjuster confirmation — disclosed as pending, not blank**
+- [x] Third-party (carrier) estimate attached to the claim file
+- [x] Operation descriptions in plain language
+- [x] Tow / storage authorized separately (n/a this vehicle — none charged)
+- [ ] Confirm current California BAR section references + effective date against knowledge-base/regulations/ before treating any wording as compliant → **owner/counsel flag; not asserted here**
+
+## Pre-Submission Checklist
+- [ ] Every structural / ADAS line has a confirmed OEM citation → **2 to confirm (structural procedure after bench; held ADAS line)**
+- [x] Every submitted line has at least one supporting photo
+- [x] Every submitted labor time cites the guide and op code
+- [ ] Post-scan attached → **PENDING (held line)**
+- [x] Carrier format: Mercury DRP — line-item CCC export + California consumer disclosures
+- [x] No inflammatory language · No invented citations, damage, or labor times
+
+## Shop Signature Block (from config.yml)
+Priya N., Estimator — Golden State Collision
+San Jose, CA · BAR Auto Body Registration ARD-00291744
+[Direct phone] · [Email]
+```
+
+What this third example demonstrates that the first two do not: the output changes shape when the shop's state does. The reassembly line, the third-party-payor column with its "pending" fallback, the plain-language operation descriptions, and the separate tow/storage authorization are all California-specific and all flow from `knowledge-base/regulations/` rather than from a hardcoded default — and the signature block carries the shop's real BAR registration number from `config.yml` rather than a `[Shop Name]` placeholder. The section numbers and effective date are deliberately *not* asserted; they are flagged to counsel, holding the same cite-or-flag line the skill applies to OEM statements.
 
 ## Notes on Usage
 

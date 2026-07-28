@@ -4,7 +4,7 @@ category: _shared
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~10 min/email"
-version: 1.3
+version: 1.4
 ---
 
 # ✉️ Email Drafter
@@ -274,3 +274,87 @@ Owner, Maple Street Auto
 - **Follow-up reminder:** Early August (FY27 rate-conversation kickoff) — not a response chase.
 - **Audit flag:** Rate lock expires 2026-09-30. The $1,940 deferred-work list is a soft-upsell pipeline — re-surface the two brake items (Units 3 and 19) at the next PM cycle.
 ```
+
+**Inputs (regulator — state licensing board inquiry):**
+
+*This is the register where the tone matrix matters most and where the shop's instinct is most likely to be wrong. The owner's impulse is to explain, apologize, and argue. The regulator wants a dated, documented, unemotional recital and nothing else. Note also that this example uses a different `config.yml` — a California shop with a license number — to show the signature block and channel logic adapting to config rather than to a hardcoded default.*
+
+- Recipient: Field Representative D. Okafor, Bureau of Automotive Repair (no first name given in the letter), via the BAR correspondence portal
+- Goal: Respond, by the stated deadline, to a written inquiry opened on a consumer complaint. The customer alleges the shop performed and billed work she never authorized. The shop's position is that she authorized it verbally by phone and the advisor logged the call — but the shop concedes it does **not** have her signature on the revised estimate.
+- Notes: BAR inquiry #C-2026-118442, received 2026-07-06, response due 2026-07-27. Consumer: R. Vance. Vehicle 2017 Subaru Outback, RO-4471. Timeline: 2026-06-02 vehicle dropped for check-engine light; written estimate $189 diagnostic, signed by consumer 2026-06-02 09:14. 2026-06-03 11:40 advisor (K. Boyd) called consumer, described failed rear O2 sensor + cracked flex pipe, quoted $842 total; call logged in the shop management system with duration 6m12s and advisor's contemporaneous note "cust approved both, wants it done before the weekend." No revised written estimate was signed. 2026-06-04 work completed, invoiced $842. Consumer paid, then disputed 2026-06-11. Shop offered a $200 goodwill credit 2026-06-12, declined. Enclosures: signed original estimate, SMS log, phone-log screenshot with timestamp + duration, advisor's contemporaneous note, final invoice, the 2026-06-12 goodwill-credit offer letter. Shop has already retained counsel (M. Reyes).
+- Attachments: ro-4471-signed-estimate.pdf, ro-4471-phone-log.pdf, ro-4471-advisor-note.pdf, ro-4471-invoice.pdf, goodwill-offer-2026-06-12.pdf
+- Tone: Formal (default for regulator)
+- Urgency: Time-sensitive (statutory response deadline)
+- Config: Coast Ridge Automotive, 2210 Wooley Rd, Oxnard CA 93030, owner Renee Alvarado, (805) 555-0177, renee@coastridgeauto.com, BAR ARD #ARD-00284417
+
+**Output:**
+
+```
+## Email Draft
+
+**To:** Field Representative D. Okafor, Bureau of Automotive Repair
+**Subject:** Response to inquiry C-2026-118442 — RO-4471, ARD-00284417
+**Urgency:** Time-sensitive (response due 2026-07-27)
+
+---
+
+Dear Field Representative Okafor,
+
+This is Coast Ridge Automotive's response to inquiry C-2026-118442, received 2026-07-06,
+concerning repair order RO-4471 and the 2017 Subaru Outback belonging to R. Vance. Our license
+number is ARD-00284417.
+
+The following is a chronological recital of the documented facts, with the corresponding records
+enclosed.
+
+- **2026-06-02, 09:14** — Vehicle presented for a check-engine-light concern. Written estimate for
+  diagnosis, $189.00, signed by the consumer. (Enclosure 1)
+- **2026-06-03, 11:40** — Service advisor K. Boyd telephoned the consumer, described the failed
+  rear oxygen sensor and cracked flex pipe, and quoted $842.00 total. The call is logged in our
+  management system at 6 minutes 12 seconds. The advisor's contemporaneous note reads: "cust
+  approved both, wants it done before the weekend." (Enclosures 2 and 3)
+- **2026-06-03** — **No revised written estimate was signed by the consumer.** The authorization
+  we relied upon was verbal, obtained on the call above. We state this plainly rather than
+  characterize it further.
+- **2026-06-04** — Work completed and invoiced at $842.00. Invoice enclosed. (Enclosure 4)
+- **2026-06-11** — Consumer contacted the shop disputing authorization for the repair.
+- **2026-06-12** — Shop offered a $200.00 goodwill credit in writing. The consumer declined.
+  (Enclosure 5)
+
+Enclosed with this response:
+1. ro-4471-signed-estimate.pdf — original written estimate, signed 2026-06-02
+2. ro-4471-phone-log.pdf — system phone log, 2026-06-03, timestamp and call duration
+3. ro-4471-advisor-note.pdf — advisor's contemporaneous note of the authorization call
+4. ro-4471-invoice.pdf — final invoice, 2026-06-04
+5. goodwill-offer-2026-06-12.pdf — written goodwill-credit offer and the consumer's declination
+
+Coast Ridge Automotive is represented in this matter by M. Reyes, who is copied on this response.
+We will provide any additional records or a written statement from the advisor on request, and we
+will make the advisor available to you. Please direct any further correspondence to me at the
+address and number below.
+
+Respectfully,
+
+Renee Alvarado
+Owner, Coast Ridge Automotive
+BAR ARD #ARD-00284417
+2210 Wooley Rd, Oxnard CA 93030
+(805) 555-0177 | renee@coastridgeauto.com
+
+---
+
+## Notes for the Sender
+- **Attachments referenced:** ro-4471-signed-estimate.pdf, ro-4471-phone-log.pdf, ro-4471-advisor-note.pdf, ro-4471-invoice.pdf, goodwill-offer-2026-06-12.pdf
+- **Send channel:** **Submit through the BAR correspondence portal, and send a duplicate by certified mail, return receipt requested.** Email alone is not the record you want to be holding if the response deadline is ever contested. Keep the portal confirmation number and the certified-mail receipt with the RO file.
+- **⚠️ Do not send until counsel has reviewed it.** Counsel is already retained on this matter. This draft is written to be factually complete and non-argumentative, but a regulator response is a document that will be read back to you, and the decision to send it is counsel's, not this skill's.
+- **Follow-up reminder:** None. Do not chase a regulator. Calendar the 2026-07-27 deadline and confirm the submission landed; then wait.
+- **Audit flag — this is the actual finding:** the exposure here is not the repair, it is the **missing signature on the revised estimate.** Verbal authorization with a logged call and a contemporaneous note is materially better than nothing, and it may well carry the day — but it is not a signed revised estimate, and the shop should not pretend otherwise to a licensing board. Fix the process now, while the complaint is open: no work proceeds past a signed estimate without a signed revision (text-back approval with the dollar figure, or an e-sign link), for every RO, starting today. If the process is already fixed by the time BAR follows up, that is a materially better conversation than if it isn't.
+```
+
+**What this example demonstrates that the others don't:** the formal register (no warmth, no
+apology, no argument — a dated recital and nothing else); a **damaging fact stated plainly** rather
+than buried, because a regulator will find it and the shop's credibility is worth more than the
+sentence; the license number pulled from `config.yml` into the subject line and signature block; a
+**non-email send channel** recommended over email alone; a hold-for-counsel flag; and a "do not
+follow up" instruction, which is the opposite of the advice every other recipient type in the
+matrix gets.

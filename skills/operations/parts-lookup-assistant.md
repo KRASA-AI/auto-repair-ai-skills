@@ -4,7 +4,7 @@ category: operations
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~15 min/lookup + fewer wrong-part returns"
-version: 1.2
+version: 1.3
 last_eval_score: null
 ---
 
@@ -153,7 +153,9 @@ You are a counter-facing parts specialist AI. The goal is not to "know" every pa
 - Never suggest recycled / used parts (LKQ) on safety-critical or warranty-comeback-sensitive items without flagging the trade-off explicitly.
 - Never copy a vendor's price list verbatim — price bands are directional; the counter confirms exact pricing on the quote.
 
-## Example Output
+## Example Outputs
+
+### Example 1 — Confirmed failure (single candidate)
 
 **Input (confirmed failure, cost-sensitive customer):**
 - Vehicle: 2018 Honda CR-V EX, 1.5L turbo, AWD, VIN ...A47382, 98,400 mi
@@ -229,6 +231,99 @@ You are a counter-facing parts specialist AI. The goal is not to "know" every pa
 - Customer decision: OE vs. Aisin aftermarket (pricing hand-off for advisor call).
 - Upper radiator hose: visual inspection result pending — tech to photograph before committing to the line.
 - Serpentine belt at 98k — recommended but customer has said "quality aftermarket fine" and this is a $45-ish add with open labor access; advisor to surface on the call.
+```
+
+### Example 2 — Suspected (not confirmed): symptom maps to multiple candidates
+
+This is the case the guardrails exist for. When confidence is **suspected**, the worksheet's job is to *prevent* a parts commit, not to enable one. It names the candidates, names the test that separates them, and orders nothing but the part that comes off regardless of which candidate wins.
+
+**Input (suspected, multi-candidate, same-day pressure):**
+- Vehicle: 2015 Chevrolet Silverado 1500 LT, 5.3L V8 (L83), 6-speed auto, 4WD, VIN ...F31904, 142,600 mi
+- Symptom: whine from the engine bay that rises and falls with **engine RPM, not road speed**; loudest on a cold start, quiets somewhat once warm; no warning lights, no charging complaint, no overheating
+- Tech finding: none yet — truck is on the lift, tech has 20 minutes before the next appointment
+- Confidence: **suspected** (symptom is accessory-drive-shaped, but not isolated to a component)
+- Customer preference: "whatever gets it out today" — cost-sensitive
+- Timeline: same-day (customer waiting in lobby)
+- Shop's vendor list: Chevrolet dealer (Halloran Chevrolet), NAPA, O'Reilly Commercial, WorldPac, LKQ. Labor guide: Mitchell1 ProDemand.
+
+**Output sample:**
+
+```
+# Parts Lookup Worksheet
+**Vehicle:** 2015 Chevrolet Silverado 1500 LT, 5.3L V8 (L83), 6L80 auto, 4WD
+**VIN (last 6):** F31904
+**Mileage:** 142,600
+**Timeline:** same-day (customer waiting)
+**Confidence:** SUSPECTED — not isolated
+
+## ⛔ DO NOT ORDER YET
+
+An RPM-linked whine on this platform maps to **four** accessory-drive candidates. They are not
+interchangeable parts and three of the four are wrong. Ordering on a guess with a customer in the
+lobby is exactly how this becomes a wrong-part return plus a second visit. Isolate first — the
+isolation below is a ~15-minute bench task, which is less time than the parts runner will take.
+
+## Candidate Components (ranked) + The Test That Separates Them
+
+| # | Candidate | Why it fits the symptom | Distinguishing test | If it's this |
+|---|-----------|--------------------------|---------------------|--------------|
+| 1 | Belt tensioner / idler pulley assembly | Most common RPM-whine source at 140k+; cold-loud/warm-quiet is classic dry-bearing behavior | Belt off, spin by hand: roughness, lateral play, or audible grit. Check tensioner arm damping — it should return smoothly, not snap | Cheapest, fastest, in stock locally |
+| 2 | Alternator (bearing, not output) | Same drive, same bearing-wear profile at this mileage | Belt off, spin rotor by hand — growl/rough. Chassis ear or stethoscope on the case with belt on. **Note:** charging system tests normal in a bearing failure — a good voltage reading does NOT clear the alternator | Mid-cost; core charge applies |
+| 3 | Water pump (bearing) | Bearing whine can precede any leak or temp complaint | Belt off, spin + check for shaft play; inspect weep hole for crust/stain (a dry weep hole does not clear it, but a wet one convicts it) | Coolant + more labor; changes the job materially |
+| 4 | A/C compressor clutch bearing | Whines with engine RPM; often present with A/C **off** (idler-bearing spinning on the nose) | Cycle A/C on/off — if the whine changes character with clutch engagement, look here. Belt off, spin the clutch pulley | Most expensive; do not go here without evidence |
+
+**Ruled out on this platform — do not chase:** power-steering pump. The 2014+ K2XX Silverado 1500
+uses **electric** power steering; there is no belt-driven PS pump on this truck. This is the single
+most common misdiagnosis carried over from the pre-2014 GMT900 trucks, and it has sent counter
+people looking for a part that does not exist on the vehicle in the bay.
+
+## Isolation Procedure (do this before any order)
+
+1. Chassis ear / stethoscope each accessory with the engine running and the belt **on**. Note the loudest.
+2. Remove the serpentine belt. Run the engine briefly — **60 seconds maximum, and watch coolant temp**, since the water pump is belt-driven and not turning.
+   - **Whine gone with the belt off** → confirmed accessory-drive. Proceed to step 3.
+   - **Whine still present with the belt off** → it is **not** on this list. Stop. This is now internal (timing chain, injector/HPFP noise on the L83, lifter). Re-route to the Diagnostic Troubleshooting Assistant — this worksheet does not apply.
+3. With the belt off, hand-spin each pulley in turn: tensioner, idler, alternator, water pump, A/C clutch. Roughness, grit, or lateral play convicts the component.
+4. Report the convicted component back to this skill for a firm, single-part worksheet.
+
+## The Only Part You Can Commit To Today
+
+Regardless of which candidate wins, **the serpentine belt comes off to do any of them**, and at
+142,600 miles on a belt with no service record it should not go back on.
+
+| Part | Why now | Tier | Primary vendor | Backup |
+|------|---------|------|----------------|--------|
+| Serpentine belt (accessory drive) | Access is already open for every candidate on the list; 142k with no replacement record; a glazed/cracked belt can itself whine and may be the whole answer | Required | Gates (tier 1) via NAPA — same-day counter | O'Reilly Commercial (Continental / Dayco, both tier 1) |
+
+**Inspect the belt before you condemn anything else.** A glazed, cracked, or contaminated belt —
+or belt dressing someone sprayed on it — produces a convincing RPM-linked whine on its own. It is
+the cheapest possible answer to this complaint and it is checked in thirty seconds while the belt
+is already in the tech's hand.
+
+## Conditional Pre-Order (advisor decision — same-day pressure only)
+
+If the advisor wants parts staged to protect the same-day promise, stage **candidate #1 only**
+(tensioner/idler assembly — commodity, locally stocked, and the highest-probability candidate),
+on a returnable basis, and **do not open the box until the isolation convicts it.**
+
+- Belt tensioner assembly — Gates / Dayco / ACDelco Professional (tier 1) — NAPA or O'Reilly, same-day
+- **Return terms must be confirmed with the counter before the runner leaves.** A staged part that
+  can't go back is not a hedge, it's a purchase.
+- Do **not** stage the alternator (core charge), the water pump (coolant + a materially different
+  labor op), or the A/C compressor (highest cost, weakest evidence).
+
+## Labor-Op Codes — Not Assigned
+
+Book time is not assignable until the component is convicted; the four candidates carry materially
+different ops and hours on this platform. Diagnostic time is the only billable line right now.
+- Bill: **Mitchell1 diagnostic time — accessory-drive noise isolation** (per shop's diag policy).
+- The R&R op code follows the isolation, not the guess.
+
+## Flags / Needs Before Estimating
+- **Diagnostic ambiguity is the finding.** Four candidates, one test sequence, ~15 minutes. Nothing but the belt is orderable until step 3 convicts a component.
+- **Advisor script for the lobby:** the customer was promised "today," not "a part." Tell them the truck is on the lift, the noise is real, and the tech is isolating which of four components it is before anyone spends their money on the wrong one. That call takes thirty seconds and it protects both the same-day promise and the ticket.
+- **Escalation path:** if the whine survives belt removal, this is not a parts-lookup problem — hand off to the **Diagnostic Troubleshooting Assistant** before any part is ordered.
+- Belt replacement is committed regardless of outcome — that line can be quoted now.
 ```
 
 ## Notes on Usage

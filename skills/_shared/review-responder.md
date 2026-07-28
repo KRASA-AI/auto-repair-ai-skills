@@ -4,7 +4,7 @@ category: _shared
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~3 min/review · full weekly queue in one session"
-version: 1.2
+version: 1.4
 ---
 
 # ⭐ Review Responder (Quick)
@@ -164,6 +164,59 @@ Reason: [one-sentence explanation — e.g., "3-star review names a specific miss
 - Ready to paste into the review platform
 - Saved to `outputs/` if the user is batch-processing multiple reviews
 
+## Batch Mode (queue sweep)
+
+Batch is what this skill is *for*. When the user pastes in a stack of reviews rather than one, do
+not emit the full single-review block N times — that produces a wall the owner has to scroll
+through, and the whole point was to clear the queue in one session. Emit a **paste table** plus a
+**redirect list**, in that order.
+
+Rules for batch mode:
+
+- **Run the stop-signal checklist on every review independently.** Batch pressure is exactly when a
+  negative review gets swept into a cheerful two-sentence reply. It does not get a reply here; it
+  gets a row in the redirect list. Never soften, never "handle it quickly since we're here."
+- **Vary the openers.** Ten replies posted the same day that all begin "Thanks for the kind words"
+  read as a bot to anyone who scrolls the shop's Google profile — which is every prospective
+  customer who reads reviews. Each reply in a batch opens differently. This is a hard requirement,
+  not a preference; a batch's biggest failure mode is uniformity, and it is visible in a way that a
+  single reply's flaws never are.
+- **Anchor every reply in its own review.** No shared anchor across rows. If two reviewers both
+  said "fair price," the two replies still mirror different specifics.
+- **One signer per batch**, from config, unless the user says otherwise — replies signed by
+  different names on the same day look like a delegation mess.
+- **Order the output for the paste task:** the table is worked top-to-bottom with the platform open
+  in the next tab. Character counts go in the table so the owner never has to check one.
+- **The redirect list goes at the bottom and is never blank when it should not be.** Say plainly
+  which review needs the full generator and why, then stop.
+
+**Batch output format:**
+
+```
+## Review Queue Sweep — [N reviews] — [date]
+
+**Replies ready to post: [X]** · **Redirected to full generator: [Y]**
+Signed by: [owner/manager first name from config]
+
+| # | Reviewer | ★ | Platform | Reply (paste as-is) | Chars | Anchor |
+|---|----------|---|----------|---------------------|-------|--------|
+| 1 | [Name] | 5 | [Platform] | [Full reply text, signature included] | [n/cap] | [what was mirrored] |
+| 2 | ... | | | | | |
+
+## ⚠️ Redirect — do NOT reply from this skill
+
+| # | Reviewer | ★ | Platform | Stop signal(s) fired | Why it can't be a quick reply |
+|---|----------|---|----------|----------------------|-------------------------------|
+| n | [Name] | 2 | [Platform] | [signals] | [one sentence] |
+
+→ Work these through `customer-service/review-response-generator.md` in a separate pass.
+
+## Sweep Notes
+- Openers varied: [confirm no two replies open alike]
+- Blocklist phrases: none used
+- PII check: clear
+```
+
 ## Example Outputs
 
 **Example 1 — 5-star, Google, specific service named:**
@@ -241,6 +294,82 @@ Rating: 2 stars
 Recommendation: use `customer-service/review-response-generator.md` instead of the Quick variant.
 Reason: the review names a specific dollar amount, a disputed diagnostic conclusion, and signals an incoming refund request — a 2-sentence reply would under-serve the situation and likely escalate it publicly. The full generator handles acknowledgment language, offline-escalation routing (invite to DM / call the manager), and a dispute-guarded phrasing that doesn't accidentally concede the misdiagnosis claim in writing.
 ```
+
+**Example 4 — batch mode: a five-review weekly sweep:**
+
+Input: the owner pastes the week's queue — five reviews, mixed platforms — and says "clear these."
+Config: Maple Street Auto, owner Mike, voice = friendly.
+
+Output:
+```
+## Review Queue Sweep — 5 reviews — 2026-07-13
+
+**Replies ready to post: 4** · **Redirected to full generator: 1**
+Signed by: Mike (from config)
+
+| # | Reviewer | ★ | Platform | Reply (paste as-is) | Chars | Anchor |
+|---|----------|---|----------|---------------------|-------|--------|
+| 1 | Priya | 5 | Google | Priya — glad the Civic's finally tracking straight after that pothole. Nothing satisfying about paying for an alignment, so I appreciate you saying it was worth it. Come see us when the tires need rotating. — Mike, owner, Maple Street Auto | 231 / 400 | "tracking straight" + the pothole alignment she named |
+| 2 | Dale | 5 | Google | Dale, that Ram had us going for a minute — intermittent electrical is the worst kind. Cody stuck with it, and I'll tell him you said so. Bring it back for the next oil service and we'll take another look at that ground strap. — Mike, owner, Maple Street Auto | 244 / 400 | Cody by name + the intermittent electrical fault |
+| 3 | Janet | 4 | Yelp | Janet, thank you — glad the AC is blowing cold again before it got truly miserable out. You're right that the Tuesday morning wait was long; we were a tech short that day and it showed. Next time call ahead and we'll get you in and out. — Mike, owner, Maple Street Auto | 253 / 500 | AC repair + direct acknowledgment of the wait irritant, no systemic promise |
+| 4 | Marcus | 5 | Facebook | Appreciate this, Marcus. A pre-purchase inspection that talks someone *out* of a car is the one that earns its keep — glad we caught the frame damage before you signed anything. Happy to look at the next one. — Mike, owner, Maple Street Auto | 226 / 400 | The PPI that killed the deal — the specific outcome he valued |
+
+## ⚠️ Redirect — do NOT reply from this skill
+
+| # | Reviewer | ★ | Platform | Stop signal(s) fired | Why it can't be a quick reply |
+|---|----------|---|----------|----------------------|-------------------------------|
+| 5 | Kenneth | 2 | Google | (a) 2-star, (b) disputed charge ($140 diag), (c) alleges misdiagnosis, (d) signals incoming refund request | A two-sentence reply to a public misdiagnosis claim with a dollar figure in it either concedes the claim in writing or reads as dismissive. Needs acknowledgment language, dispute-guarded phrasing, and offline-escalation routing. |
+
+→ Work this through `customer-service/review-response-generator.md` in a separate pass.
+
+## Sweep Notes
+- Openers varied: yes — name-first (1), situation-first (2), thanks-first (3), reaction-first (4). No two alike.
+- Blocklist phrases: none used.
+- PII check: clear — no RO numbers, no dollar amounts, no last names, no plates.
+```
+
+*Note what the sweep did and didn't do: four replies are paste-ready with distinct openers and
+distinct anchors, and Kenneth's 2-star did not get a fast, friendly reply just because it arrived in
+the same batch as four good ones. That is the entire discipline of batch mode.*
+
+**Example 5 — config `voice` drives the output (same review, three shops):**
+
+Examples 1–2 read as warm-and-friendly because that is the config those shops run. But the reply is supposed to sound like *this* shop, not like a house style — and the `voice` setting in `config.yml` is what makes that true. Step 7 of the process names three voices (friendly / professional / **plain-spoken**); the first two appear above, and the plain-spoken register — the one many owner-operators actually talk in — has no demonstration. Here is the **same 5-star review** answered under each of the three configs, so the difference is the config value and nothing else.
+
+Input (held constant):
+- Review text: "Had my 2019 Camry in for brakes last Thursday. Drew walked me through exactly what was needed and why, didn't try to upsell me, and had it done the same day. Fair price. Will be back."
+- Rating: 5 · Reviewer: Linda · Service: front brake pads + rotors · Platform: Google
+- Anchor (constant): Drew by name + same-day + fair-price mirror
+
+```
+## Quick Review Reply — voice comparison (same review, config varied)
+
+**voice: friendly** — config: Maple Street Auto, signer Mike (owner)
+Linda, thanks for the kind words — I'll pass that along to Drew. Glad we got the Camry
+stopped right and out the same day. See you at the next oil service, or sooner if anything
+comes up.
+— Mike, owner, Maple Street Auto                                        (198 / 400)
+
+**voice: professional** — config: Alpine Automotive, signer Susan (service manager)
+Linda, thank you for the review. I'm glad Drew explained the brake work clearly and that we
+completed it the same day at a fair price. We look forward to helping with your next service.
+— Susan, Service Manager, Alpine Automotive                             (214 / 400)
+
+**voice: plain-spoken** — config: Ruiz & Sons Garage, signer Hector (owner)
+Thanks, Linda. Drew's a straight shooter — that's how we run it here. Camry's brakes are
+done and they'll last. Come back when it's due.
+— Hector, Ruiz & Sons Garage                                            (146 / 400)
+
+### Notes
+- The only inputs that changed are the three config fields: `voice`, shop name, and signer.
+  The anchor (Drew + same-day + fair price) is mirrored in all three.
+- Plain-spoken is not "friendly with fewer words" — it drops the invite-back softeners, uses
+  the owner's own register ("straight shooter," "that's how we run it here"), and lands shorter.
+  A shop whose owner talks this way and posts warm-corporate replies reads as ghost-written.
+- All three obey the same blocklist and PII guardrails; none use an AI-tell phrase.
+```
+
+This is the personalization the skill claims but Examples 1–2 only half-showed: the reply adapts to the shop's configured voice, not to a single house tone. When the batch signer and voice come from `config.yml`, a plain-spoken owner's queue comes out sounding like the owner — which is the whole reason the reply is signed with a human's name instead of "The Team."
 
 ## Notes on Usage
 
