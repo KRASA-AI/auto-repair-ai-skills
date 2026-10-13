@@ -4,7 +4,7 @@ category: admin
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~20 min per request + escalation packet, if needed"
-version: 1.0
+version: 1.1
 last_eval_score: null
 ---
 
@@ -35,6 +35,7 @@ Use this skill when:
 - **Ground every request in what is actually confirmed, and flag what isn't.** As of July 1, 2026, EPA issued guidance — following a Presidential Memorandum, "Lowering the Cost of Living by Promoting the Freedom to Fix" — affirming that under the Clean Air Act, manufacturers of light-, medium-, and heavy-duty vehicles must provide independent shops and vehicle owners the **same emissions-related service information, diagnostic tools, training materials, and reprogramming capability** they give their own branded dealers, on reasonable terms. This explicitly includes DEF and other emissions-control systems. It explicitly does **not** extend to proprietary designs, software code, or other confidential/IP-protected manufacturer material. This is new executive-branch guidance, not new legislation — it clarifies EPA's reading of existing law, and guidance can be revised. Treat the exact letter/citation language as something to confirm against the shop's own printed copy of the July 1, 2026 guidance before quoting it to a manufacturer, not something this skill quotes verbatim.
 - **Never assert a specific statute section, CFR citation, penalty, or deadline as settled fact.** If the shop or manufacturer needs the precise citation, flag it as "pull the exact citation from the guidance document / confirm with counsel" rather than inventing one.
 - **Generic-parts note, stated accurately:** the guidance confirms manufacturers cannot require branded parts for emissions-system repairs and generic/equivalent parts may be used — but it does **not** guarantee warranty coverage if the customer's vehicle is still under a manufacturer warranty and a noncertified part is used. Say this plainly to the shop; don't oversell it to the customer.
+- **Tampering boundary — the guidance clarified access, it did not loosen the tampering rules.** Legal commentary on the July 2026 guidance reads it as restating EPA's existing "reasonable basis" approach, not replacing EPA's 2020 tampering enforcement policy — and that policy has historically pointed enforcement at service shops, not just owners. So: (a) any temporary override or bypass used to diagnose or complete the repair is defensible only if the vehicle is back in certified configuration before it leaves the bay, and the packet's Documentation Log must record that restoration; (b) OBD-monitoring changes are the highest-risk zone — the skill never drafts a request whose purpose is to disable, delete, or defeat a monitor, and it flags any input that reads that way; (c) state rules (e.g., California's aftermarket-parts approval requirement) still sit on top. Treat these as flags for owner/counsel, not citations. See `knowledge-base/regulations/emissions-freedom-to-fix.md`.
 - **Never guarantee an outcome.** This skill produces a well-documented request and escalation path. It cannot promise the manufacturer will comply on any particular timeline, and it must never tell the shop "you are legally entitled to this, full stop" — it says what the current federal guidance affirms, cites it accurately, and lets the manufacturer, NASTF, or counsel resolve any dispute.
 - **NASTF process details are treated as background, not asserted fact.** NASTF (a nonprofit, industry-run body) operates a Service Information Request (SIR) process and a Dispute Resolution Panel for exactly this kind of access dispute, and EPA's July 2026 announcement referenced NASTF as a model for industry collaboration. Specific figures about NASTF's request volume or resolution rate are industry-reported, not verified by this skill — flag them as "confirm NASTF's current process and expected timeline" rather than quoting a number to the manufacturer.
 
@@ -106,6 +107,7 @@ You are drafting a documented request-and-escalation packet for an independent s
 - Stage 2 and Stage 3 are included only when the input indicates the prior stage was actually attempted and unresolved — never generate an escalation for a request that hasn't been tried yet.
 - The Stage 3 escalation note is explicitly internal (owner/counsel), never phrased as something to hand a customer.
 - If a required input is missing, list it under "Flags to Confirm Before Sending" rather than guessing.
+- If the requested access involves any temporary override, forced regeneration, or system bypass, the Documentation Log includes a **"Returned to certified configuration"** line (date, final scan result, readiness monitors, no override left active) — left as a blank to complete if the repair isn't finished yet. A request whose stated goal is to remove, delete, or permanently disable an emissions control or OBD monitor is refused and flagged, not drafted.
 - Saved to `outputs/` if the user confirms.
 
 ## Example Output
