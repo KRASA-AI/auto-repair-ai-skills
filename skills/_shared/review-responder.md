@@ -4,7 +4,7 @@ category: _shared
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~3 min/review · full weekly queue in one session"
-version: 1.4
+version: 1.5
 ---
 
 # ⭐ Review Responder (Quick)
@@ -370,6 +370,49 @@ done and they'll last. Come back when it's due.
 ```
 
 This is the personalization the skill claims but Examples 1–2 only half-showed: the reply adapts to the shop's configured voice, not to a single house tone. When the batch signer and voice come from `config.yml`, a plain-spoken owner's queue comes out sounding like the owner — which is the whole reason the reply is signed with a human's name instead of "The Team."
+
+**Example 6 — the shop's own blocklist (from `config.yml`) filters a draft:**
+
+The AI-tell blocklist in Step 5 is universal. Most shops also have words *they* never want in public, and `config.yml` can carry them as `review_reply_blocklist`. The skill treats those entries exactly like the universal list: check the draft, rewrite any line that hits one, and report the hit in Notes so the owner can see the filter worked.
+
+Config (Hilltop Auto Care, signer Dana, voice = professional):
+
+```
+review_reply_blocklist:
+  - "cheap" / "cheapest"          # we compete on trust, not price
+  - "Kyle"                        # tech left in June; don't name former staff
+  - "warranty" / "guarantee"      # only the written RO terms count
+  - "dealer" comparisons          # owner policy: never knock the dealer publicly
+```
+
+Inputs: 5★ Google review from Jorge: "Kyle fixed my check engine light way cheaper than the dealer quoted. Guaranteed work too. Great shop!"
+
+First-pass draft (internal, never posted):
+> Jorge, thanks! Kyle's great, and we're glad we beat the dealer's quote — cheap and guaranteed is how we do it. — Dana
+
+That draft hits four config entries. The skill rewrites to keep the anchor (check-engine fix, value, trust) without repeating any of them:
+
+```
+## Quick Review Reply
+
+**Platform:** Google  ·  **Rating:** 5★  ·  **Reviewer:** Jorge
+
+### Reply
+Jorge, thank you. We're glad the check engine light is sorted and that the repair felt like
+good value. If anything comes back, call us and we'll take a look.
+— Dana, Service Manager, Hilltop Auto Care                              (186 / 400)
+
+### Notes
+- Config blocklist hits in first pass: "Kyle" (former staff), "cheap," "guaranteed," dealer
+  comparison. All four removed; none of them is echoed back, even though the reviewer used them.
+- Value is mirrored as "good value" (the customer's point) without a price claim the shop
+  doesn't want to own publicly.
+- "Call us and we'll take a look" stands in for a guarantee: it invites the comeback without
+  promising terms beyond the written RO.
+- Universal AI-tell blocklist: none used. PII: first name only.
+```
+
+Why this matters: a reviewer's words are not automatically safe to repeat. Echoing "cheapest in town" anchors the shop on price, naming a departed tech sends the next customer asking for him, and repeating "guaranteed" in public can read as a promise wider than the written warranty. The config blocklist is how the owner's standing policy reaches every reply, including ones drafted in a 40-review batch sweep, without anyone re-reading the rules.
 
 ## Notes on Usage
 

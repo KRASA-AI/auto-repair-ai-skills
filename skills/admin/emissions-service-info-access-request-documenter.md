@@ -4,7 +4,7 @@ category: admin
 tools: [claude, chatgpt]
 difficulty: intermediate
 time_saved: "~20 min per request + escalation packet, if needed"
-version: 1.1
+version: 1.2
 last_eval_score: null
 ---
 
@@ -119,7 +119,7 @@ You are drafting a documented request-and-escalation packet for an independent s
 - Repair it's blocking: Truck derated and in limp mode on a stored SCR-efficiency code (P20EE); tech has isolated it to a DEF-quality/dosing issue via manual data but cannot complete the repair verification without running a forced regen and clearing the derate through the dealer-level procedure
 - What's been tried: Shop called Freightliner's dealer service-info line on 2026-07-14, was told to "bring it to a dealer"; no written response to a follow-up voicemail left 2026-07-16
 - Manufacturer/contact: Daimler Truck North America (Freightliner) — shop does not have a direct service-information department contact, only the general dealer line
-- Shop info: Ridgeline Fleet Service, 4410 Depot Road, Elkhart, IN 46514, (574) 555-0198, requester Marcus Webb, Shop Foreman
+- Shop info: not typed — pulled from `config.yml` (`shop_name: Ridgeline Fleet Service`, `address: 4410 Depot Road, Elkhart, IN 46514`, `phone: (574) 555-0198`, `default_requester: Marcus Webb, Shop Foreman`, `segment: heavy-duty / fleet`). The fleet segment in config is why the letter leads with downtime cost rather than a retail-customer framing.
 - Urgency: Customer's truck (regional fleet, owner-operator) has been down since 2026-07-13 — four days lost revenue, currently on a loaner arrangement the customer is unhappy about
 
 **Output:**
@@ -164,6 +164,7 @@ Shop Foreman, Ridgeline Fleet Service
 | 2026-07-14 | Phone | Freightliner dealer service-info line | Requested bidirectional access / forced-regen procedure for VIN ...R4471 | Told to "bring it to a dealer"; no ticket number or contact given |
 | 2026-07-16 | Voicemail | Same line, follow-up | Restated request, asked for a callback | No response as of 2026-07-18 |
 | 2026-07-18 | Written letter (this document) | Daimler Truck NA Service Information Dept. (via dealer line pending direct contact) | Formal written request, cites July 2026 EPA guidance, requests response by 2026-07-25 | Pending |
+| _to complete before release_ | RO note | Marcus Webb | **Returned to certified configuration** — forced regen run, derate cleared, final scan with no active emissions codes, readiness monitors re-set, no override or bypass left active | _blank until repair is verified_ |
 
 ## Flags to Confirm Before Sending
 
@@ -181,6 +182,27 @@ Shop Foreman, Ridgeline Fleet Service
 - The letter sets its own reasonable response date rather than asserting a legally mandated deadline that isn't confirmed.
 - The Flags section is honest about what the skill doesn't know (the correct department contact, NASTF's current process) instead of inventing a contact or a process step to make the packet look more complete than the input supports.
 - The next step (Stage 2 NASTF SIR) is pre-staged but not written yet — it only gets drafted once the Stage 1 deadline actually passes unanswered, keeping the escalation honest to what's actually happened.
+
+**Follow-on example — the same case one week later (Stage 2 triggered):**
+
+Input update: "No response from Daimler Truck by 2026-07-25. Customer moved the truck to a dealer on 2026-07-22 to stop the downtime. We still want the access for the next Cascadia." The skill reclassifies this as a **standing capability gap** (no vehicle on-site) and drafts Stage 2 only — Stage 3 stays unwritten because NASTF hasn't been tried yet.
+
+```
+## Stage 2 — NASTF Service Information Request (draft)
+
+Requester: Marcus Webb, Shop Foreman, Ridgeline Fleet Service (from config) — independent heavy-duty facility
+Manufacturer: Daimler Truck North America (Freightliner / Detroit DD13)
+Information/tool sought: Bidirectional access sufficient to command a forced DPF/SCR regeneration, and the
+  dealer-level procedure for clearing an SCR-efficiency derate after repair, model year 2023 Cascadia
+Why it is emissions-related: SCR/DEF system; repair cannot be verified or the derate cleared without it
+Prior attempts: phone 2026-07-14 ("bring it to a dealer"); voicemail 2026-07-16 (no reply);
+  written request 2026-07-18 with a 2026-07-25 response date (no reply) — copies attached
+Impact: one customer vehicle lost to a dealer after 9 days down; the gap will recur on every
+  2023+ DD13 SCR fault this shop sees
+Ask: NASTF's help identifying the correct Daimler Truck service-information channel and obtaining the access above
+```
+
+Flags carried forward: confirm NASTF's current SIR form and fields at nastf.org (this draft is content for the form, not the form itself); attach the Stage 1 letter and the log; the "Returned to certified configuration" log line is closed as **N/A — vehicle released to dealer before repair**, so no override was ever applied by this shop. What changed versus the Stage 1 example: the skill dropped the urgency framing (no truck on the lot), rewrote the impact as a recurring gap, and did not jump to a counsel note just because the manufacturer went quiet.
 
 ## Related Skills
 

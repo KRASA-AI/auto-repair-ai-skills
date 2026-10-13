@@ -4,7 +4,7 @@ category: _shared
 tools: [claude, chatgpt]
 difficulty: beginner
 time_saved: "~10 min/email"
-version: 1.4
+version: 1.5
 ---
 
 # ✉️ Email Drafter
@@ -358,3 +358,54 @@ sentence; the license number pulled from `config.yml` into the subject line and 
 **non-email send channel** recommended over email alone; a hold-for-counsel flag; and a "do not
 follow up" instruction, which is the opposite of the advice every other recipient type in the
 matrix gets.
+
+**Inputs (customer — goodwill note after a comeback):**
+
+*The customer row is the first line of the tone matrix and the most common email a shop sends, but none of the four examples above shows it. It is also where the jargon pitfall in Step 5 actually bites: the tech's notes are written for the tech. This example shows the 3–5 sentence cap, plain-English substitutions, and the config `voice` applied to a customer who has reason to be annoyed.*
+
+- Recipient: Priya Nair, customer (first-name basis, regular since 2022)
+- Goal: Tell her what went wrong with last week's A/C job, what we found, and that the re-repair labor is on us — and get her to book a drop-off.
+- Notes (tech's words, verbatim from the RO): "RO-5088 2026-09-29 R-1234yf evac/recharge, dye added, no leak found at time of svc. RO-5120 cust back 10/08 warm air at idle. UV dye at cond lower RH corner, rock strike, cond needs R&R. Recharge again after. Cond $286.40 pt. Shop covering labor + recharge as goodwill per Mike. Job ~half day." Vehicle: 2019 Honda Pilot.
+- Attachments: photo of the condenser damage (condenser-damage.jpg)
+- Tone: default (customer)
+- Urgency: Routine
+- Config: Maple Street Auto, owner Mike Sorensen, (614) 555-0142, service@maplestreetauto.com, voice = friendly
+
+**Output:**
+
+```
+## Email Draft
+
+**To:** Priya Nair — [customer email on file]
+**Subject:** Your 2019 Pilot's A/C — what we found and next steps
+**Urgency:** Routine
+
+---
+
+Hi Priya,
+
+I'm sorry the Pilot's A/C quit on you so soon after last week's visit. This time we found the real
+cause: a rock hit the A/C condenser (the radiator-like part behind the grille), and it has been
+slowly leaking. A photo is attached. The new condenser is $286.40, and the labor to install it and
+recharge the system is on us, since we should have caught it the first time. Reply here or call
+(614) 555-0142 to pick a drop-off day; the job takes about half a day.
+
+Mike Sorensen
+Maple Street Auto
+```
+
+## Notes for the Sender
+- **Attachments referenced:** condenser-damage.jpg
+- **Send channel:** Email is fine, but a quick call first is better for a comeback. Send this as the written follow-up so the price and the goodwill terms are in writing.
+- **Follow-up reminder:** If no reply in 2 business days, text her. Don't let a warm-air comeback go quiet.
+- **Audit flag:** The RO says the first visit's dye test found no leak, which is normal for a slow leak. Don't promise in writing that it "should have been caught," unless Mike agrees with that wording. Softer option: "we'd rather make it right than argue about timing."
+```
+
+**What this example demonstrates that the others don't:** the customer row of the tone matrix in
+practice. It stays within the 3–5 sentence target for the body, the signature is first-name-friendly
+per config `voice`, and every piece of tech shorthand is translated. *R-1234yf evac/recharge* becomes
+"recharge the system," *cond R&R* becomes "a new condenser," and the part itself is explained once
+in plain words instead of assumed. The dollar figure is the only number, and it comes straight from
+the notes. The comeback is owned in one clause without groveling. The audit flag warns the owner
+before an admission of fault goes into writing, which is exactly the judgment a customer email
+needs and the other recipient types don't.
